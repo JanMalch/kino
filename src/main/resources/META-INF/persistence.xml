@@ -10,11 +10,11 @@
             <property name="javax.persistence.jdbc.user" value="jpa"/>
             <property name="javax.persistence.jdbc.password" value="jpa"/>
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+
 
         </properties>
     </persistence-unit>
