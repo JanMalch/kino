@@ -1,16 +1,16 @@
 language: java
 jdk: openjdk11
 
-sudo: false
+sudo: false # faster builds
 install: true
 
 
-addons:
-  sonarcloud:
-    organization: "janmalch-github" # the key of the org
+# addons:
+#   sonarcloud:
+#     organization: "janmalch-github" # the key of the org
 
-script:
-  - sonar-scanner
+# script:
+#  - sonar-scanner
 #  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 cache:

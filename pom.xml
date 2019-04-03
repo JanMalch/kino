@@ -55,7 +55,7 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <!-- default target/jscoco/site/* -->
+                        <!-- default target/jacoco/site/* -->
                         <configuration>
                             <outputDirectory>target/jacoco-report</outputDirectory>
                         </configuration>
