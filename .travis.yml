@@ -8,6 +8,16 @@ env:
   global:
     - CODECOV_TOKEN="e68bacda-60dc-4860-b3c4-2d203e96af55"
 
+addons:
+  sonarcloud:
+    organization: "janmalch-github" # the key of the org
+#   token:
+#      secure: ********* # encrypted value of your token
+script:
+  # other script steps might be done before running the actual analysis
+  - sonar-scanner
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+
 cache:
   directories:
     - $HOME/.m2
