@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
@@ -9,6 +10,9 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id = System.currentTimeMillis();
+
+  @OneToMany(mappedBy = "user")
+  private List<Reservation> reservations;
 
   private String firstName;
 
