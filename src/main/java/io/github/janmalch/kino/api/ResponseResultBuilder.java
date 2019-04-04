@@ -31,6 +31,9 @@ public class ResponseResultBuilder<P> implements ResultBuilder<Response, P> {
       map.put("instance", problem.getInstance());
     }
     map.putAll(problem.getParameters());
-    return Response.status(problem.getStatus()).entity(map).build();
+    return Response.status(problem.getStatus())
+        .type("application/problem+json")
+        .entity(map)
+        .build();
   }
 }
