@@ -1,13 +1,20 @@
 package io.github.janmalch.kino.api;
 
+import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.problem.Problem;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.core.Response;
 
-public class Responsify {
+public class ResponseResultBuilder<P> implements ResultBuilder<Response, P> {
 
-  public static Response fromProblem(Problem problem) {
+  @Override
+  public Response success(P payload) {
+    return Response.ok(payload).build();
+  }
+
+  @Override
+  public Response failure(Problem problem) {
     // TODO: replace Map with Jackson Serializer
     Map<String, Object> map = new HashMap<>(5);
     map.put("type", problem.getType());
