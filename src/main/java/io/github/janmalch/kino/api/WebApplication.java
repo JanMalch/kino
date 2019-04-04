@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api;
 
 import io.github.janmalch.kino.api.boundary.PingResource;
+import io.github.janmalch.kino.api.boundary.UserResource;
 import io.swagger.jaxrs.config.BeanConfig;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,7 @@ public class WebApplication extends Application {
     Set<Class<?>> resources = new HashSet<>();
 
     resources.add(PingResource.class);
+    resources.add(UserResource.class);
 
     resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
     resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
