@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.api;
 
-import io.github.janmalch.kino.api.problem.Problem;
+import io.github.janmalch.kino.problem.Problem;
 import java.net.URI;
 import java.util.Date;
 import javax.ws.rs.core.Response;

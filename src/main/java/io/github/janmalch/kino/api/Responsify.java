@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.api;
 
-import io.github.janmalch.kino.api.problem.Problem;
+import io.github.janmalch.kino.problem.Problem;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.core.Response;
