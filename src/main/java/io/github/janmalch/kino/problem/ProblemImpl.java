@@ -79,4 +79,24 @@ public class ProblemImpl implements Problem {
   public Map<String, Object> getParameters() {
     return parameters;
   }
+
+  @Override
+  public String toString() {
+    return "ProblemImpl{"
+        + "type="
+        + type
+        + ", title='"
+        + title
+        + '\''
+        + ", status="
+        + status
+        + ", detail='"
+        + detail
+        + '\''
+        + ", instance="
+        + instance
+        + ", parameters="
+        + parameters
+        + '}';
+  }
 }
