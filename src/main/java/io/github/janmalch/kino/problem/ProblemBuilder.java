@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.problem;
+package io.github.janmalch.kino.problem;
 
 import java.net.URI;
 import java.util.*;
