@@ -72,4 +72,20 @@ public class Movie {
   public void setAgeRating(int ageRating) {
     this.ageRating = ageRating;
   }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public List<Presentation> getPresentations() {
+    return presentations;
+  }
+
+  public void setPresentations(List<Presentation> presentations) {
+    this.presentations = presentations;
+  }
 }

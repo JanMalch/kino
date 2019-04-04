@@ -6,12 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
-public class User {
+public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id = System.currentTimeMillis();
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "account")
   private List<Reservation> reservations;
 
   private String firstName;
@@ -60,5 +60,13 @@ public class User {
 
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
+  }
+
+  public List<Reservation> getReservations() {
+    return reservations;
+  }
+
+  public void setReservations(List<Reservation> reservations) {
+    this.reservations = reservations;
   }
 }

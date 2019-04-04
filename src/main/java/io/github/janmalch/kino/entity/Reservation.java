@@ -10,8 +10,8 @@ public class Reservation {
   private long id;
 
   @ManyToOne
-  @JoinColumn(name = "USER_ID")
-  private User user;
+  @JoinColumn(name = "ACCOUNT_ID")
+  private Account account;
 
   @ManyToOne
   @JoinColumn(name = "PRESENTATION_ID")
@@ -25,5 +25,29 @@ public class Reservation {
 
   public void setReservationDate(Date reservationDate) {
     this.reservationDate = reservationDate;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public Account getAccount() {
+    return account;
+  }
+
+  public void setAccount(Account account) {
+    this.account = account;
+  }
+
+  public Presentation getPresentation() {
+    return presentation;
+  }
+
+  public void setPresentation(Presentation presentation) {
+    this.presentation = presentation;
   }
 }
