@@ -83,6 +83,8 @@ public class SignUpControl implements Control<Object> {
       account.setEmail(signUpDto.getEmail());
       account.setFirstName(signUpDto.getFirstName());
       account.setLastName(signUpDto.getLastName());
+      // TODO: fix password setter
+      account.setPassword(signUpDto.getPassword());
       try {
         account.setBirthday(BIRTHDAY_FORMAT.parse(signUpDto.getBirthday()));
       } catch (ParseException e) {
