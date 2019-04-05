@@ -1,14 +1,18 @@
 package io.github.janmalch.kino.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
-public class User {
+public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id = System.currentTimeMillis();
+  private long id;
+
+  @OneToMany(mappedBy = "account")
+  private List<Reservation> reservations;
 
   private String firstName;
 
@@ -17,6 +21,8 @@ public class User {
   @Email private String email;
 
   private Date birthday;
+
+  private String password;
 
   public long getId() {
     return id;
@@ -56,5 +62,21 @@ public class User {
 
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
+  }
+
+  public List<Reservation> getReservations() {
+    return reservations;
+  }
+
+  public void setReservations(List<Reservation> reservations) {
+    this.reservations = reservations;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

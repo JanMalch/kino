@@ -1,32 +1,32 @@
 package io.github.janmalch.kino.repository;
 
-import io.github.janmalch.kino.entity.User;
+import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.repository.specification.Specification;
 import java.util.List;
 import javax.persistence.*;
 
 // TODO: currently uses Entity model
-public class UserRepository implements Repository<User> {
+public class UserRepository implements Repository<Account> {
 
   private EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
   private EntityManager em = factory.createEntityManager();
 
   @Override
-  public void add(Iterable<User> items) {
+  public void add(Iterable<Account> items) {
     em.getTransaction().begin();
     items.forEach(em::persist);
     em.getTransaction().commit();
   }
 
   @Override
-  public void update(User item) {
+  public void update(Account item) {
     em.getTransaction().begin();
     em.merge(item);
     em.getTransaction().commit();
   }
 
   @Override
-  public int remove(User item) {
+  public int remove(Account item) {
     em.getTransaction().begin();
     em.remove(item);
     em.getTransaction().commit();
@@ -43,8 +43,8 @@ public class UserRepository implements Repository<User> {
   }
 
   @Override
-  public List<User> query(Specification<User> specification) {
-    TypedQuery<User> query = specification.toQuery();
+  public List<Account> query(Specification<Account> specification) {
+    TypedQuery<Account> query = specification.toQuery();
     return query.getResultList();
   }
 }

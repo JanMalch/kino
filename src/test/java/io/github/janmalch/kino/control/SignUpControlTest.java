@@ -13,7 +13,7 @@ public class SignUpControlTest {
     SignUpDto data = new SignUpDto();
     data.setEmail("test@example.com");
     data.setFirstName("Test");
-    data.setLastName("User");
+    data.setLastName("Account");
     data.setPassword("Start123");
     data.setBirthday("1990-01-01");
     // TODO: fix JPA for tests

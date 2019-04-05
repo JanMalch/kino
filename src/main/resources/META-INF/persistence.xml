@@ -2,7 +2,16 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="kino" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>io.github.janmalch.kino.entity.User</class>
+        <class>io.github.janmalch.kino.entity.Account</class>
+        <class>io.github.janmalch.kino.entity.Reservation</class>
+        <class>io.github.janmalch.kino.entity.Presentation</class>
+        <class>io.github.janmalch.kino.entity.Seat</class>
+        <class>io.github.janmalch.kino.entity.CinemaHall</class>
+        <class>io.github.janmalch.kino.entity.Movie</class>
+        <class>io.github.janmalch.kino.entity.PriceCategory</class>
+
+
+        <!--<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"
@@ -14,8 +23,8 @@
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+
         </properties>
     </persistence-unit>
 </persistence>

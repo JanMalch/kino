@@ -1,12 +1,12 @@
 package io.github.janmalch.kino.repository.specification;
 
-import io.github.janmalch.kino.entity.User;
+import io.github.janmalch.kino.entity.Account;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-public class UserByEmailSpec implements Specification<User> {
+public class UserByEmailSpec implements Specification<Account> {
 
   private final String email;
 
@@ -15,11 +15,11 @@ public class UserByEmailSpec implements Specification<User> {
   }
 
   @Override
-  public TypedQuery<User> toQuery() {
+  public TypedQuery<Account> toQuery() {
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
     EntityManager em = factory.createEntityManager();
-    TypedQuery<User> query =
-        em.createQuery("SELECT u FROM User u WHERE email = :email", User.class);
+    TypedQuery<Account> query =
+        em.createQuery("SELECT u FROM Account u WHERE email = :email", Account.class);
     query.setParameter("email", email);
     query.setMaxResults(1);
     return query;
