@@ -11,7 +11,7 @@ import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class JwtTokenFactory implements TokenFactory {
+public class JwtTokenFactory implements TokenFactory {
 
   private Logger log = LoggerFactory.getLogger(JwtTokenFactory.class);
 
@@ -57,8 +57,7 @@ class JwtTokenFactory implements TokenFactory {
     JwtConsumer consumer = new JwtConsumerBuilder().setSkipSignatureVerification().build();
     JwtClaims claims = consumer.processToClaims(token);
     var subject = claims.getSubject();
-    var expiration =
-        new Date(claims.getExpirationTime().getValueInMillis() - TimeUnit.HOURS.toMillis(10));
+    var expiration = new Date(claims.getExpirationTime().getValueInMillis());
     return new JwtToken(token, subject, expiration);
   }
 
