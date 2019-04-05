@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 public class SignUpDtoValidator implements Validator<SignUpDto> {
 
-  public static final SimpleDateFormat BIRTHDAY_FORMAT = new SimpleDateFormat("YYYY-MM-DD");
+  private final SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
   @Override
   public Optional<Problem> validate(SignUpDto data) {
@@ -24,7 +24,7 @@ public class SignUpDtoValidator implements Validator<SignUpDto> {
 
   Optional<Problem> checkValidBirthday(SignUpDto data) {
     try {
-      BIRTHDAY_FORMAT.parse(data.getBirthday());
+      birthdayFormat.parse(data.getBirthday());
       return Optional.empty();
     } catch (ParseException e) {
       Problem problem =
