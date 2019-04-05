@@ -33,6 +33,7 @@ class TokenFactory implements ITokenFactory {
     return new JwtToken(tokenString, subject, expiration);
   }
 
+  @Override
   public Token refresh(Token token) throws MalformedClaimException, InvalidJwtException {
     Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token.getTokenString());
 

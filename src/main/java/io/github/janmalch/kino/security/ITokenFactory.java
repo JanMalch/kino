@@ -8,5 +8,7 @@ public interface ITokenFactory {
 
   Token parse(String token) throws InvalidJwtException, MalformedClaimException;
 
+  Token refresh(Token token) throws MalformedClaimException, InvalidJwtException;
+
   void setTokenDuration(long duration);
 }
