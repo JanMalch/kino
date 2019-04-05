@@ -24,6 +24,9 @@ public class Account {
 
   private String password;
 
+  // TODO remove
+  private String role;
+
   public long getId() {
     return id;
   }
@@ -78,5 +81,13 @@ public class Account {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 }
