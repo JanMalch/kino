@@ -40,9 +40,10 @@ public class JwtTokenFactory implements TokenFactory {
     JwtConsumer consumer = new JwtConsumerBuilder().setSkipSignatureVerification().build();
     JwtClaims claims = consumer.processToClaims(token.getSubject());
     var subject = claims.getSubject();
-    var expiration = new Date(System.currentTimeMillis() + this.tokenDuration);
+
     log.info(subject + " has refreshed his Token");
-    return new JwtToken(token.toString(), subject, expiration);
+    // generate new token string !
+    return generateToken(subject);
   }
 
   @Override
