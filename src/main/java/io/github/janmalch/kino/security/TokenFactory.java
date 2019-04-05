@@ -3,7 +3,6 @@ package io.github.janmalch.kino.security;
 import io.github.janmalch.kino.entity.Account;
 import io.jsonwebtoken.*;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
@@ -18,7 +17,6 @@ class TokenFactory {
 
   private static final String ROLE_KEY = "sub";
   private static final String secretKey = "jAzbOw76gakypHAYOsn5";
-  private long tokenDuration = TimeUnit.HOURS.toMillis(1); // duration = 1h
 
   Token createToken(Account account) {
     long now = (new Date()).getTime();
@@ -29,7 +27,7 @@ class TokenFactory {
             .setSubject(account.getEmail())
             .claim(ROLE_KEY, account.getRole())
             .signWith(SignatureAlgorithm.HS256, secretKey)
-            .setExpiration(new Date(now + this.tokenDuration))
+            .setExpiration(new Date(now + token.getTokenDuration()))
             .compact());
 
     log.info("Token created for " + account.getEmail());

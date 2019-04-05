@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.entity.Account;
 import io.jsonwebtoken.SignatureException;
+import java.util.concurrent.TimeUnit;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.junit.jupiter.api.Test;
@@ -48,5 +49,14 @@ class TokenFactoryTest {
     token.setToken(
         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFbWFpbEB1c2VyLmRlIiwicm9sZSI6IkFkbWlzc3NzbiIsImV4cCI6MTU1MTQ5ODEzNH0.r3kKffGzcEFxsGUYIbrEP0w2S7IgyMPmVoJDyM6l2js");
     assertThrows(SignatureException.class, () -> tokenFactoryClass.validateToken(token));
+  }
+
+  @Test
+  void validateExpiredToken() {
+    TokenFactory tokenFactoryClass = new TokenFactory();
+    // random String
+    Token token = new Token();
+    token.setTokenDuration(TimeUnit.SECONDS.toMillis(1));
+    assertThrows(IllegalArgumentException.class, () -> tokenFactoryClass.validateToken(token));
   }
 }
