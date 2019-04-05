@@ -14,8 +14,7 @@ class TokenTest {
   void createToken() {
     Token tokenClass = new Token();
     Account TestUser = new Account();
-    TestUser.setEmail("Email@user.de");
-    TestUser.setRole("admin");
+    TestUser.setEmail("Test1@user.de");
     String token = tokenClass.createToken(TestUser);
     assertNotNull(token);
   }
@@ -25,11 +24,10 @@ class TokenTest {
     String expectedRole = "NoRole";
     Token tokenClass = new Token();
     Account TestUser = new Account();
-    TestUser.setEmail("Email@user.de");
-
+    TestUser.setEmail("Test2@user.de");
     TestUser.setRole(expectedRole);
     String token = tokenClass.createToken(TestUser);
-    String role = tokenClass.getAccountCredential(token);
+    String role = tokenClass.getAccountRole(token);
     assertEquals(role, expectedRole);
   }
 
@@ -37,8 +35,7 @@ class TokenTest {
   void validateCorrectToken() {
     Token tokenClass = new Token();
     Account TestUser = new Account();
-    TestUser.setEmail("Email@user.de");
-    TestUser.setRole("Anfänger");
+    TestUser.setEmail("Test3@user.de");
     String token = tokenClass.createToken(TestUser);
     assertTrue(tokenClass.validateToken(token));
   }
@@ -46,12 +43,9 @@ class TokenTest {
   @Test
   void validateIncorrectToken() {
     Token tokenClass = new Token();
-    Account TestUser = new Account();
-    TestUser.setEmail("Email@user.de");
-    TestUser.setRole("Anfänger");
+    // random String
     String token =
         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFbWFpbEB1c2VyLmRlIiwicm9sZSI6IkFkbWlzc3NzbiIsImV4cCI6MTU1MTQ5ODEzNH0.r3kKffGzcEFxsGUYIbrEP0w2S7IgyMPmVoJDyM6l2js";
-
     assertThrows(
         SignatureException.class,
         () -> {
