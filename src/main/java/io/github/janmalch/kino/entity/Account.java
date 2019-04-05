@@ -9,9 +9,9 @@ import javax.validation.constraints.Email;
 public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id = System.currentTimeMillis();
+  private long id;
 
-  @OneToMany(mappedBy = "account")
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   private List<Reservation> reservations;
 
   private String firstName;
