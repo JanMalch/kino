@@ -22,6 +22,8 @@ public class Account {
 
   private Date birthday;
 
+  private String password;
+
   public long getId() {
     return id;
   }
@@ -68,5 +70,13 @@ public class Account {
 
   public void setReservations(List<Reservation> reservations) {
     this.reservations = reservations;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }
