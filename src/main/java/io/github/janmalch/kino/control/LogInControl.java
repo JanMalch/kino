@@ -31,6 +31,8 @@ public class LogInControl implements Control<Token> {
 
   @Override
   public <T> T execute(ResultBuilder<T, Token> result) {
+    log.info("New login from " + data.getEmail());
+
     var query = new UserByEmailSpec(data.getEmail());
     var referredUser = repository.queryFirst(query);
     if (referredUser.isEmpty()) {
@@ -39,8 +41,7 @@ public class LogInControl implements Control<Token> {
 
     var userEntity = referredUser.get();
     // TODO: change when hashing & salting is implemented
-    if (!doPasswordsMatch(
-        data.getPassword(), userEntity.getPassword(), /*userEntity.getSalt()*/ null)) {
+    if (!doPasswordsMatch(userEntity.getPassword(), /*userEntity.getSalt()*/ null)) {
       return result.failure(invalidLogin);
     }
 
@@ -50,7 +51,7 @@ public class LogInControl implements Control<Token> {
   }
 
   // TODO: change when hashing & salting is implemented
-  boolean doPasswordsMatch(String clearPassword, String hash, String salt) {
-    return clearPassword.equals(hash);
+  boolean doPasswordsMatch(String hash, String salt) {
+    return data.getPassword().equals(hash);
   }
 }
