@@ -12,7 +12,7 @@ class BeanValidationsTest {
     SignUpDto data = new SignUpDto();
     data.setEmail("test@example.com");
     data.setFirstName(""); // firstName is empty, which is not allowed
-    data.setLastName("User");
+    data.setLastName("Account");
     data.setPassword("Start123");
     data.setBirthday("1990-01-01");
 

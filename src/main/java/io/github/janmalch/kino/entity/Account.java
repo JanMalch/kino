@@ -11,7 +11,7 @@ public class Account {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
-  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "account")
   private List<Reservation> reservations;
 
   private String firstName;

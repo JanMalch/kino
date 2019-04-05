@@ -14,7 +14,7 @@ class SignUpDtoValidatorTest {
     SignUpDto data = new SignUpDto();
     data.setEmail("test@example.com");
     data.setFirstName("Test");
-    data.setLastName("User");
+    data.setLastName("Account");
     data.setPassword("Start123");
     data.setBirthday("1990-01-01");
     SignUpDtoValidator validator = new SignUpDtoValidator();
@@ -27,7 +27,7 @@ class SignUpDtoValidatorTest {
     SignUpDto data = new SignUpDto();
     // email will be null
     data.setFirstName("Test");
-    data.setLastName("User");
+    data.setLastName("Account");
     data.setPassword("Start123");
     data.setBirthday("1990-01-01");
     SignUpDtoValidator validator = new SignUpDtoValidator();
@@ -41,7 +41,7 @@ class SignUpDtoValidatorTest {
     SignUpDto data = new SignUpDto();
     data.setEmail("test@example.com");
     data.setFirstName("Test");
-    data.setLastName("User");
+    data.setLastName("Account");
     data.setPassword("Start123");
     data.setBirthday("1990:01-01");
     SignUpDtoValidator validator = new SignUpDtoValidator();

@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.control.validation.SignUpDtoValidator;
-import io.github.janmalch.kino.entity.User;
+import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.UserRepository;
 import io.github.janmalch.kino.repository.specification.Specification;
@@ -55,8 +55,8 @@ public class SignUpControl implements Control<Object> {
   }
 
   Optional<Problem> checkIfEmailExists() {
-    Specification<User> presentCheck = new UserByEmailSpec(data.getEmail());
-    Optional<User> referredUser = repository.queryFirst(presentCheck);
+    Specification<Account> presentCheck = new UserByEmailSpec(data.getEmail());
+    Optional<Account> referredUser = repository.queryFirst(presentCheck);
 
     // if a value is present, it means that the user exists and a Problem will be created
     // if no user is present in the Optional, it will return Optional.empty()
@@ -73,23 +73,23 @@ public class SignUpControl implements Control<Object> {
                 .build());
   }
 
-  public static class SignUpMapper implements Mapper<User, SignUpDto> {
+  public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
     public static final SimpleDateFormat BIRTHDAY_FORMAT = new SimpleDateFormat("YYYY-MM-DD");
 
     @Override
-    public User mapToEntity(SignUpDto signUpDto) {
-      User user = new User();
-      user.setEmail(signUpDto.getEmail());
-      user.setFirstName(signUpDto.getFirstName());
-      user.setLastName(signUpDto.getLastName());
+    public Account mapToEntity(SignUpDto signUpDto) {
+      Account account = new Account();
+      account.setEmail(signUpDto.getEmail());
+      account.setFirstName(signUpDto.getFirstName());
+      account.setLastName(signUpDto.getLastName());
       try {
-        user.setBirthday(BIRTHDAY_FORMAT.parse(signUpDto.getBirthday()));
+        account.setBirthday(BIRTHDAY_FORMAT.parse(signUpDto.getBirthday()));
       } catch (ParseException e) {
         // rethrow as unchecked as this should be handled by the validator
         throw new RuntimeException(e);
       }
-      return user;
+      return account;
     }
   }
 }
