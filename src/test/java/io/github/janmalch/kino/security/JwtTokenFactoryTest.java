@@ -7,11 +7,11 @@ import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.junit.jupiter.api.Test;
 
-class TokenFactoryTest {
+class JwtTokenFactoryTest {
 
   @Test
   void refresh() throws MalformedClaimException, InvalidJwtException {
-    TokenFactory factory = new TokenFactory();
+    JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
     Token token = factory.generateToken(acc.getEmail());
@@ -22,7 +22,7 @@ class TokenFactoryTest {
 
   @Test
   void parse() throws MalformedClaimException, InvalidJwtException {
-    TokenFactory factory = new TokenFactory();
+    JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
     Token token = factory.generateToken(acc.getEmail());

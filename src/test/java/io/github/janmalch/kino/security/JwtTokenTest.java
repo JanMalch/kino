@@ -12,7 +12,7 @@ class JwtTokenTest {
 
   @Test
   void getTokenString() {
-    TokenFactory factory = new TokenFactory();
+    JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
     Token token = factory.generateToken(acc.getEmail());
@@ -21,7 +21,7 @@ class JwtTokenTest {
 
   @Test
   void getSubject() throws MalformedClaimException, InvalidJwtException {
-    TokenFactory factory = new TokenFactory();
+    JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
     String testSubject = "TestUser@mail.de";
     acc.setEmail(testSubject);
@@ -31,7 +31,7 @@ class JwtTokenTest {
 
   @Test
   void isNotExpired() {
-    TokenFactory factory = new TokenFactory();
+    JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
     Token token = factory.generateToken(acc.getEmail());
@@ -40,7 +40,7 @@ class JwtTokenTest {
 
   @Test
   void isExpired() throws InterruptedException {
-    TokenFactory factory = new TokenFactory();
+    JwtTokenFactory factory = new JwtTokenFactory();
     factory.setTokenDuration(TimeUnit.SECONDS.toMillis(1));
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
