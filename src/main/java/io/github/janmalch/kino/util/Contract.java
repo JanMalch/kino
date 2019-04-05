@@ -39,6 +39,8 @@ package io.github.janmalch.kino.util;
  */
 public final class Contract {
 
+  private Contract() {}
+
   /**
    * Used to test function arguments.
    *
