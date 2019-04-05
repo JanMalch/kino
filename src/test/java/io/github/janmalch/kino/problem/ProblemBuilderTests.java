@@ -1,10 +1,8 @@
-package io.github.janmalch.kino.api.problem;
+package io.github.janmalch.kino.problem;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URI;
-import java.util.Map;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +13,7 @@ public class ProblemBuilderTests {
   @Test
   @DisplayName("reserved and custom fields")
   public void allFields() {
-    URI baseUri = URI.create("https://www.mosbach.dhbw.de/");
+    URI baseUri = Problem.DEFAULT_TYPE;
     Problem problem =
         Problem.builder()
             .type(baseUri)
@@ -34,8 +32,20 @@ public class ProblemBuilderTests {
         UriBuilder.fromUri(baseUri).matrixParam("timestamp", "test").build(),
         problem.getInstance());
 
-    Map<String, Object> parameters = problem.getParameters();
+    var parameters = problem.getParameters();
     assertEquals("janmalch", parameters.get("user"));
+  }
+
+  @Test
+  public void autoInstance() {
+    Problem problem = Problem.builder().type(Problem.DEFAULT_TYPE).instance().build();
+    assertTrue(problem.getInstance().toString().contains("time"));
+  }
+
+  @Test
+  public void typePathAppending() {
+    Problem problem = Problem.builder().type("test").build();
+    assertEquals(problem.getType().toString(), Problem.DEFAULT_TYPE.toString() + "/test");
   }
 
   @Test

@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.problem;
+package io.github.janmalch.kino.problem;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -78,5 +78,25 @@ public class ProblemImpl implements Problem {
   @Override
   public Map<String, Object> getParameters() {
     return parameters;
+  }
+
+  @Override
+  public String toString() {
+    return "ProblemImpl{"
+        + "type="
+        + type
+        + ", title='"
+        + title
+        + '\''
+        + ", status="
+        + status
+        + ", detail='"
+        + detail
+        + '\''
+        + ", instance="
+        + instance
+        + ", parameters="
+        + parameters
+        + '}';
   }
 }

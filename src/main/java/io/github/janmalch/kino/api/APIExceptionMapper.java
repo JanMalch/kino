@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.api;
 
-import io.github.janmalch.kino.api.problem.Problem;
+import io.github.janmalch.kino.problem.Problem;
 import java.net.URI;
 import java.util.Date;
 import javax.ws.rs.core.Response;
@@ -25,6 +25,6 @@ public class APIExceptionMapper implements ExceptionMapper<Exception> {
     System.err.println(Problem.toString(problem));
     System.err.println("\t-- for exception --");
     e.printStackTrace();
-    return Responsify.fromProblem(problem);
+    return new ResponseResultBuilder<>().failure(problem);
   }
 }

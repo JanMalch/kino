@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.problem;
+package io.github.janmalch.kino.problem;
 
 import java.net.URI;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 
 public interface Problem {
 
-  URI DEFAULT_TYPE = URI.create("about:blank");
+  URI DEFAULT_TYPE = URI.create("http://localhost:8080/kino");
 
   default URI getType() {
     return DEFAULT_TYPE;

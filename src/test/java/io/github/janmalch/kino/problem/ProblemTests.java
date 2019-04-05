@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.problem;
+package io.github.janmalch.kino.problem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
