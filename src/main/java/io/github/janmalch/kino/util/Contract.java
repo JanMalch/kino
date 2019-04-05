@@ -48,7 +48,7 @@ public final class Contract {
    * @param message description of what is expected
    * @throws IllegalArgumentException if the <code>value</code> argument is false
    */
-  public static void require(boolean value, String message) throws IllegalArgumentException {
+  public static void require(boolean value, String message) {
     if (!value) {
       throw new IllegalArgumentException(message);
     }
@@ -61,7 +61,7 @@ public final class Contract {
    * @param message description of what is expected
    * @throws IllegalStateException if the <code>value</code> argument is false
    */
-  public static void check(boolean value, String message) throws IllegalStateException {
+  public static void check(boolean value, String message) {
     if (!value) {
       throw new IllegalStateException(message);
     }
