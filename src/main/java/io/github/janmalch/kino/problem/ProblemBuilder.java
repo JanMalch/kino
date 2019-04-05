@@ -92,8 +92,6 @@ public class ProblemBuilder {
    * @throws IllegalStateException if the type is null
    */
   public ProblemBuilder instance() {
-    Contract.check(
-        this.type != null, "auto-generating instance field requires setting type field before");
     this.instance = UriBuilder.fromUri(type).queryParam("time", System.currentTimeMillis()).build();
     return this;
   }
