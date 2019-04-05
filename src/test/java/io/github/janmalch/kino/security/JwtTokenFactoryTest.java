@@ -13,11 +13,13 @@ class JwtTokenFactoryTest {
   @Test
   void refresh() throws MalformedClaimException, InvalidJwtException {
     JwtTokenFactory factory = new JwtTokenFactory();
-    Account acc = new Account();
-    acc.setEmail("TestUser@mail.de");
-    Token token = factory.generateToken(acc.getEmail());
-    Token newToken = factory.parse(token.getTokenString());
-    assertNotEquals(token, newToken);
+
+    Token token = factory.generateToken("TestUser@mail.de");
+    // change duration to change the JWT token signature
+    factory.setTokenDuration(TimeUnit.MINUTES.toMillis(30));
+    Token newToken = factory.refresh(token);
+
+    assertNotEquals(token.getTokenString(), newToken.getTokenString());
     assertFalse(token.isExpired());
   }
 

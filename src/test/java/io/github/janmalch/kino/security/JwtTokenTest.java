@@ -39,13 +39,11 @@ class JwtTokenTest {
   }
 
   @Test
-  void isExpired() throws InterruptedException {
+  void isExpired() {
     JwtTokenFactory factory = new JwtTokenFactory();
-    factory.setTokenDuration(TimeUnit.SECONDS.toMillis(1));
-    Account acc = new Account();
-    acc.setEmail("TestUser@mail.de");
-    Token token = factory.generateToken(acc.getEmail());
-    Thread.sleep(1000);
+    // create instantly invalid tokens
+    factory.setTokenDuration(TimeUnit.SECONDS.toMillis(-10));
+    Token token = factory.generateToken("TestUser@mail.de");
     assertTrue(token.isExpired());
   }
 }

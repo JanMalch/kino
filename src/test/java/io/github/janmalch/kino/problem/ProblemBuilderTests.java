@@ -43,6 +43,16 @@ public class ProblemBuilderTests {
   }
 
   @Test
+  void nullTypeFail() {
+    try {
+      Problem.builder().type((URI) null);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertEquals("type for Problem may never be null", e.getMessage());
+    }
+  }
+
+  @Test
   public void typePathAppending() {
     Problem problem = Problem.builder().type("test").build();
     assertEquals(problem.getType().toString(), Problem.DEFAULT_TYPE.toString() + "/test");
