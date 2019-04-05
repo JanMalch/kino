@@ -35,10 +35,10 @@ public class JwtTokenFactory implements TokenFactory {
 
   @Override
   public Token refresh(Token token) throws MalformedClaimException, InvalidJwtException {
-    Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token.getTokenString());
+    validateToken(token.getTokenString());
 
     JwtConsumer consumer = new JwtConsumerBuilder().setSkipSignatureVerification().build();
-    JwtClaims claims = consumer.processToClaims(token.getSubject());
+    JwtClaims claims = consumer.processToClaims(token.getTokenString());
     var subject = claims.getSubject();
 
     log.info(subject + " has refreshed his Token");
@@ -49,17 +49,29 @@ public class JwtTokenFactory implements TokenFactory {
   @Override
   public Token parse(String token)
       throws InvalidJwtException, MalformedClaimException, SignatureException {
+    validateToken(token);
+    JwtConsumer consumer = new JwtConsumerBuilder().setSkipSignatureVerification().build();
+    JwtClaims claims = consumer.processToClaims(token);
+    var subject = claims.getSubject();
+    var expiration = new Date(claims.getExpirationTime().getValueInMillis());
+    return new JwtToken(token, subject, expiration);
+  }
+
+  /**
+   * Checks if the JWT token has our signature and is not malformed. The method will not throw an
+   * exception if the token is expired.
+   *
+   * @param token the token string
+   * @throws MalformedJwtException
+   * @throws SignatureException
+   */
+  void validateToken(String token) throws MalformedJwtException, SignatureException {
     try {
       Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token); // signatur prüfen
     } catch (ExpiredJwtException e) {
       // token is still valid, just expired
       // this can be expected
     }
-    JwtConsumer consumer = new JwtConsumerBuilder().setSkipSignatureVerification().build();
-    JwtClaims claims = consumer.processToClaims(token);
-    var subject = claims.getSubject();
-    var expiration = new Date(claims.getExpirationTime().getValueInMillis());
-    return new JwtToken(token, subject, expiration);
   }
 
   @Override
