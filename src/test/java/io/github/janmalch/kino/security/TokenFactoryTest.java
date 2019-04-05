@@ -8,48 +8,45 @@ import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.junit.jupiter.api.Test;
 
-class TokenTest {
+class TokenFactoryTest {
 
   @Test
   void createToken() {
-    Token tokenClass = new Token();
+    TokenFactory tokenFactoryClass = new TokenFactory();
     Account TestUser = new Account();
     TestUser.setEmail("Test1@user.de");
-    String token = tokenClass.createToken(TestUser);
-    assertNotNull(token);
+    Token token = tokenFactoryClass.createToken(TestUser);
+    assertNotNull(token.getToken());
   }
 
   @Test
   void getAccountCredential() throws MalformedClaimException, InvalidJwtException {
     String expectedRole = "NoRole";
-    Token tokenClass = new Token();
+    TokenFactory tokenFactoryClass = new TokenFactory();
     Account TestUser = new Account();
     TestUser.setEmail("Test2@user.de");
     TestUser.setRole(expectedRole);
-    String token = tokenClass.createToken(TestUser);
-    String role = tokenClass.getAccountRole(token);
+    Token token = tokenFactoryClass.createToken(TestUser);
+    String role = tokenFactoryClass.getAccountRole(token);
     assertEquals(role, expectedRole);
   }
 
   @Test
   void validateCorrectToken() {
-    Token tokenClass = new Token();
+    TokenFactory tokenFactoryClass = new TokenFactory();
     Account TestUser = new Account();
     TestUser.setEmail("Test3@user.de");
-    String token = tokenClass.createToken(TestUser);
-    assertTrue(tokenClass.validateToken(token));
+    Token token = tokenFactoryClass.createToken(TestUser);
+    assertTrue(tokenFactoryClass.validateToken(token));
   }
 
   @Test
   void validateIncorrectToken() {
-    Token tokenClass = new Token();
+    TokenFactory tokenFactoryClass = new TokenFactory();
     // random String
-    String token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFbWFpbEB1c2VyLmRlIiwicm9sZSI6IkFkbWlzc3NzbiIsImV4cCI6MTU1MTQ5ODEzNH0.r3kKffGzcEFxsGUYIbrEP0w2S7IgyMPmVoJDyM6l2js";
-    assertThrows(
-        SignatureException.class,
-        () -> {
-          tokenClass.validateToken(token);
-        });
+    Token token = new Token();
+    token.setToken(
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFbWFpbEB1c2VyLmRlIiwicm9sZSI6IkFkbWlzc3NzbiIsImV4cCI6MTU1MTQ5ODEzNH0.r3kKffGzcEFxsGUYIbrEP0w2S7IgyMPmVoJDyM6l2js");
+    assertThrows(SignatureException.class, () -> tokenFactoryClass.validateToken(token));
   }
 }
