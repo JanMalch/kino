@@ -18,7 +18,7 @@ class Token {
 
   private static final String ROLE_KEY = "sub";
   private static final String secretKey = "jAzbOw76gakypHAYOsn5";
-  private long tokenDuration = TimeUnit.HOURS.toMillis(10); // duration = 10h
+  private long tokenDuration = TimeUnit.HOURS.toMillis(1); // duration = 1h
 
   String createToken(Account account) {
     long now = (new Date()).getTime();
@@ -51,7 +51,7 @@ class Token {
       Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
       return true;
     } catch (ExpiredJwtException e) {
-      log.info("Authentikation Token has expired");
+      log.info("Authentication Token has expired");
       return false;
     }
   }
