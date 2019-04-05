@@ -75,7 +75,7 @@ public class SignUpControl implements Control<Object> {
 
   public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
-    public static final SimpleDateFormat BIRTHDAY_FORMAT = new SimpleDateFormat("YYYY-MM-DD");
+    private final SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public Account mapToEntity(SignUpDto signUpDto) {
@@ -84,7 +84,7 @@ public class SignUpControl implements Control<Object> {
       account.setFirstName(signUpDto.getFirstName());
       account.setLastName(signUpDto.getLastName());
       try {
-        account.setBirthday(BIRTHDAY_FORMAT.parse(signUpDto.getBirthday()));
+        account.setBirthday(birthdayFormat.parse(signUpDto.getBirthday()));
       } catch (ParseException e) {
         // rethrow as unchecked as this should be handled by the validator
         throw new RuntimeException(e);

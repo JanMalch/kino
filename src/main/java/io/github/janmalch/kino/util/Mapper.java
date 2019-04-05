@@ -1,11 +1,17 @@
 package io.github.janmalch.kino.util;
 
-public interface Mapper<ENTITY, DOMAIN> {
-  default DOMAIN mapFromEntity(ENTITY entity) {
+/**
+ * Generic Mapper interface to map between entity and domain models
+ *
+ * @param <E> the Entity model
+ * @param <D> the Domain model
+ */
+public interface Mapper<E, D> {
+  default D mapFromEntity(E entity) {
     throw new UnsupportedOperationException();
   }
 
-  default ENTITY mapToEntity(DOMAIN domain) {
+  default E mapToEntity(D domain) {
     throw new UnsupportedOperationException();
   }
 }
