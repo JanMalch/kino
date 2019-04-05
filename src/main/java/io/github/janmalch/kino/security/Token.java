@@ -1,27 +1,12 @@
 package io.github.janmalch.kino.security;
 
-import java.util.concurrent.TimeUnit;
+import org.jose4j.jwt.MalformedClaimException;
+import org.jose4j.jwt.consumer.InvalidJwtException;
 
-public class Token {
+public interface Token {
+  String getTokenString();
 
-  private String token;
-  private long tokenDuration = TimeUnit.HOURS.toMillis(1); // duration = 1h
+  String getSubject() throws InvalidJwtException, MalformedClaimException;
 
-  Token() {}
-
-  String getToken() {
-    return token;
-  }
-
-  void setToken(String token) {
-    this.token = token;
-  }
-
-  public long getTokenDuration() {
-    return tokenDuration;
-  }
-
-  public void setTokenDuration(long tokenDuration) {
-    this.tokenDuration = tokenDuration;
-  }
+  boolean isExpired();
 }
