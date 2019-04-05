@@ -47,4 +47,11 @@ class JwtTokenFactoryTest {
           factory.parse(token.getTokenString());
         });
   }
+
+  @Test
+  void invalidate() {
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Token token = factory.invalidate();
+    assertTrue(token.isExpired());
+  }
 }

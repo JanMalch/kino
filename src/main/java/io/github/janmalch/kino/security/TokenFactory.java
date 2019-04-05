@@ -11,4 +11,6 @@ public interface TokenFactory {
   Token refresh(Token token) throws MalformedClaimException, InvalidJwtException;
 
   void setTokenDuration(long duration);
+
+  Token invalidate();
 }

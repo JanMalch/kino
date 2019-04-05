@@ -75,6 +75,12 @@ public class JwtTokenFactory implements TokenFactory {
   }
 
   @Override
+  public Token invalidate() {
+    var expiration = new Date(System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(1));
+    return new JwtToken("", "", expiration);
+  }
+
+  @Override
   public void setTokenDuration(long duration) {
     this.tokenDuration = duration;
   }
