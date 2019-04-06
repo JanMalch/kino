@@ -14,4 +14,13 @@ class RoleTest {
     List<Role> actual = Role.MODERATOR.getAllChildren();
     assertEquals(actual, expectedList);
   }
+
+  @Test
+  void getAllChildren2() {
+    List<Role> expectedList = new ArrayList<>();
+    expectedList.add(Role.MODERATOR);
+    expectedList.add(Role.ADMIN);
+    List<Role> actual = Role.CUSTOMER.getAllChildren();
+    assertEquals(actual, expectedList);
+  }
 }
