@@ -24,6 +24,8 @@ public class Account {
 
   private String password;
 
+  private Role role;
+
   public long getId() {
     return id;
   }
