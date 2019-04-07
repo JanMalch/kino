@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Role {
-  GUEST(null),
-  CUSTOMER(GUEST),
-  MODERATOR(CUSTOMER),
-  ADMIN(MODERATOR);
+  ADMIN(null),
+  MODERATOR(ADMIN),
+  CUSTOMER(MODERATOR),
+  GUEST(CUSTOMER);
 
   private Role parent;
   private List<Role> children = new ArrayList<>();
@@ -23,7 +23,7 @@ public enum Role {
     this.children.add(child);
   }
 
-  public List<Role> getAllChildren() {
+  List<Role> getAllChildren() {
     List<Role> list = new ArrayList<>();
     addChildren(this, list);
     return list;
@@ -34,5 +34,11 @@ public enum Role {
     for (Role child : root.children) {
       addChildren(child, list);
     }
+  }
+
+  public boolean hasMinRole(Role role) {
+    List<Role> list = this.getAllChildren();
+    list.add(this);
+    return list.contains(role);
   }
 }
