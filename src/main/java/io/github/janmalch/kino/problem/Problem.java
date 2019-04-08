@@ -42,6 +42,10 @@ public interface Problem {
     return new ProblemBuilder();
   }
 
+  static ProblemBuilder builder(Response.StatusType status) {
+    return Problem.builder().status(status).title(status.getReasonPhrase());
+  }
+
   static Problem valueOf(Response.StatusType status) {
     return Problem.valueOf(status, null, null);
   }
