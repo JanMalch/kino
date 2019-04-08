@@ -49,4 +49,15 @@ class SignUpDtoValidatorTest {
     assertTrue(result.isPresent());
     assertEquals("The given birthday '1990:01-01' has an invalid format", result.get().getDetail());
   }
+
+  @Test
+  void validateDataNotNull() {
+    var validator = new SignUpDtoValidator();
+    try {
+      validator.validate(null);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertEquals("SignUp data is null", e.getMessage());
+    }
+  }
 }

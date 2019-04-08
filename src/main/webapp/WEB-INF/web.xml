@@ -9,6 +9,19 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>io.github.janmalch.kino.api</param-value>
         </init-param>
+        <!-- Application -->
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>io.github.janmalch.kino.api.WebApplication</param-value>
+        </init-param>
+        <!-- Filters -->
+        <init-param>
+            <param-name>javax.ws.rs.container.ContainerRequestFilter</param-name>
+            <param-value>
+<!--                io.github.janmalch.kino.security.AuthorizationFilter-->
+                org.glassfish.jersey.filter.LoggingFilter;
+            </param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>

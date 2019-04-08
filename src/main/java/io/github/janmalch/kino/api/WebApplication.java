@@ -2,14 +2,13 @@ package io.github.janmalch.kino.api;
 
 import io.github.janmalch.kino.api.boundary.PingResource;
 import io.github.janmalch.kino.api.boundary.UserResource;
+import io.github.janmalch.kino.security.AuthorizationFilter;
 import io.swagger.jaxrs.config.BeanConfig;
-import java.util.HashSet;
-import java.util.Set;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("/")
-public class WebApplication extends Application {
+public class WebApplication extends ResourceConfig {
 
   public WebApplication() {
     BeanConfig beanConfig = new BeanConfig();
@@ -20,18 +19,12 @@ public class WebApplication extends Application {
     beanConfig.setBasePath("/kino/api");
     beanConfig.setResourcePackage("io.github.janmalch.kino.api.boundary");
     beanConfig.setScan(true);
-  }
 
-  @Override
-  public Set<Class<?>> getClasses() {
-    Set<Class<?>> resources = new HashSet<>();
+    register(PingResource.class);
+    register(UserResource.class);
+    register(AuthorizationFilter.class);
 
-    resources.add(PingResource.class);
-    resources.add(UserResource.class);
-
-    resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
-    resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
-
-    return resources;
+    register(io.swagger.jaxrs.listing.ApiListingResource.class);
+    register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
   }
 }
