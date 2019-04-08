@@ -24,8 +24,7 @@ public class Account {
 
   private String password;
 
-  // TODO remove
-  private String role;
+  private Role role;
 
   public long getId() {
     return id;
@@ -83,11 +82,11 @@ public class Account {
     this.password = password;
   }
 
-  public String getRole() {
+  public Role getRole() {
     return role;
   }
 
-  public void setRole(String role) {
+  public void setRole(Role role) {
     this.role = role;
   }
 }

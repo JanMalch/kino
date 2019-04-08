@@ -5,21 +5,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public interface Repository<DOMAIN> {
+/**
+ * Generic Repository interface to define common CRUD methods
+ *
+ * @param <D> the Domain model
+ */
+public interface Repository<D> {
 
-  default void add(DOMAIN item) {
+  default void add(D item) {
     add(Collections.singletonList(item));
   }
 
-  void add(Iterable<DOMAIN> items);
+  void add(Iterable<D> items);
 
-  void update(DOMAIN item);
+  void update(D item);
 
   /**
    * @param item the entity to delete
    * @return the number of deleted entities, always 1
    */
-  int remove(DOMAIN item);
+  int remove(D item);
 
   /**
    * @param specification the specification to delete by
@@ -27,9 +32,9 @@ public interface Repository<DOMAIN> {
    */
   int remove(Specification specification);
 
-  List<DOMAIN> query(Specification<DOMAIN> specification);
+  List<D> query(Specification<D> specification);
 
-  default Optional<DOMAIN> queryFirst(Specification<DOMAIN> specification) {
+  default Optional<D> queryFirst(Specification<D> specification) {
     var result = this.query(specification);
     if (result != null && !result.isEmpty()) {
       return Optional.of(result.get(0));
