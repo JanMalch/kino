@@ -85,7 +85,6 @@ public class SignUpControl implements Control<Object> {
       account.setEmail(signUpDto.getEmail());
       account.setFirstName(signUpDto.getFirstName());
       account.setLastName(signUpDto.getLastName());
-      account.setHashedPassword(signUpDto.getPassword());
       account.setSalt(pm.generateSalt());
       account.setHashedPassword(pm.hashPassword(signUpDto.getPassword(), account.getSalt()));
       try {
