@@ -5,6 +5,7 @@ import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.UserRepository;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenFactory;
+import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ public class LogInControl implements Control<Token> {
   private Logger log = LoggerFactory.getLogger(LogInControl.class);
   private final UserRepository repository = new UserRepository();
   private final LoginDto data;
+  private final PasswordManager pm = new PasswordManager();
 
   private final Problem invalidLogin =
       Problem.builder()
@@ -40,8 +42,8 @@ public class LogInControl implements Control<Token> {
     }
 
     var userEntity = referredUser.get();
-    // TODO: change when hashing & salting is implemented
-    if (!doPasswordsMatch(userEntity.getPassword(), /*userEntity.getSalt()*/ null)) {
+
+    if (!doPasswordsMatch(userEntity.getHashedPassword(), userEntity.getSalt())) {
       return result.failure(invalidLogin);
     }
 
@@ -50,8 +52,7 @@ public class LogInControl implements Control<Token> {
     return result.success(token);
   }
 
-  // TODO: change when hashing & salting is implemented
-  boolean doPasswordsMatch(String hash, String salt) {
-    return data.getPassword().equals(hash);
+  boolean doPasswordsMatch(String hash, byte[] salt) {
+    return pm.isSamePassword(data.getPassword(), hash, salt);
   }
 }
