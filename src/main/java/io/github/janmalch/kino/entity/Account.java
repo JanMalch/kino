@@ -26,6 +26,10 @@ public class Account {
 
   private Role role;
 
+  private byte[] salt;
+
+  private String hashedPassword;
+
   public long getId() {
     return id;
   }
@@ -88,5 +92,21 @@ public class Account {
 
   public void setRole(Role role) {
     this.role = role;
+  }
+
+  public byte[] getSalt() {
+    return salt;
+  }
+
+  public void setSalt(byte[] salt) {
+    this.salt = salt;
+  }
+
+  public String getHashedPassword() {
+    return hashedPassword;
+  }
+
+  public void setHashedPassword(String hashedPassword) {
+    this.hashedPassword = hashedPassword;
   }
 }
