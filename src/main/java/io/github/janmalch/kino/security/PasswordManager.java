@@ -28,8 +28,8 @@ public class PasswordManager {
     byte[] bytes = md.digest(clearPassword.getBytes(StandardCharsets.UTF_8));
     StringBuilder sb = new StringBuilder();
     // https://stackoverflow.com/questions/36491665/byte-to-integer-and-then-to-string-conversion-in-java
-    for (int i = 0; i < bytes.length; i++) {
-      sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+    for (byte aByte : bytes) {
+      sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
     }
     generatedHashedPassword = sb.toString();
 
