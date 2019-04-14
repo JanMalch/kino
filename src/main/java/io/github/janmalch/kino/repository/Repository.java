@@ -4,35 +4,60 @@ import io.github.janmalch.kino.repository.specification.Specification;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  * Generic Repository interface to define common CRUD methods
  *
  * @param <D> the Domain model
  */
-public interface Repository<D> {
+public interface Repository<D> extends TransactionProvider {
 
   default void add(D item) {
     add(Collections.singletonList(item));
   }
 
-  void add(Iterable<D> items);
+  default void add(Iterable<D> items) {
+    var em = getEntityManager();
+    inTransaction(() -> items.forEach(em::persist));
+  }
 
-  void update(D item);
+  default void update(D item) {
+    var em = getEntityManager();
+    inTransaction(() -> em.merge(item));
+  }
 
   /**
    * @param item the entity to delete
    * @return the number of deleted entities, always 1
    */
-  int remove(D item);
+  default int remove(D item) {
+    var em = getEntityManager();
+    inTransaction(() -> em.remove(item));
+    return 1;
+  }
 
   /**
    * @param specification the specification to delete by
    * @return the number of deleted entities
    */
-  int remove(Specification specification);
+  default int remove(Specification specification) {
+    return inTransaction(
+        () -> {
+          Query query = specification.toQuery();
+          return query.executeUpdate();
+        });
+  }
 
-  List<D> query(Specification<D> specification);
+  default D find(long id) {
+    throw new UnsupportedOperationException(
+        "Finding entities by primary key is not supported for this Repository");
+  }
+
+  default List<D> query(Specification<D> specification) {
+    var query = specification.toQuery();
+    return query.getResultList();
+  }
 
   default Optional<D> queryFirst(Specification<D> specification) {
     var result = this.query(specification);
