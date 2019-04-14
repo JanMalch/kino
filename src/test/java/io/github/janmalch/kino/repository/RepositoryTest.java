@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.repository.specification.Specification;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
 
@@ -56,6 +57,11 @@ class RepositoryTest {
     public List<Object> query(Specification<Object> specification) {
       // dumb way to have both branches
       return specification == null ? List.of() : List.of(new Object());
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+      return null;
     }
   }
 
