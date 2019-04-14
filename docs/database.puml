@@ -1,0 +1,97 @@
+@startuml
+' uncomment the line below if you're using computer with a retina display
+' skinparam dpi 300
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+' we use bold for primary key
+' green color for unique
+' and underscore for not_null
+!define primary_key(x) <b>x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+' other tags available:
+' <i></i>
+' <back:COLOR></color>, where color is a color name or html color code
+' (#FFAACC)
+' see: http://plantuml.com/classes.html#More
+hide methods
+hide stereotypes
+
+' entities
+
+Table(account, "Account") {
+primary_key(id) BIGINT
+not_null(unique(email)) VARCHAR[255]
+not_null(hashedPassword) VARCHAR[255]
+not_null(firstName) VARCHAR[255]
+not_null(lastName) VARCHAR[255]
+not_null(birthday) DATETIME
+not_null(role) INTEGER
+not_null(salt) TINYBLOB
+}
+
+Table(movie, "Movie") {
+primary_key(id) BIGINT
+not_null(name) VARCHAR[255]
+not_null(duration) FLOAT
+not_null(startDate) DATETIME
+not_null(endDate) DATETIME
+not_null(ageRating) INTEGER
+not_null(PRICECATEGORY_ID) BIGINT
+}
+
+Table(reservation, "Reservation\n(Verknüpfung zwischen User und Aufführung)") {
+primary_key(id) BIGINT
+not_null(reservationDate) DATETIME
+not_null(ACCOUNT_ID) BIGINT
+not_null(PRESENTATION_ID) BIGINT
+}
+
+Table(presentation, "Presentation") {
+primary_key(id) BIGINT
+not_null(date) DATETIME
+not_null(MOVIE_ID) BIGINT
+not_null(CINEMAHALL_ID) BIGINT
+}
+
+Table(cinemaHall, "Cinema Hall") {
+primary_key(id) BIGINT
+not_null(name) VARCHAR[255]
+not_null(MOVIE_ID) BIGINT
+not_null(CINEMAHALL_ID) BIGINT
+}
+
+Table(priceCategory, "Price Category") {
+primary_key(id) BIGINT
+not_null(name) VARCHAR[255]
+not_null(regularPrice) FLOAT
+not_null(regularPrice) FLOAT
+}
+
+Table(seat, "Seat") {
+primary_key(id) BIGINT
+not_null(row) VARCHAR[255]
+not_null(seatNumber) INTEGER
+}
+
+Table(reservationWithSeat, "Reservation with Sear") {
+primary_key(id) BIGINT
+not_null(RESERVATION_ID) BIGINT
+not_null(SEAT_ID) BIGINT
+}
+
+' relationships
+' one-to-one relationship
+' user -- user_profile : "A user only \nhas one profile"
+' one to may relationship
+account "1" --> "0..N" reservation : Ein User hat mehrere Reservierungen
+movie "1" --> "0..N" presentation : Ein Film hat mehrere Aufführungen
+presentation "1" --> "0..N" reservation : Eine Aufführung hat mehrere Reservierungen
+cinemaHall "1" --> "0..N" presentation : Ein Saal hat mehrere Aufführungen
+cinemaHall "1" --> "1..N" seat : Ein Saal hat mehrere Sitze
+priceCategory "1" --> "0..N"  movie : Mehrere Filme gehören zu einer Preiskategorie
+seat --> reservationWithSeat : Ein Sitz gehört zu mehreren Reservierungen
+reservation "1" --> "1..N" reservationWithSeat : Eine Reservierung besteht aus mehreren reservierten Sitzen
+' many to many relationship
+' user "1" --> "*" user_group : "A user may be \nin many groups"
+' group "1" --> "0..N" user_group : "A group may \ncontain many users"
+@enduml
