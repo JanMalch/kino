@@ -3,13 +3,13 @@ package io.github.janmalch.kino.api.boundary;
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.GetMovieControl;
 import io.github.janmalch.kino.control.NewMovieControl;
+import io.github.janmalch.kino.control.RemoveMovieControl;
+import io.github.janmalch.kino.entity.Movie;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
@@ -27,9 +27,27 @@ public class MovieResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns the ID for the newly created movie", response = Long.class)
-  public Response logIn(MovieDto movieDto) {
+  public Response newMovie(MovieDto movieDto) {
     log.info(movieDto.toString());
     Control<Long> control = new NewMovieControl(movieDto);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("m/{id}")
+  @DELETE
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Deletes the movie for the given ID", response = Object.class)
+  public Response deleteMovie(@PathParam("id") long id) {
+    var control = new RemoveMovieControl(id);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("m/{id}")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Retrieves the movie for the given ID", response = Movie.class)
+  public Response getMovie(@PathParam("id") long id) {
+    var control = new GetMovieControl(id);
     return control.execute(new ResponseResultBuilder<>());
   }
 }
