@@ -7,6 +7,7 @@ import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.UserRepository;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
+import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,6 +77,7 @@ public class SignUpControl implements Control<Object> {
   public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
     private final SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final PasswordManager pm = new PasswordManager();
 
     @Override
     public Account mapToEntity(SignUpDto signUpDto) {
@@ -83,8 +85,8 @@ public class SignUpControl implements Control<Object> {
       account.setEmail(signUpDto.getEmail());
       account.setFirstName(signUpDto.getFirstName());
       account.setLastName(signUpDto.getLastName());
-      // TODO: fix password setter
-      account.setPassword(signUpDto.getPassword());
+      account.setSalt(pm.generateSalt());
+      account.setHashedPassword(pm.hashPassword(signUpDto.getPassword(), account.getSalt()));
       try {
         account.setBirthday(birthdayFormat.parse(signUpDto.getBirthday()));
       } catch (ParseException e) {

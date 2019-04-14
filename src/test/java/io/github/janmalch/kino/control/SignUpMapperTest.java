@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.security.PasswordManager;
 import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,7 @@ public class SignUpMapperTest {
   @Test
   public void mapToEntity() {
     var signUpDto = new SignUpDto();
+    var pm = new PasswordManager();
     signUpDto.setEmail("test@example.com");
     signUpDto.setFirstName("Test");
     signUpDto.setLastName("Account");
@@ -24,7 +26,7 @@ public class SignUpMapperTest {
     assertEquals("test@example.com", entity.getEmail());
     assertEquals("Test", entity.getFirstName());
     assertEquals("Account", entity.getLastName());
-    assertEquals("Start123", entity.getPassword());
+    assertEquals(pm.hashPassword("Start123", entity.getSalt()), entity.getHashedPassword());
     // TODO: fix SimpleDateFormat in mapper
     // var formatter = new SimpleDateFormat("yyyy-MM-dd");
     // assertEquals("1990-01-01", formatter.format(entity.getBirthday()));
