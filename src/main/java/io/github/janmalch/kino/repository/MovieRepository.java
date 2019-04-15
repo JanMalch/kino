@@ -1,19 +1,18 @@
 package io.github.janmalch.kino.repository;
 
-import io.github.janmalch.kino.entity.Account;
+import io.github.janmalch.kino.entity.Movie;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-// TODO: currently uses Entity model
-public class UserRepository implements Repository<Account> {
+public class MovieRepository implements Repository<Movie> {
 
   private EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
   private EntityManager em = factory.createEntityManager();
 
   @Override
-  public Account find(long id) {
-    return em.find(Account.class, id);
+  public Movie find(long id) {
+    return em.find(Movie.class, id);
   }
 
   @Override
