@@ -10,13 +10,13 @@ class MovieResourceTest {
 
   @Test
   void newMovie() {
-    Long movieId = createMovie();
+    Long movieId = persistNewMovie();
     assertTrue(movieId > 0);
   }
 
   @Test
   void deleteMovie() {
-    Long movieId = createMovie();
+    Long movieId = persistNewMovie();
 
     var resource = new MovieResource();
     var response = resource.deleteMovie(movieId);
@@ -25,7 +25,7 @@ class MovieResourceTest {
 
   @Test
   void getMovie() {
-    Long movieId = createMovie();
+    Long movieId = persistNewMovie();
 
     var resource = new MovieResource();
     var response = resource.getMovie(movieId);
@@ -35,7 +35,22 @@ class MovieResourceTest {
     assertEquals("Captain Marvel", expectedEntity.getName());
   }
 
-  private Long createMovie() {
+  @Test
+  void updateMovie() {
+    Long movieId = persistNewMovie();
+    var resource = new MovieResource();
+
+    var update = new MovieDto();
+    update.setName("Wonder Woman");
+    var response = resource.updateMovie(update, movieId);
+    assertEquals(200, response.getStatus());
+
+    // check if update has successfully been merged
+    var fetched = (Movie) resource.getMovie(movieId).getEntity();
+    assertEquals("Wonder Woman", fetched.getName());
+  }
+
+  private Long persistNewMovie() {
     var resource = new MovieResource();
     var dto = new MovieDto();
     dto.setName("Captain Marvel");
