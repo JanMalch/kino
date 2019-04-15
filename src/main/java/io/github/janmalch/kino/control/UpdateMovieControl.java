@@ -28,8 +28,7 @@ public class UpdateMovieControl implements Control<Object> {
     }
 
     var mapper = new UpdateMovieMapper();
-    var entity = mapper.mapToEntity(movieDto);
-    entity.setId(movieId);
+    var entity = mapper.updateEntity(movieDto, refMovie);
     repository.update(entity);
     return result.success(new Object());
   }
@@ -38,36 +37,34 @@ public class UpdateMovieControl implements Control<Object> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    @Override
-    public Movie mapToEntity(MovieDto domain) {
-      var movie = new Movie();
-      if (domain.getName() != null) {
-        movie.setName(domain.getName());
+    public Movie updateEntity(MovieDto partialUpdate, Movie existingEntity) {
+      if (partialUpdate.getName() != null) {
+        existingEntity.setName(partialUpdate.getName());
       }
-      if (domain.getAgeRating() != null) {
-        movie.setAgeRating(domain.getAgeRating());
+      if (partialUpdate.getAgeRating() != null) {
+        existingEntity.setAgeRating(partialUpdate.getAgeRating());
       }
-      if (domain.getDuration() != null) {
-        movie.setDuration(domain.getDuration());
+      if (partialUpdate.getDuration() != null) {
+        existingEntity.setDuration(partialUpdate.getDuration());
       }
-      if (domain.getStartDate() != null) {
+      if (partialUpdate.getStartDate() != null) {
         try {
-          movie.setStartDate(dayFormat.parse(domain.getStartDate()));
+          existingEntity.setStartDate(dayFormat.parse(partialUpdate.getStartDate()));
         } catch (ParseException e) {
           // rethrow as unchecked as this should be handled by the validator
           throw new RuntimeException(e);
         }
       }
-      if (domain.getEndDate() != null) {
+      if (partialUpdate.getEndDate() != null) {
         try {
-          movie.setEndDate(dayFormat.parse(domain.getEndDate()));
+          existingEntity.setEndDate(dayFormat.parse(partialUpdate.getEndDate()));
         } catch (ParseException e) {
           // rethrow as unchecked as this should be handled by the validator
           throw new RuntimeException(e);
         }
       }
 
-      return movie;
+      return existingEntity;
     }
   }
 }
