@@ -11,6 +11,10 @@ class NewMovieMapperTest {
   @Test
   void mapToEntity() {
     var dto = new MovieDto();
+    dto.setName("Captain Marvel");
+    dto.setPriceCategory("1");
+    dto.setAgeRating(12);
+    dto.setDuration(2.5F);
     dto.setStartDate("20g20-01-01");
     dto.setEndDate("20g20-01-02");
 
