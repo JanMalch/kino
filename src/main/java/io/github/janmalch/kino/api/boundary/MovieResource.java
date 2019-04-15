@@ -7,8 +7,10 @@ import io.github.janmalch.kino.control.GetMovieControl;
 import io.github.janmalch.kino.control.NewMovieControl;
 import io.github.janmalch.kino.control.RemoveMovieControl;
 import io.github.janmalch.kino.entity.Movie;
+import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,6 +26,8 @@ public class MovieResource {
 
   @Path("new")
   @POST
+  @Secured
+  @RolesAllowed("MODERATOR")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns the ID for the newly created movie", response = Long.class)
@@ -35,6 +39,8 @@ public class MovieResource {
 
   @Path("m/{id}")
   @DELETE
+  @Secured
+  @RolesAllowed("MODERATOR")
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Deletes the movie for the given ID", response = Object.class)
   public Response deleteMovie(@PathParam("id") long id) {
