@@ -48,6 +48,7 @@ class MovieResourceTest {
     // check if update has successfully been merged
     var fetched = (Movie) resource.getMovie(movieId).getEntity();
     assertEquals("Wonder Woman", fetched.getName());
+    assertNotNull(fetched.getStartDate(), "Updating should not overwrite with null");
   }
 
   private Long persistNewMovie() {
