@@ -2,7 +2,6 @@ package io.github.janmalch.kino.control;
 
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.MovieRepository;
-import io.github.janmalch.kino.util.Contract;
 import javax.ws.rs.core.Response;
 
 public class RemoveMovieControl implements Control<Void> {
@@ -28,8 +27,7 @@ public class RemoveMovieControl implements Control<Void> {
               .build());
     }
 
-    var affected = repository.remove(movie);
-    Contract.affirm(affected == 1, "Delete action didn't remove one movie");
+    repository.remove(movie);
     return result.success(null);
   }
 }
