@@ -2,10 +2,7 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.control.Control;
-import io.github.janmalch.kino.control.GetMovieControl;
-import io.github.janmalch.kino.control.NewMovieControl;
-import io.github.janmalch.kino.control.RemoveMovieControl;
+import io.github.janmalch.kino.control.*;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
@@ -54,6 +51,18 @@ public class MovieResource {
   @ApiOperation(value = "Retrieves the movie for the given ID", response = Movie.class)
   public Response getMovie(@PathParam("id") long id) {
     var control = new GetMovieControl(id);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("m/{id}")
+  @POST
+  @Secured
+  @RolesAllowed("MODERATOR")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Partially updates the movie for the given ID", response = Object.class)
+  public Response updateMovie(MovieDto movieDto, @PathParam("id") long id) {
+    var control = new UpdateMovieControl(movieDto, id);
     return control.execute(new ResponseResultBuilder<>());
   }
 }

@@ -6,8 +6,8 @@ public class MovieDto {
   private String priceCategory;
   private String startDate;
   private String endDate;
-  private float duration;
-  private int ageRating;
+  private Float duration;
+  private Integer ageRating;
 
   public String getName() {
     return name;
@@ -41,19 +41,19 @@ public class MovieDto {
     this.endDate = endDate;
   }
 
-  public float getDuration() {
+  public Float getDuration() {
     return duration;
   }
 
-  public void setDuration(float duration) {
+  public void setDuration(Float duration) {
     this.duration = duration;
   }
 
-  public int getAgeRating() {
+  public Integer getAgeRating() {
     return ageRating;
   }
 
-  public void setAgeRating(int ageRating) {
+  public void setAgeRating(Integer ageRating) {
     this.ageRating = ageRating;
   }
 
