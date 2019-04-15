@@ -22,7 +22,11 @@ public class Account {
 
   private Date birthday;
 
-  private String password;
+  private Role role;
+
+  private byte[] salt;
+
+  private String hashedPassword;
 
   public long getId() {
     return id;
@@ -72,11 +76,27 @@ public class Account {
     this.reservations = reservations;
   }
 
-  public String getPassword() {
-    return password;
+  public Role getRole() {
+    return role;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  public byte[] getSalt() {
+    return salt;
+  }
+
+  public void setSalt(byte[] salt) {
+    this.salt = salt;
+  }
+
+  public String getHashedPassword() {
+    return hashedPassword;
+  }
+
+  public void setHashedPassword(String hashedPassword) {
+    this.hashedPassword = hashedPassword;
   }
 }
