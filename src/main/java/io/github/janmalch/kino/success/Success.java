@@ -9,7 +9,6 @@ public interface Success<T> {
     return null;
   }
 
-  @Nullable
   default Response.StatusType getStatus() {
     return Response.Status.OK;
   }
