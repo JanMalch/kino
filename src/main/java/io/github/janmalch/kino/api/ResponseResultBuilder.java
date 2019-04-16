@@ -31,9 +31,10 @@ public class ResponseResultBuilder<P> implements ResultBuilder<Response, P> {
       map.put("instance", problem.getInstance());
     }
     map.putAll(problem.getParameters());
-    return Response.status(problem.getStatus())
-        .type("application/problem+json")
-        .entity(map)
-        .build();
+
+    var responseStatus =
+        problem.getStatus() != null ? problem.getStatus() : Response.Status.INTERNAL_SERVER_ERROR;
+
+    return Response.status(responseStatus).type("application/problem+json").entity(map).build();
   }
 }
