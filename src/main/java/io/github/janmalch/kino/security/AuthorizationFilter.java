@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-// @PreMatching
 @Secured
 public class AuthorizationFilter implements ContainerRequestFilter {
 
@@ -37,16 +36,10 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     }
 
     String tokenString = authHeader.substring(7);
-
     Token token = parseToken(tokenString);
     // abort if token cannot be parsed
     if (token == null) {
       log.info("Invalid Token: " + tokenString);
-      requestContext.abortWith(responseBuilder.failure(unAuthProblem));
-      return;
-    }
-
-    if (token.isExpired()) {
       requestContext.abortWith(responseBuilder.failure(unAuthProblem));
       return;
     }
