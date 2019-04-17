@@ -12,7 +12,15 @@ class SuccessTest {
     var success = new SuccessTest.TestSuccess();
     assertNull(success.getMessage());
     assertEquals(Response.Status.OK, success.getStatus());
+    assertNull(success.getInstance());
     assertNull(success.getData());
+  }
+
+  @Test
+  void valueOf() {
+    var dataString = "Added a movie";
+    var success = Success.valueOf(dataString);
+    assertEquals(dataString, success.getData());
   }
 
   private static class TestSuccess implements Success {}
