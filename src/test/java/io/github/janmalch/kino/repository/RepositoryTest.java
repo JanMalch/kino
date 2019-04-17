@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import io.github.janmalch.kino.repository.specification.Specification;
 import java.util.List;
@@ -31,6 +32,17 @@ class RepositoryTest {
     assertTrue(result.isPresent());
   }
 
+  @Test
+  void find() {
+    var repository = new TestRepository();
+    try {
+      repository.find(1);
+      fail("default implementation should throw UnsupportedOperationException");
+    } catch (UnsupportedOperationException e) {
+      // this Exception is expected
+    }
+  }
+
   private static class TestRepository implements Repository<Object> {
 
     boolean hasAdded = false;
@@ -38,19 +50,6 @@ class RepositoryTest {
     @Override
     public void add(Iterable<Object> items) {
       hasAdded = true;
-    }
-
-    @Override
-    public void update(Object item) {}
-
-    @Override
-    public int remove(Object item) {
-      return 0;
-    }
-
-    @Override
-    public int remove(Specification specification) {
-      return 0;
     }
 
     @Override

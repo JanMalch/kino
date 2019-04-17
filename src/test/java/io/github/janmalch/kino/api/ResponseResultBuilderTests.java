@@ -45,4 +45,11 @@ class ResponseResultBuilderTests {
     assertEquals(500, response.getStatus());
     assertTrue(response.getEntity().toString().contains("type"));
   }
+
+  @Test
+  void failureMinimalResponse() {
+    Problem problem = Problem.builder().build();
+    Response response = builder.failure(problem);
+    assertTrue(response.getEntity().toString().contains("type"));
+  }
 }

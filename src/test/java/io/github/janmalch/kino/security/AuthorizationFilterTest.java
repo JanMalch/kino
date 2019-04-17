@@ -1,10 +1,14 @@
 package io.github.janmalch.kino.security;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import io.github.janmalch.kino.entity.Account;
+import io.github.janmalch.kino.repository.UserRepository;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.*;
 import org.junit.jupiter.api.Test;
@@ -41,13 +45,53 @@ class AuthorizationFilterTest {
   void filterValidToken() {
     var filter = new AuthorizationFilter();
     var context = new TestContainerRequestContext();
-    context.authHeader = "Bearer aa.bbf";
+
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Account acc = new Account();
+    acc.setEmail("TestUser2@mail.de");
+    Token token = factory.generateToken(acc.getEmail());
+
+    context.authHeader = "Bearer " + token.getTokenString();
     filter.filter(context);
     assertEquals(401, context.abortedWithStatus);
   }
 
+  @Test
+  void filterExpiredToken() {
+    var filter = new AuthorizationFilter();
+    var context = new TestContainerRequestContext();
+
+    JwtTokenFactory factory = new JwtTokenFactory();
+    factory.setTokenDuration(TimeUnit.SECONDS.toMillis(-10));
+    Account acc = new Account();
+    acc.setEmail("TestUser@mail.de");
+    Token token = factory.generateToken(acc.getEmail());
+
+    context.authHeader = "Bearer " + token.getTokenString();
+    filter.filter(context);
+    assertEquals(401, context.abortedWithStatus);
+  }
+
+  @Test
+  void filterSuccessful() {
+    var filter = new AuthorizationFilter();
+    var context = new TestContainerRequestContext();
+    var repository = new UserRepository();
+
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Account acc = new Account();
+    acc.setEmail("TestUser@mail.de");
+    repository.add(acc);
+    Token token = factory.generateToken(acc.getEmail());
+
+    context.authHeader = "Bearer " + token.getTokenString();
+    filter.filter(context);
+    assertNotNull(context.securityContext);
+  }
+
   private static class TestContainerRequestContext implements ContainerRequestContext {
 
+    private SecurityContext securityContext = null;
     private String authHeader = null;
 
     @Override
@@ -154,7 +198,9 @@ class AuthorizationFilterTest {
     }
 
     @Override
-    public void setSecurityContext(SecurityContext context) {}
+    public void setSecurityContext(SecurityContext context) {
+      securityContext = context;
+    }
 
     @Override
     public void abortWith(Response response) {

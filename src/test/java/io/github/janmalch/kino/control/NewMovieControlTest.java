@@ -1,15 +1,18 @@
 package io.github.janmalch.kino.control;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.MovieDto;
 import java.text.ParseException;
+import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 class NewMovieControlTest {
 
   @Test
-  void validateInvalidDateRange() {
+  void executeInvalidDateRange() {
     var dto = new MovieDto();
     dto.setName("Captain Marvel");
     dto.setStartDate("2020-02-02");
@@ -19,9 +22,10 @@ class NewMovieControlTest {
     dto.setPriceCategory("1");
 
     var control = new NewMovieControl(dto);
-    var optionalProblem = control.validate();
-    assertTrue(optionalProblem.isPresent());
-    assertEquals("Start date is after the end date", optionalProblem.get().getTitle());
+    var response = control.execute(new ResponseResultBuilder<>());
+    assertEquals(400, response.getStatus());
+    var problem = (HashMap<String, Object>) response.getEntity(); // TODO: refactor when new mapper
+    assertEquals("Start date is after the end date", problem.get("title"));
   }
 
   @Test

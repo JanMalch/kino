@@ -14,18 +14,22 @@ public class TokenSecurityContext implements SecurityContext {
     this.token = ensureUserExists(token);
   }
 
-  Token ensureUserExists(Token token) {
-    UserRepository repository = new UserRepository();
-
-    var query = new UserByEmailSpec(this.token.getName());
-    var referredUser = repository.queryFirst(query);
-
-    if (referredUser.isPresent()) {
-      this.userRole = referredUser.get().getRole();
-      return token;
+  Token ensureUserExists(Token _token) {
+    if (_token == null) {
+      return null;
     }
 
-    return null;
+    UserRepository repository = new UserRepository();
+
+    var query = new UserByEmailSpec(_token.getName());
+    var referredUser = repository.queryFirst(query);
+
+    if (referredUser.isEmpty()) {
+      return null;
+    }
+
+    this.userRole = referredUser.get().getRole();
+    return _token;
   }
 
   @Override
@@ -44,25 +48,6 @@ public class TokenSecurityContext implements SecurityContext {
     } catch (IllegalArgumentException e) {
       return false;
     }
-
-    // UserRepository repository = new UserRepository();
-    //
-    // var query = new UserByEmailSpec(this.token.getName());
-    // var referredUser = repository.queryFirst(query);
-    // Contract.check(referredUser.isPresent(), "User referred in token does not exist");
-    //
-    // var userRole = referredUser.get().getRole().name();
-    //
-    // return Arrays.stream(Role.values()).anyMatch(role -> role.name().equals(userRole));
-
-    // var user = referredUser.get();
-    // var userRole = user.getRole();
-    // for (Role r : Role.values()) {
-    //     if (r.name().equals(s)) {
-    //         return userRole.hasMinRole(r);
-    //     }
-    // }
-    // return false;
   }
 
   @Override
@@ -72,6 +57,6 @@ public class TokenSecurityContext implements SecurityContext {
 
   @Override
   public String getAuthenticationScheme() {
-    return null;
+    return "JWT";
   }
 }
