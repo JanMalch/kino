@@ -52,7 +52,6 @@ class PasswordManagerTest {
   void isSamePassword_withIncorrectSalt() {
     byte[] salt = pm.generateSalt();
     String hash = pm.hashPassword("testPassword", salt);
-    System.out.println(hash);
     byte[] anotherSalt = pm.generateSalt();
     assertFalse(pm.isSamePassword("testPassword", hash, anotherSalt));
   }
