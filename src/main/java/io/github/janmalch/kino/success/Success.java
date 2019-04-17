@@ -34,4 +34,19 @@ public interface Success<T> {
   static <T> SuccessBuilder<T> builder() {
     return new SuccessBuilder<>();
   }
+
+  static String toString(Success<?> success) {
+    return "Success{"
+        + "message="
+        + success.getMessage()
+        + ", status='"
+        + success.getStatus()
+        + '\''
+        + ", data="
+        + success.getData()
+        + '\''
+        + ", instance="
+        + success.getInstance()
+        + '}';
+  }
 }

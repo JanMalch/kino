@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.Response;
 
-public class UpdateMovieControl implements Control<Object> {
+public class UpdateMovieControl implements Control<Void> {
 
   private final MovieDto movieDto;
   private final long movieId;
@@ -21,7 +21,7 @@ public class UpdateMovieControl implements Control<Object> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Object> result) {
+  public <T> T execute(ResultBuilder<T, Void> result) {
     var refMovie = repository.find(movieId);
     if (refMovie == null) {
       return result.failure(Problem.builder(Response.Status.NOT_FOUND).instance().build());
@@ -30,7 +30,7 @@ public class UpdateMovieControl implements Control<Object> {
     var mapper = new UpdateMovieMapper();
     var entity = mapper.updateEntity(movieDto, refMovie);
     repository.update(entity);
-    return result.success(new Object());
+    return result.success(null, "Movie successfully updated");
   }
 
   static class UpdateMovieMapper implements Mapper<Movie, MovieDto> {
