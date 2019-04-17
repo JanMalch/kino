@@ -6,6 +6,7 @@ import io.github.janmalch.kino.api.model.LoginDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.api.model.TokenDto;
 import io.github.janmalch.kino.security.JwtTokenFactory;
+import io.github.janmalch.kino.success.Success;
 import org.junit.jupiter.api.Test;
 
 class LoginResourceTest {
@@ -16,7 +17,8 @@ class LoginResourceTest {
     var token = new JwtTokenFactory().generateToken("test@example.com");
     var response = builder.success(token);
     assertEquals(200, response.getStatus());
-    var entity = (TokenDto) response.getEntity();
+    var success = (Success) response.getEntity();
+    var entity = (TokenDto) success.getData();
     assertEquals(token.getTokenString(), entity.getToken());
   }
 
@@ -44,7 +46,8 @@ class LoginResourceTest {
     dto.setPassword("Start123");
     var response = resource.logIn(dto);
     assertEquals(200, response.getStatus());
-    var tokenDto = (TokenDto) response.getEntity();
+    var success = (Success) response.getEntity();
+    var tokenDto = (TokenDto) success.getData();
     assertNotNull(tokenDto.getToken());
   }
 
