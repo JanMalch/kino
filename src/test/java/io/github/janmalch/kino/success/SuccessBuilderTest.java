@@ -31,7 +31,7 @@ class SuccessBuilderTest {
   @Test
   public void toStringPrintsCorrectString() {
     URI baseUri = Success.DEFAULT_TYPE;
-    Success success =
+    var success =
         Success.builder()
             .message("A movie was added")
             .status(Response.Status.OK)
