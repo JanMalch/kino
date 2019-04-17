@@ -27,6 +27,10 @@ public interface Success<T> {
     return null;
   }
 
+  static <T> Success<T> valueOf(T data) {
+    return new SuccessBuilder<T>().data(data).build();
+  }
+
   static <T> SuccessBuilder<T> builder() {
     return new SuccessBuilder<>();
   }
