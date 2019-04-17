@@ -2,7 +2,6 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.SignUpDto;
-import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.SignUpControl;
 import io.swagger.annotations.Api;
 import javax.ws.rs.Consumes;
@@ -28,7 +27,7 @@ public class UserResource {
   public Response signUp(SignUpDto data) {
     log.info("------------------ BEGIN SIGN UP REQUEST ------------------");
     log.info(data.toString());
-    Control<Object> control = new SignUpControl(data);
+    var control = new SignUpControl(data);
     Response response = control.execute(new ResponseResultBuilder<>());
     log.info("sending response\n\t" + response.getEntity());
     return response;

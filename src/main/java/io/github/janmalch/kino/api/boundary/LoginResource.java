@@ -6,6 +6,7 @@ import io.github.janmalch.kino.api.model.TokenDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.LogInControl;
 import io.github.janmalch.kino.security.Token;
+import io.github.janmalch.kino.success.Success;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.ws.rs.POST;
@@ -42,7 +43,7 @@ public class LoginResource {
     public Response success(Token payload) {
       var dto = new TokenDto();
       dto.setToken(payload.getTokenString());
-      return Response.ok(dto).build();
+      return Response.ok(Success.valueOf(dto)).build();
     }
   }
 }

@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignUpControl implements Control<Object> {
+public class SignUpControl implements Control<Void> {
 
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);
   private final UserRepository repository = new UserRepository();
@@ -28,7 +28,7 @@ public class SignUpControl implements Control<Object> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Object> result) {
+  public <T> T execute(ResultBuilder<T, Void> result) {
     // -- validate prerequisites --
     var invalidDataProblem = validateSignUpDto();
     if (invalidDataProblem.isPresent()) {
@@ -47,7 +47,7 @@ public class SignUpControl implements Control<Object> {
     repository.add(user);
 
     // -- build success response --
-    return result.success(new Object());
+    return result.success(null, "Account successfully created");
   }
 
   Optional<Problem> validateSignUpDto() {
