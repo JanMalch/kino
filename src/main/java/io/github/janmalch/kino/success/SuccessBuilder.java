@@ -7,7 +7,7 @@ import javax.ws.rs.core.UriBuilder;
 public class SuccessBuilder<T> {
 
   private String message;
-  private Response.StatusType status;
+  private Response.StatusType status = Response.Status.OK;
   private T data;
   private URI instance;
 
