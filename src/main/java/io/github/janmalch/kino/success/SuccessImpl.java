@@ -3,13 +3,13 @@ package io.github.janmalch.kino.success;
 import java.net.URI;
 import javax.ws.rs.core.Response;
 
-public class SuccessImpl implements Success {
+public class SuccessImpl<T> implements Success<T> {
   private String message;
   private Response.StatusType status;
-  private String data;
+  private T data;
   private URI instance;
 
-  SuccessImpl(String message, Response.StatusType status, String data, URI instance) {
+  SuccessImpl(String message, Response.StatusType status, T data, URI instance) {
     this.message = message;
     this.status = status;
     this.data = data;
@@ -27,10 +27,11 @@ public class SuccessImpl implements Success {
   }
 
   @Override
-  public String getData() {
+  public T getData() {
     return data;
   }
 
+  @Override
   public URI getInstance() {
     return instance;
   }

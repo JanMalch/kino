@@ -23,11 +23,11 @@ public interface Success<T> {
   }
 
   @Nullable
-  default T getInstance() {
+  default URI getInstance() {
     return null;
   }
 
-  static SuccessBuilder builder() {
-    return new SuccessBuilder();
+  static <T> SuccessBuilder<T> builder() {
+    return new SuccessBuilder<>();
   }
 }
