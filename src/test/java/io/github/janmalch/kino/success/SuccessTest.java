@@ -23,5 +23,12 @@ class SuccessTest {
     assertEquals(dataString, success.getData());
   }
 
+  @Test
+  void toString1() {
+    var dataString = "Added a movie";
+    var success = Success.valueOf(dataString);
+    assertTrue(Success.toString(success).contains("Added a movie"));
+  }
+
   private static class TestSuccess implements Success {}
 }
