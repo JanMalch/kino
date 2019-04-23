@@ -3,11 +3,11 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.repository.UserRepository;
-import java.util.HashMap;
+import io.github.janmalch.kino.util.either.EitherResultBuilder;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class SignUpControlTest {
@@ -19,7 +19,7 @@ class SignUpControlTest {
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
-    data.setBirthday("1990-01-01");
+    data.setBirthday(LocalDate.now());
     var control = new SignUpControl(data);
     var result = control.validateSignUpDto();
     assertTrue(result.isEmpty());
@@ -32,13 +32,13 @@ class SignUpControlTest {
     data.setFirstName("Test");
     // lastName missing
     data.setPassword("Start123");
-    data.setBirthday("1990-01-01");
+    data.setBirthday(LocalDate.now());
     var control = new SignUpControl(data);
-    var response = control.execute(new ResponseResultBuilder<>());
-    assertEquals(400, response.getStatus());
-    var problem = (HashMap<String, Object>) response.getEntity(); // TODO: refactor when new mapper
-    assertEquals("A required field is empty", problem.get("title"));
-    assertEquals("The required field 'lastName' is empty", problem.get("detail"));
+    var response = control.execute(new EitherResultBuilder<>());
+    assertEquals(400, response.getStatus().getStatusCode());
+    var problem = response.getProblem();
+    assertEquals("A required field is empty", problem.getTitle());
+    assertEquals("The required field 'lastName' is empty", problem.getDetail());
   }
 
   @Test
@@ -53,13 +53,13 @@ class SignUpControlTest {
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
-    data.setBirthday("1990-01-01");
+    data.setBirthday(LocalDate.now());
 
     var control = new SignUpControl(data);
-    var response = control.execute(new ResponseResultBuilder<>());
-    assertEquals(400, response.getStatus());
-    var problem = (HashMap<String, Object>) response.getEntity(); // TODO: refactor when new mapper
+    var response = control.execute(new EitherResultBuilder<>());
+    assertEquals(400, response.getStatus().getStatusCode());
+    var problem = response.getProblem();
     assertEquals(
-        "An account with the email 'existing@example.com' already exists", problem.get("detail"));
+        "An account with the email 'existing@example.com' already exists", problem.getDetail());
   }
 }
