@@ -4,6 +4,8 @@ import java.util.function.Function;
 
 public class FunctionUtils {
 
+  private FunctionUtils() {}
+
   public static <T, R, E extends Exception> Function<T, R> uncheck(
       FunctionWithException<T, R, E> function) {
     return input -> {
