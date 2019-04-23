@@ -1,12 +1,10 @@
 package io.github.janmalch.kino.control.movie;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.text.ParseException;
-import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 class NewMovieControlTest {
@@ -22,10 +20,11 @@ class NewMovieControlTest {
     dto.setPriceCategory("1");
 
     var control = new NewMovieControl(dto);
-    var response = control.execute(new ResponseResultBuilder<>());
-    assertEquals(400, response.getStatus());
-    var problem = (HashMap<String, Object>) response.getEntity(); // TODO: refactor when new mapper
-    assertEquals("Start date is after the end date", problem.get("title"));
+    var response = control.execute(new EitherResultBuilder<>());
+    assertTrue(response.isFailure());
+    assertEquals(400, response.getStatus().getStatusCode());
+    var problem = response.getProblem();
+    assertEquals("Start date is after the end date", problem.getTitle());
   }
 
   @Test

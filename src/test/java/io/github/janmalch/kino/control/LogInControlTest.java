@@ -3,11 +3,10 @@ package io.github.janmalch.kino.control;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.boundary.UserResource;
 import io.github.janmalch.kino.api.model.LoginDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
-import java.util.HashMap;
+import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import org.junit.jupiter.api.Test;
 
 class LogInControlTest {
@@ -20,10 +19,10 @@ class LogInControlTest {
     dto.setEmail("logIn@example.com");
     dto.setPassword("Hilfe123");
     var control = new LogInControl(dto);
-    var response = control.execute(new ResponseResultBuilder<>());
-    assertEquals(400, response.getStatus());
-    var problem = (HashMap<String, Object>) response.getEntity(); // TODO: refactor when new mapper
-    assertEquals("Username or password is wrong", problem.get("title"));
+    var response = control.execute(new EitherResultBuilder<>());
+    assertEquals(400, response.getStatus().getStatusCode());
+    var problem = response.getProblem();
+    assertEquals("Username or password is wrong", problem.getTitle());
   }
 
   private void createUser() {
