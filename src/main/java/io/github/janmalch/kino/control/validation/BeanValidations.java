@@ -1,8 +1,7 @@
 package io.github.janmalch.kino.control.validation;
 
 import io.github.janmalch.kino.problem.Problem;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
+import io.github.janmalch.kino.util.BeanUtils;
 import java.util.*;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
@@ -49,30 +48,6 @@ public class BeanValidations<T> {
   }
 
   Stream<Map.Entry<String, Object>> propStream() {
-    return this.beanProperties().entrySet().stream();
-  }
-
-  // https://stackoverflow.com/a/8524043
-  Map<String, Object> beanProperties() {
-    try {
-      Map<String, Object> map = new HashMap<>();
-      Arrays.stream(
-              Introspector.getBeanInfo(data.getClass(), Object.class).getPropertyDescriptors())
-          // filter out properties with setters only
-          .filter(pd -> Objects.nonNull(pd.getReadMethod()))
-          .forEach(
-              pd -> { // invoke method to get value
-                try {
-                  Object value = pd.getReadMethod().invoke(data);
-                  map.put(pd.getName(), value);
-                } catch (Exception e) {
-                  // add proper error handling here
-                }
-              });
-      return map;
-    } catch (IntrospectionException e) {
-      // add proper error handling here
-      return Collections.emptyMap();
-    }
+    return BeanUtils.getBeanProperties(data).entrySet().stream();
   }
 }
