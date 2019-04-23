@@ -2,7 +2,7 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.SignUpDto;
-import io.github.janmalch.kino.control.SignUpControl;
+import io.github.janmalch.kino.control.account.SignUpControl;
 import io.swagger.annotations.Api;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

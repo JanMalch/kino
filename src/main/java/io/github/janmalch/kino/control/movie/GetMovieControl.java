@@ -1,5 +1,7 @@
-package io.github.janmalch.kino.control;
+package io.github.janmalch.kino.control.movie;
 
+import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.MovieRepository;

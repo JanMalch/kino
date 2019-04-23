@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.control;
+package io.github.janmalch.kino.control.movie;
 
 import static org.junit.jupiter.api.Assertions.*;
 

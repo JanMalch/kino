@@ -1,6 +1,8 @@
-package io.github.janmalch.kino.control;
+package io.github.janmalch.kino.control.account;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.SignUpDtoValidator;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
