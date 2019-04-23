@@ -21,7 +21,7 @@ public class MovieResource {
   // TODO: refactor to @Inject
   private Logger log = LoggerFactory.getLogger(MovieResource.class);
 
-  @Path("new")
+  @Path("")
   @POST
   @Secured
   @RolesAllowed("MODERATOR")
@@ -34,7 +34,7 @@ public class MovieResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("m/{id}")
+  @Path("{id}")
   @DELETE
   @Secured
   @RolesAllowed("MODERATOR")
@@ -45,7 +45,7 @@ public class MovieResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("m/{id}")
+  @Path("{id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Retrieves the movie for the given ID", response = Movie.class)
@@ -54,8 +54,8 @@ public class MovieResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("m/{id}")
-  @POST
+  @Path("{id}")
+  @PUT
   @Secured
   @RolesAllowed("MODERATOR")
   @Consumes(MediaType.APPLICATION_JSON)
