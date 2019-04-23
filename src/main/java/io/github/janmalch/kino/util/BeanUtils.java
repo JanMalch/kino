@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 public class BeanUtils {
 
+  private BeanUtils() {}
+
   /**
    * Returns a stream of the properties for the given target class. If the retrieveSetters flag is
    * set to true, only property descriptors with at least a setter method will be returned. If the
