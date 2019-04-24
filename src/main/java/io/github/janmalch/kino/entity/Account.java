@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -20,7 +21,7 @@ public class Account {
 
   @Email private String email;
 
-  private Date birthday;
+  private LocalDate birthday;
 
   private Role role;
 
@@ -60,11 +61,11 @@ public class Account {
     this.email = email;
   }
 
-  public Date getBirthday() {
+  public LocalDate getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(Date birthday) {
+  public void setBirthday(LocalDate birthday) {
     this.birthday = birthday;
   }
 
@@ -98,5 +99,33 @@ public class Account {
 
   public void setHashedPassword(String hashedPassword) {
     this.hashedPassword = hashedPassword;
+  }
+
+  @Override
+  public String toString() {
+    return "Account{"
+        + "id="
+        + id
+        + ", reservations="
+        + reservations
+        + ", firstName='"
+        + firstName
+        + '\''
+        + ", lastName='"
+        + lastName
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", birthday="
+        + birthday
+        + ", role="
+        + role
+        + ", salt="
+        + Arrays.toString(salt)
+        + ", hashedPassword='"
+        + hashedPassword
+        + '\''
+        + '}';
   }
 }

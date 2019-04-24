@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.validation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class BeanValidationsTest {
@@ -14,7 +15,7 @@ class BeanValidationsTest {
     data.setFirstName(""); // firstName is empty, which is not allowed
     data.setLastName("Account");
     data.setPassword("Start123");
-    data.setBirthday("1990-01-01");
+    data.setBirthday(LocalDate.now());
 
     var validator = new BeanValidations<>(data, "test");
     var result = validator.requireNotEmpty(/* everything must be set*/ );

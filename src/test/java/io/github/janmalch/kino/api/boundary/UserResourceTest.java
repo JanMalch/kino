@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.repository.UserRepository;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class UserResourceTest {
@@ -16,7 +17,7 @@ class UserResourceTest {
     dto.setEmail("signUp@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
-    dto.setBirthday("1990-01-01");
+    dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
     var response = resource.signUp(dto);
     assertEquals(200, response.getStatus());

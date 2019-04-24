@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.repository;
 
+import io.github.janmalch.kino.util.functions.VoidConsumer;
 import java.util.function.Supplier;
 import javax.persistence.EntityManager;
 
