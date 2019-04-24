@@ -14,6 +14,11 @@ public class JwtToken implements Token {
   }
 
   @Override
+  public Date getExpiration() {
+    return expiration;
+  }
+
+  @Override
   public String getTokenString() {
     return tokenString;
   }

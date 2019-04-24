@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.security;
 
 import java.security.Principal;
+import java.util.Date;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 
@@ -22,4 +23,6 @@ public interface Token extends Principal {
   }
 
   boolean isExpired();
+
+  Date getExpiration();
 }
