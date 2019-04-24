@@ -10,7 +10,7 @@ import org.jose4j.jwt.consumer.InvalidJwtException;
 @Singleton
 public class JwtTokenBlacklist {
 
-  Map<String, Date> blacklist = new HashMap<>();
+  private Set<Token> blacklist = new HashSet<>();
 
   private static JwtTokenBlacklist instance;
 
@@ -26,22 +26,29 @@ public class JwtTokenBlacklist {
     clearOutdatedBlacklistedToken();
     var factory = new JwtTokenFactory();
     Token token;
-    Date date;
     try {
       token = factory.parse(tokenString);
-      date = token.getExpiration();
-      blacklist.put(token.getTokenString(), date);
+      blacklist.add(token);
     } catch (InvalidJwtException e) {
       // token could be invalid at this time
       // this can be expected
     }
   }
 
+  public boolean hasToken(Token token) {
+    for (Token value : blacklist) {
+      if (value.getTokenString().equals(token.getTokenString())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public boolean isBlacklisted(Token token) {
-    return blacklist.containsKey(token.getTokenString());
+    return this.hasToken(token);
   }
 
   public void clearOutdatedBlacklistedToken() {
-    blacklist.entrySet().removeIf(entry -> entry.getValue().getTime() < System.currentTimeMillis());
+    blacklist.removeIf(Token::isExpired);
   }
 }
