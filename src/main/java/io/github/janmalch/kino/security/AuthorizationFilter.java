@@ -23,6 +23,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
   private Logger log = LoggerFactory.getLogger(AuthorizationFilter.class);
   private ResponseResultBuilder<Void> responseBuilder = new ResponseResultBuilder<>();
+  private JwtTokenBlacklist blacklist = JwtTokenBlacklist.getInstance();
   private Problem unAuthProblem = Problem.builder(Response.Status.UNAUTHORIZED).instance().build();
 
   @Override
@@ -40,6 +41,12 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     // abort if token cannot be parsed
     if (token == null) {
       log.info("Invalid Token: " + tokenString);
+      requestContext.abortWith(responseBuilder.failure(unAuthProblem));
+      return;
+    }
+
+    if (blacklist.isBlacklisted(token)) {
+      log.info("Token is blacklisted: " + tokenString);
       requestContext.abortWith(responseBuilder.failure(unAuthProblem));
       return;
     }
