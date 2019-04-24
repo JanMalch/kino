@@ -17,7 +17,6 @@ class LogOutControlTest {
     acc.setEmail("TestUser@mail.de");
     factory.setTokenDuration(TimeUnit.SECONDS.toMillis(-10));
     var expiredToken = factory.generateToken(acc.getEmail());
-    System.out.println(expiredToken.isExpired());
 
     var control = new LogOutControl(expiredToken);
     var response = control.execute(new EitherResultBuilder<>());
