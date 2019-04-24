@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.*;
+import org.jose4j.jwt.MalformedClaimException;
 import org.junit.jupiter.api.Test;
 
 class AuthorizationFilterTest {
@@ -87,6 +88,25 @@ class AuthorizationFilterTest {
     context.authHeader = "Bearer " + token.getTokenString();
     filter.filter(context);
     assertNotNull(context.securityContext);
+  }
+
+  @Test
+  void filterBlacklistedToken() throws MalformedClaimException {
+    var filter = new AuthorizationFilter();
+    var context = new TestContainerRequestContext();
+    var repository = new UserRepository();
+    var blacklist = JwtTokenBlacklist.getInstance();
+
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Account acc = new Account();
+    acc.setEmail("TestUser@mail.de");
+    repository.add(acc);
+    Token token = factory.generateToken(acc.getEmail());
+    blacklist.addToBlackList(token.getTokenString());
+
+    context.authHeader = "Bearer " + token.getTokenString();
+    filter.filter(context);
+    assertEquals(401, context.abortedWithStatus);
   }
 
   private static class TestContainerRequestContext implements ContainerRequestContext {

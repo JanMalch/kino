@@ -3,6 +3,7 @@ package io.github.janmalch.kino.security;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.entity.Account;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
@@ -17,6 +18,16 @@ class JwtTokenTest {
     acc.setEmail("TestUser@mail.de");
     Token token = factory.generateToken(acc.getEmail());
     assertNotNull(token.getTokenString());
+  }
+
+  @Test
+  void getExpiration() {
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Account acc = new Account();
+    String testSubject = "TestUser@mail.de";
+    acc.setEmail(testSubject);
+    Token token = factory.generateToken(acc.getEmail());
+    assertTrue(token.getExpiration() instanceof Date);
   }
 
   @Test
