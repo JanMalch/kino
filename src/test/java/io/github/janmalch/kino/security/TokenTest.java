@@ -3,6 +3,8 @@ package io.github.janmalch.kino.security;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.Date;
+import javax.security.auth.Subject;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.junit.jupiter.api.Test;
@@ -10,11 +12,11 @@ import org.junit.jupiter.api.Test;
 class TokenTest {
 
   @Test
-  void getName() {
+  void getName() throws MalformedClaimException, InvalidJwtException {
     var token = new TestToken();
     assertEquals(
         "Test",
-        token.getName(),
+        token.getSubject(),
         "Default implementation should return the subject as the principal name");
   }
 
@@ -38,13 +40,28 @@ class TokenTest {
     }
 
     @Override
-    public String getSubject() throws InvalidJwtException, MalformedClaimException {
+    public String getSubject() {
       return "Test";
+    }
+
+    @Override
+    public String getName() {
+      return null;
+    }
+
+    @Override
+    public boolean implies(Subject subject) {
+      return false;
     }
 
     @Override
     public boolean isExpired() {
       return false;
+    }
+
+    @Override
+    public Date getExpiration() {
+      return null;
     }
   }
 
@@ -55,13 +72,18 @@ class TokenTest {
     }
 
     @Override
-    public String getSubject() throws InvalidJwtException, MalformedClaimException {
+    public String getSubject() throws MalformedClaimException {
       throw new MalformedClaimException("Test claim");
     }
 
     @Override
     public boolean isExpired() {
       return false;
+    }
+
+    @Override
+    public Date getExpiration() {
+      return null;
     }
   }
 }
