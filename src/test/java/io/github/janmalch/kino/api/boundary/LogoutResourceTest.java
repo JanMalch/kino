@@ -40,7 +40,6 @@ class LogoutResourceTest {
     var context = new TokenSecurityContext(token);
     var resource = new LogoutResource();
     var response = resource.logOut(context);
-    System.out.println(response.toString());
     assertEquals(200, response.getStatus());
   }
 }
