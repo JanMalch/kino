@@ -1,12 +1,17 @@
 package io.github.janmalch.kino.api.model;
 
+import java.time.LocalDate;
+import javax.json.bind.annotation.JsonbDateFormat;
+
 public class SignUpDto {
 
   private String firstName;
   private String lastName;
   private String password;
   private String email;
-  private String birthday;
+
+  @JsonbDateFormat(value = "yyyy-MM-dd", locale = "de-DE")
+  private LocalDate birthday;
 
   public String getFirstName() {
     return firstName;
@@ -40,11 +45,11 @@ public class SignUpDto {
     this.email = email;
   }
 
-  public String getBirthday() {
+  public LocalDate getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(String birthday) {
+  public void setBirthday(LocalDate birthday) {
     this.birthday = birthday;
   }
 

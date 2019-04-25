@@ -7,6 +7,7 @@ import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.api.model.TokenDto;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.success.Success;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class LoginResourceTest {
@@ -28,7 +29,7 @@ class LoginResourceTest {
     dto.setEmail("test@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
-    dto.setBirthday("1990-01-01");
+    dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
     var signUpResponse = resource.signUp(dto);
     if (signUpResponse.getStatus() != 200) {

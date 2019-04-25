@@ -7,6 +7,7 @@ import io.github.janmalch.kino.api.boundary.UserResource;
 import io.github.janmalch.kino.api.model.LoginDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class LogInControlTest {
@@ -31,7 +32,7 @@ class LogInControlTest {
     dto.setEmail("logIn@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
-    dto.setBirthday("1990-01-01");
+    dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
     var signUpResponse = resource.signUp(dto);
     if (signUpResponse.getStatus() != 200) {

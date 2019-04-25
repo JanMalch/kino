@@ -5,14 +5,14 @@ import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.SignUpDtoValidator;
 import io.github.janmalch.kino.entity.Account;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.UserRepository;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.util.Mapper;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
@@ -78,23 +78,19 @@ public class SignUpControl implements Control<Void> {
 
   public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
-    private final SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final PasswordManager pm = new PasswordManager();
+    private final ReflectionMapper mapper = new ReflectionMapper();
 
     @Override
     public Account mapToEntity(SignUpDto signUpDto) {
-      Account account = new Account();
-      account.setEmail(signUpDto.getEmail());
-      account.setFirstName(signUpDto.getFirstName());
-      account.setLastName(signUpDto.getLastName());
-      account.setSalt(pm.generateSalt());
-      account.setHashedPassword(pm.hashPassword(signUpDto.getPassword(), account.getSalt()));
-      try {
-        account.setBirthday(birthdayFormat.parse(signUpDto.getBirthday()));
-      } catch (ParseException e) {
-        // rethrow as unchecked as this should be handled by the validator
-        throw new RuntimeException(e);
-      }
+      var account = mapper.map(signUpDto, Account.class);
+      account.setRole(Role.CUSTOMER);
+
+      var salt = pm.generateSalt();
+      var hashedPw = pm.hashPassword(signUpDto.getPassword(), salt);
+      account.setSalt(salt);
+      account.setHashedPassword(hashedPw);
+
       return account;
     }
   }

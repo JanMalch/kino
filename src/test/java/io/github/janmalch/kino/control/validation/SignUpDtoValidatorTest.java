@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.problem.Problem;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class SignUpDtoValidatorTest {
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
-    data.setBirthday("1990-01-01");
+    data.setBirthday(LocalDate.now());
     SignUpDtoValidator validator = new SignUpDtoValidator();
     Optional<Problem> result = validator.validate(data);
     assertTrue(result.isEmpty());
@@ -29,25 +30,11 @@ class SignUpDtoValidatorTest {
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
-    data.setBirthday("1990-01-01");
+    data.setBirthday(LocalDate.now());
     SignUpDtoValidator validator = new SignUpDtoValidator();
     Optional<Problem> result = validator.validate(data);
     assertTrue(result.isPresent());
     assertEquals("The required field 'email' is empty", result.get().getDetail());
-  }
-
-  @Test
-  void validateDateIsInvalid() {
-    SignUpDto data = new SignUpDto();
-    data.setEmail("test@example.com");
-    data.setFirstName("Test");
-    data.setLastName("Account");
-    data.setPassword("Start123");
-    data.setBirthday("1990:01-01");
-    SignUpDtoValidator validator = new SignUpDtoValidator();
-    Optional<Problem> result = validator.validate(data);
-    assertTrue(result.isPresent());
-    assertEquals("The given birthday '1990:01-01' has an invalid format", result.get().getDetail());
   }
 
   @Test
