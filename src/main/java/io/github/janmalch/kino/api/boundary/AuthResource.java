@@ -4,26 +4,30 @@ import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.LoginDto;
 import io.github.janmalch.kino.api.model.TokenDto;
 import io.github.janmalch.kino.control.Control;
-import io.github.janmalch.kino.control.LogInControl;
+import io.github.janmalch.kino.control.auth.LogInControl;
+import io.github.janmalch.kino.control.auth.LogOutControl;
+import io.github.janmalch.kino.security.Secured;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.success.Success;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Path("login")
 @Api
-public class LoginResource {
+public class AuthResource {
 
-  // TODO: refactor to @Inject
-  private Logger log = LoggerFactory.getLogger(LoginResource.class);
+  private Logger log = LoggerFactory.getLogger(AuthResource.class);
 
+  @Path("login")
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(
@@ -37,8 +41,25 @@ public class LoginResource {
     return control.execute(new JwtResultBuilder());
   }
 
-  static class JwtResultBuilder extends ResponseResultBuilder<Token> {
+  @Path("logout")
+  @Secured
+  @RolesAllowed("CUSTOMER")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(
+      value = "Returns an invalid JWT token when successfully logged out",
+      response = TokenDto.class)
+  public Response logOut(@Context SecurityContext securityContext) {
+    log.info("------------------ BEGIN LOGOUT REQUEST ------------------");
 
+    var logoutToken = securityContext.getUserPrincipal();
+
+    LogOutControl control = new LogOutControl((Token) logoutToken);
+
+    return control.execute(new JwtResultBuilder());
+  }
+
+  static class JwtResultBuilder extends ResponseResultBuilder<Token> {
     @Override
     public Response success(Token payload) {
       var dto = new TokenDto();

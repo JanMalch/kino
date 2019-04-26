@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
@@ -76,7 +77,7 @@ class AuthorizationFilterTest {
   void filterSuccessful() {
     var filter = new AuthorizationFilter();
     var context = new TestContainerRequestContext();
-    var repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
     JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
@@ -87,6 +88,25 @@ class AuthorizationFilterTest {
     context.authHeader = "Bearer " + token.getTokenString();
     filter.filter(context);
     assertNotNull(context.securityContext);
+  }
+
+  @Test
+  void filterBlacklistedToken() {
+    var filter = new AuthorizationFilter();
+    var context = new TestContainerRequestContext();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
+    var blacklist = JwtTokenBlacklist.getInstance();
+
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Account acc = new Account();
+    acc.setEmail("TestUser@mail.de");
+    repository.add(acc);
+    Token token = factory.generateToken(acc.getEmail());
+    blacklist.addToBlackList(token);
+
+    context.authHeader = "Bearer " + token.getTokenString();
+    filter.filter(context);
+    assertEquals(401, context.abortedWithStatus);
   }
 
   private static class TestContainerRequestContext implements ContainerRequestContext {

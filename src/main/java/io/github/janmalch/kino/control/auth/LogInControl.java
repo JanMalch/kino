@@ -1,8 +1,12 @@
-package io.github.janmalch.kino.control;
+package io.github.janmalch.kino.control.auth;
 
 import io.github.janmalch.kino.api.model.LoginDto;
+import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ResultBuilder;
+import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
@@ -14,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class LogInControl implements Control<Token> {
 
   private Logger log = LoggerFactory.getLogger(LogInControl.class);
-  private final UserRepository repository = new UserRepository();
+  private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
   private final LoginDto data;
   private final PasswordManager pm = new PasswordManager();
 
