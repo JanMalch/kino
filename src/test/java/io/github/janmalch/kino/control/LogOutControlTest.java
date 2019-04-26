@@ -20,9 +20,7 @@ class LogOutControlTest {
 
     var control = new LogOutControl(expiredToken);
     var response = control.execute(new EitherResultBuilder<>());
-    assertEquals(400, response.getStatus().getStatusCode());
-    var problem = response.getProblem();
-    assertEquals("Could not logout User", problem.getTitle());
+    assertEquals(200, response.getStatus().getStatusCode());
   }
 
   @Test
