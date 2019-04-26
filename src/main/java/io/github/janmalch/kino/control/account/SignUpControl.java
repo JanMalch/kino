@@ -7,7 +7,8 @@ import io.github.janmalch.kino.control.validation.SignUpDtoValidator;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.PasswordManager;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class SignUpControl implements Control<Void> {
 
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);
-  private final UserRepository repository = new UserRepository();
+  private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
   private final SignUpDto data;
 

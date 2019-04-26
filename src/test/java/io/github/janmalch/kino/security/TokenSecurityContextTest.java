@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Role;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import org.junit.jupiter.api.Test;
 
 class TokenSecurityContextTest {
@@ -36,7 +37,7 @@ class TokenSecurityContextTest {
   @Test
   void getUserPrincipal() {
     JwtTokenFactory factory = new JwtTokenFactory();
-    UserRepository repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
     var account = new Account();
     account.setEmail("principal@user.de");
@@ -61,7 +62,7 @@ class TokenSecurityContextTest {
   @Test
   void isUserInRole() {
     JwtTokenFactory factory = new JwtTokenFactory();
-    UserRepository repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
     var account = new Account();
     account.setEmail("principal2@user.de");
@@ -75,7 +76,7 @@ class TokenSecurityContextTest {
   @Test
   void isUserInRoleIllegalRoleName() {
     JwtTokenFactory factory = new JwtTokenFactory();
-    UserRepository repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
     var account = new Account();
     account.setEmail("principal3@user.de");
