@@ -37,14 +37,15 @@ public class LogOutControl implements Control<Token> {
     } catch (InvalidJwtException | MalformedClaimException e) {
       return result.failure(invalidLogout);
     }
-    if (token.isExpired()) {
-      return result.failure(invalidLogout);
-    }
 
     blacklist.addToBlackList(token);
 
     var expiredToken = factory.invalidate();
 
+    if (token.isExpired()) {
+      log.warn("Logout User: Token expired");
+      return result.success(expiredToken);
+    }
     return result.success(expiredToken);
   }
 }
