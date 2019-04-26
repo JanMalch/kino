@@ -11,12 +11,15 @@ class ReservationRepositoryTest {
 
   @Test
   void reservationWithSeats() {
-    // add seats
-    var allSeats = Set.of(new Seat(), new Seat());
+    // prepare seats
+    var exampleSeat = new Seat();
+    var allSeats = Set.of(exampleSeat, new Seat(), new Seat());
+    // persist seats
     var seatRepository = new SeatRepository();
     seatRepository.add(allSeats);
     // check if seat has been added
-    var seat = seatRepository.find(1);
+    var seatId = exampleSeat.getId();
+    var seat = seatRepository.find(seatId);
     assertEquals(0, seat.getReservations().size());
 
     // create reservation with the given 2 seats
@@ -28,7 +31,7 @@ class ReservationRepositoryTest {
 
     // refresh seat repository
     seatRepository = new SeatRepository();
-    var freshSeat = seatRepository.find(1);
-    assertEquals(1, freshSeat.getReservations().size());
+    var freshSeat = seatRepository.find(seatId);
+    assertEquals(1, freshSeat.getReservations().size(), "ManyToMany relationship failed");
   }
 }
