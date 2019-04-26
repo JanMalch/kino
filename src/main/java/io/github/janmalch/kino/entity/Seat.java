@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.entity;
 
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -7,6 +8,9 @@ public class Seat {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
+
+  @ManyToMany(mappedBy = "seats")
+  private List<Reservation> reservations;
 
   @ManyToOne
   @JoinColumn(name = "CINEMAHALL_ID")
@@ -46,5 +50,13 @@ public class Seat {
 
   public void setSeatNumber(int seatNumber) {
     this.seatNumber = seatNumber;
+  }
+
+  public List<Reservation> getReservations() {
+    return reservations;
+  }
+
+  public void setReservations(List<Reservation> reservations) {
+    this.reservations = reservations;
   }
 }
