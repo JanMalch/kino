@@ -1,9 +1,8 @@
 package io.github.janmalch.kino.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.List;
+import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
 public class PriceCategory {
@@ -11,11 +10,29 @@ public class PriceCategory {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
+  @OneToMany(mappedBy = "priceCategory")
+  private List<Movie> movies;
+
   private String name;
 
   private float regularPrice;
 
   private float reducedPrice;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof PriceCategory)) return false;
+    PriceCategory that = (PriceCategory) o;
+    return Float.compare(that.getRegularPrice(), getRegularPrice()) == 0
+        && Float.compare(that.getReducedPrice(), getReducedPrice()) == 0
+        && Objects.equals(getName(), that.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName(), getRegularPrice(), getReducedPrice());
+  }
 
   public String getName() {
     return name;
@@ -47,5 +64,13 @@ public class PriceCategory {
 
   public void setId(long id) {
     this.id = id;
+  }
+
+  public List<Movie> getMovies() {
+    return movies;
+  }
+
+  public void setMovies(List<Movie> movies) {
+    this.movies = movies;
   }
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.entity.Movie;
+import io.github.janmalch.kino.entity.PriceCategory;
 import org.junit.jupiter.api.Test;
 
 class ReflectionMapperTest {
@@ -14,7 +15,7 @@ class ReflectionMapperTest {
     var entity = new Movie();
     entity.setId(1L);
     entity.setName("Captain Marvel");
-    entity.setPriceCategory("1");
+    entity.setPriceCategory(createNormalPriceCategory());
     entity.setDuration(2.5F);
 
     var domain = mapper.map(entity, MovieDto.class);
@@ -28,16 +29,35 @@ class ReflectionMapperTest {
     var entity = new Movie();
     entity.setId(1L);
     entity.setName("Captain Marvel");
-    entity.setPriceCategory("1");
+    entity.setPriceCategory(createNormalPriceCategory());
     entity.setDuration(2.5F);
 
     var domain = mapper.map(entity, MovieDto.class);
     domain.setName("Wonder Woman");
-    domain.setPriceCategory("");
+    domain.setPriceCategory(createOverlongPriceCategory());
 
     var newEntity = mapper.update(domain, entity, Movie.class);
     assertEquals(1L, newEntity.getId());
     assertEquals("Wonder Woman", newEntity.getName());
-    assertEquals("1", newEntity.getPriceCategory(), "Empty values should not be used");
+    assertEquals(
+        createOverlongPriceCategory(),
+        newEntity.getPriceCategory(),
+        "Empty values should not be used");
+  }
+
+  private PriceCategory createNormalPriceCategory() {
+    PriceCategory priceCategory = new PriceCategory();
+    priceCategory.setName("normal");
+    priceCategory.setRegularPrice(9.99f);
+    priceCategory.setReducedPrice(7.99f);
+    return priceCategory;
+  }
+
+  private PriceCategory createOverlongPriceCategory() {
+    PriceCategory priceCategory = new PriceCategory();
+    priceCategory.setName("overlong");
+    priceCategory.setRegularPrice(12.99f);
+    priceCategory.setReducedPrice(10.99f);
+    return priceCategory;
   }
 }

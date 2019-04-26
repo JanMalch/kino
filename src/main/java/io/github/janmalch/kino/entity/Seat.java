@@ -1,5 +1,7 @@
 package io.github.janmalch.kino.entity;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -7,6 +9,9 @@ public class Seat {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
+
+  @ManyToMany(mappedBy = "seats")
+  private Set<Reservation> reservations = new HashSet<>();
 
   @ManyToOne
   @JoinColumn(name = "CINEMAHALL_ID")
@@ -46,5 +51,13 @@ public class Seat {
 
   public void setSeatNumber(int seatNumber) {
     this.seatNumber = seatNumber;
+  }
+
+  public Set<Reservation> getReservations() {
+    return reservations;
+  }
+
+  public void setReservations(Set<Reservation> reservations) {
+    this.reservations = reservations;
   }
 }

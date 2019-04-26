@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.movie;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.entity.PriceCategory;
 import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class NewMovieMapperTest {
   void mapToEntity() {
     var dto = new MovieDto();
     dto.setName("Captain Marvel");
-    dto.setPriceCategory("1");
+    dto.setPriceCategory(createPriceCategory());
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
     dto.setStartDate("20g20-01-01");
@@ -28,5 +29,13 @@ class NewMovieMapperTest {
       }
       // ParseException is expected here
     }
+  }
+
+  private PriceCategory createPriceCategory() {
+    PriceCategory priceCategory = new PriceCategory();
+    priceCategory.setName("normal");
+    priceCategory.setRegularPrice(9.99f);
+    priceCategory.setReducedPrice(7.99f);
+    return priceCategory;
   }
 }
