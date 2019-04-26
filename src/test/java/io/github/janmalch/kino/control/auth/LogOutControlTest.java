@@ -1,8 +1,7 @@
-package io.github.janmalch.kino.control;
+package io.github.janmalch.kino.control.auth;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.control.auth.LogOutControl;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
