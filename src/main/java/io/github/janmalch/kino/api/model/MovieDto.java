@@ -1,9 +1,11 @@
 package io.github.janmalch.kino.api.model;
 
+import io.github.janmalch.kino.entity.PriceCategory;
+
 public class MovieDto {
 
   private String name;
-  private String priceCategory;
+  private PriceCategory priceCategory;
   private String startDate;
   private String endDate;
   private Float duration;
@@ -17,11 +19,11 @@ public class MovieDto {
     this.name = name;
   }
 
-  public String getPriceCategory() {
+  public PriceCategory getPriceCategory() {
     return priceCategory;
   }
 
-  public void setPriceCategory(String priceCategory) {
+  public void setPriceCategory(PriceCategory priceCategory) {
     this.priceCategory = priceCategory;
   }
 

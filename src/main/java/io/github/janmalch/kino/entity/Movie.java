@@ -15,7 +15,9 @@ public class Movie {
 
   private String name;
 
-  private String priceCategory;
+  @ManyToOne
+  @JoinColumn(name = "PRICECATEGORY_ID")
+  private PriceCategory priceCategory;
 
   private Date startDate;
 
@@ -33,11 +35,11 @@ public class Movie {
     this.name = name;
   }
 
-  public String getPriceCategory() {
+  public PriceCategory getPriceCategory() {
     return priceCategory;
   }
 
-  public void setPriceCategory(String priceCategory) {
+  public void setPriceCategory(PriceCategory priceCategory) {
     this.priceCategory = priceCategory;
   }
 

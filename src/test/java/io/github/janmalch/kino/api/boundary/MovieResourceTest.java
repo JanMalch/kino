@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.entity.Movie;
+import io.github.janmalch.kino.entity.PriceCategory;
 import io.github.janmalch.kino.success.Success;
 import org.junit.jupiter.api.Test;
 
@@ -63,9 +64,17 @@ class MovieResourceTest {
     dto.setEndDate("2019-01-02");
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
-    dto.setPriceCategory("1");
+    dto.setPriceCategory(createPriceCategory());
     var response = resource.newMovie(dto);
     var success = (Success) response.getEntity();
     return (Long) success.getData();
+  }
+
+  private PriceCategory createPriceCategory() {
+    PriceCategory priceCategory = new PriceCategory();
+    priceCategory.setName("normal");
+    priceCategory.setRegularPrice(9.99f);
+    priceCategory.setReducedPrice(7.99f);
+    return priceCategory;
   }
 }
