@@ -5,6 +5,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+/**
+ * @deprecated Use <code>RepositoryFactory.createRepository(Movie.class);</code> instead
+ * @see RepositoryFactory#createRepository(Class)
+ */
+@Deprecated(forRemoval = true)
 public class MovieRepository implements Repository<Movie> {
 
   private EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
