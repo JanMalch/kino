@@ -4,14 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.*;
-import org.jose4j.jwt.MalformedClaimException;
 import org.junit.jupiter.api.Test;
 
 class AuthorizationFilterTest {
@@ -77,7 +77,7 @@ class AuthorizationFilterTest {
   void filterSuccessful() {
     var filter = new AuthorizationFilter();
     var context = new TestContainerRequestContext();
-    var repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
     JwtTokenFactory factory = new JwtTokenFactory();
     Account acc = new Account();
@@ -91,10 +91,10 @@ class AuthorizationFilterTest {
   }
 
   @Test
-  void filterBlacklistedToken() throws MalformedClaimException {
+  void filterBlacklistedToken() {
     var filter = new AuthorizationFilter();
     var context = new TestContainerRequestContext();
-    var repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
     var blacklist = JwtTokenBlacklist.getInstance();
 
     JwtTokenFactory factory = new JwtTokenFactory();
@@ -102,7 +102,7 @@ class AuthorizationFilterTest {
     acc.setEmail("TestUser@mail.de");
     repository.add(acc);
     Token token = factory.generateToken(acc.getEmail());
-    blacklist.addToBlackList(token.getTokenString());
+    blacklist.addToBlackList(token);
 
     context.authHeader = "Bearer " + token.getTokenString();
     filter.filter(context);

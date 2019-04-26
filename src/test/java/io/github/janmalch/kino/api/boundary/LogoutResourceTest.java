@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.TokenDto;
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.security.TokenSecurityContext;
@@ -26,7 +27,7 @@ class LogoutResourceTest {
 
   private Token createTokenAndAddInRepository() {
     JwtTokenFactory factory = new JwtTokenFactory();
-    UserRepository repository = new UserRepository();
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
     repository.add(acc);
@@ -41,5 +42,8 @@ class LogoutResourceTest {
     var resource = new LogoutResource();
     var response = resource.logOut(context);
     assertEquals(200, response.getStatus());
+    var success = (Success) response.getEntity();
+    var tokenDto = (TokenDto) success.getData();
+    assertNotNull(tokenDto.getToken());
   }
 }

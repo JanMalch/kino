@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.entity.Account;
 import java.util.concurrent.TimeUnit;
-import org.jose4j.jwt.MalformedClaimException;
 import org.junit.jupiter.api.Test;
 
 class JwtTokenBlacklistTest {
@@ -25,17 +24,11 @@ class JwtTokenBlacklistTest {
     Account acc = new Account();
     acc.setEmail("TestUser@mail.de");
     var expiredToken = factory.generateToken(acc.getEmail());
-    try {
-      blacklist.addToBlackList(expiredToken.getTokenString());
-    } catch (MalformedClaimException e) {
-      if (!(e.getCause() instanceof MalformedClaimException)) {
-        fail("Unknown RuntimeException");
-      }
-    }
+    blacklist.addToBlackList(expiredToken);
   }
 
   @Test
-  void addToBlackList() throws MalformedClaimException {
+  void addToBlackList() {
     var blacklist = JwtTokenBlacklist.getInstance();
     JwtTokenFactory factory = new JwtTokenFactory();
 
@@ -47,7 +40,7 @@ class JwtTokenBlacklistTest {
     Token token = factory.generateToken(acc.getEmail());
     Token token2 = factory.generateToken(acc2.getEmail());
 
-    blacklist.addToBlackList(token.getTokenString());
+    blacklist.addToBlackList(token);
     assertTrue(blacklist.isBlacklisted(token));
     assertFalse(blacklist.isBlacklisted(token2));
   }
