@@ -1,24 +1,22 @@
 package io.github.janmalch.kino.repository;
 
-import io.github.janmalch.kino.entity.Account;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-// TODO: currently uses Entity model
-/**
- * @deprecated Use <code>RepositoryFactory.createRepository(Account.class);</code> instead
- * @see RepositoryFactory#createRepository(Class)
- */
-@Deprecated(forRemoval = true)
-public class UserRepository implements Repository<Account> {
+final class RepositoryImpl<T> implements Repository<T> {
 
   private EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
   private EntityManager em = factory.createEntityManager();
+  private final Class<T> entityType;
+
+  RepositoryImpl(Class<T> entityType) {
+    this.entityType = entityType;
+  }
 
   @Override
-  public Account find(long id) {
-    return em.find(Account.class, id);
+  public T find(long id) {
+    return em.find(entityType, id);
   }
 
   @Override

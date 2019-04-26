@@ -209,6 +209,6 @@
         <hibernate.core.version>5.4.2.Final</hibernate.core.version>
         <hibernate.jpa.version>1.0.2.Final</hibernate.jpa.version>
         <maven-git-code-format.version>1.20</maven-git-code-format.version>
-        <swagger.version>1.5.11</swagger.version>
+        <swagger.version>1.5.22</swagger.version>
     </properties>
 </project>
