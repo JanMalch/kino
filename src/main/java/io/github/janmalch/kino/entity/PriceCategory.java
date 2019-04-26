@@ -11,7 +11,7 @@ public class PriceCategory {
   private long id;
 
   @OneToMany(mappedBy = "priceCategory")
-  public List<Movie> movies;
+  private List<Movie> movies;
 
   private String name;
 
@@ -64,5 +64,13 @@ public class PriceCategory {
 
   public void setId(long id) {
     this.id = id;
+  }
+
+  public List<Movie> getMovies() {
+    return movies;
+  }
+
+  public void setMovies(List<Movie> movies) {
+    this.movies = movies;
   }
 }
