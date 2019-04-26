@@ -1,7 +1,6 @@
 package io.github.janmalch.kino.entity;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +14,7 @@ public class Reservation {
       name = "RESERVATION_SEAT",
       joinColumns = @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID"),
       inverseJoinColumns = @JoinColumn(name = "SEAT_ID", referencedColumnName = "ID"))
-  private List<Seat> seats;
+  private Set<Seat> seats = new HashSet<>();
 
   @ManyToOne
   @JoinColumn(name = "ACCOUNT_ID")
@@ -59,11 +58,24 @@ public class Reservation {
     this.presentation = presentation;
   }
 
-  public List<Seat> getSeats() {
+  /*  public void addSeat(Seat seat){
+    this.seats.add(seat);
+    seat.getReservations().add(this);
+  }
+
+  public void removeSeat(Seat seat){
+    this.seats.remove(seat);
+    seat.getReservations().remove(this);
+  }*/
+
+  public Set<Seat> getSeats() {
     return seats;
   }
 
-  public void setSeats(List<Seat> seats) {
+  public void setSeats(Set<Seat> seats) {
+    /*for (Seat seat: seats) {
+      seat.getReservations().add(this);
+    }*/
     this.seats = seats;
   }
 }
