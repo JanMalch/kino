@@ -2,13 +2,9 @@ package io.github.janmalch.kino.control.auth;
 
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
-import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
-import javax.ws.rs.core.Response;
-import org.jose4j.jwt.MalformedClaimException;
-import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,26 +15,13 @@ public class LogOutControl implements Control<Token> {
   private JwtTokenFactory factory = new JwtTokenFactory();
   private Token token;
 
-  private final Problem invalidLogout =
-      Problem.builder()
-          .type("invalid-logout")
-          .title("Could not logout User")
-          .detail("Could not logout User")
-          .status(Response.Status.BAD_REQUEST)
-          .instance()
-          .build();
-
   public LogOutControl(Token token) {
     this.token = token;
   }
 
   @Override
   public <T> T execute(ResultBuilder<T, Token> result) {
-    try {
-      log.info("Logout User " + token.getSubject());
-    } catch (InvalidJwtException | MalformedClaimException e) {
-      return result.failure(invalidLogout);
-    }
+    log.info("Logout User " + token.getName());
 
     blacklist.addToBlackList(token);
 
@@ -46,7 +29,6 @@ public class LogOutControl implements Control<Token> {
 
     if (token.isExpired()) {
       log.warn("Logout User: Token expired");
-      return result.success(expiredToken);
     }
     return result.success(expiredToken);
   }
