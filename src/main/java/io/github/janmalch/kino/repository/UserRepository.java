@@ -6,6 +6,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 // TODO: currently uses Entity model
+/**
+ * @deprecated Use <code>RepositoryFactory.createRepository(Account.class);</code> instead
+ * @see RepositoryFactory#createRepository(Class)
+ */
+@Deprecated(forRemoval = true)
 public class UserRepository implements Repository<Account> {
 
   private EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
