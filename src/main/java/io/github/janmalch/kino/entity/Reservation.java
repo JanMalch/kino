@@ -1,6 +1,8 @@
 package io.github.janmalch.kino.entity;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -58,24 +60,11 @@ public class Reservation {
     this.presentation = presentation;
   }
 
-  /*  public void addSeat(Seat seat){
-    this.seats.add(seat);
-    seat.getReservations().add(this);
-  }
-
-  public void removeSeat(Seat seat){
-    this.seats.remove(seat);
-    seat.getReservations().remove(this);
-  }*/
-
   public Set<Seat> getSeats() {
     return seats;
   }
 
   public void setSeats(Set<Seat> seats) {
-    /*for (Seat seat: seats) {
-      seat.getReservations().add(this);
-    }*/
     this.seats = seats;
   }
 }
