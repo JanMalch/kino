@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.security;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import org.jose4j.jwt.MalformedClaimException;
@@ -22,26 +23,27 @@ public class JwtTokenBlacklist {
     return instance;
   }
 
+  @Deprecated
   public void addToBlackList(String tokenString) throws MalformedClaimException {
     clearOutdatedBlacklistedToken();
     var factory = new JwtTokenFactory();
     Token token;
     try {
       token = factory.parse(tokenString);
-      blacklist.add(token);
+      this.addToBlackList(token);
     } catch (InvalidJwtException e) {
       // token could be invalid at this time
       // this can be expected
     }
   }
 
+  public void addToBlackList(Token token) {
+    clearOutdatedBlacklistedToken();
+    blacklist.add(token);
+  }
+
   public boolean hasToken(Token token) {
-    for (Token value : blacklist) {
-      if (value.getTokenString().equals(token.getTokenString())) {
-        return true;
-      }
-    }
-    return false;
+    return blacklist.contains(token);
   }
 
   public boolean isBlacklisted(Token token) {
