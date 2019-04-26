@@ -1,6 +1,8 @@
 package io.github.janmalch.kino.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,13 @@ public class Reservation {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
+
+  @ManyToMany
+  @JoinTable(
+      name = "RESERVATION_SEAT",
+      joinColumns = @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID"),
+      inverseJoinColumns = @JoinColumn(name = "SEAT_ID", referencedColumnName = "ID"))
+  private Set<Seat> seats = new HashSet<>();
 
   @ManyToOne
   @JoinColumn(name = "ACCOUNT_ID")
@@ -49,5 +58,13 @@ public class Reservation {
 
   public void setPresentation(Presentation presentation) {
     this.presentation = presentation;
+  }
+
+  public Set<Seat> getSeats() {
+    return seats;
+  }
+
+  public void setSeats(Set<Seat> seats) {
+    this.seats = seats;
   }
 }
