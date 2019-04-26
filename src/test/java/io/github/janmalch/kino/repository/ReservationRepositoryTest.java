@@ -4,35 +4,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.entity.Seat;
-import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-public class ReservationRepositoryTest {
+class ReservationRepositoryTest {
 
   @Test
-  public void testReservationWithSeats() {
-    Seat seat1 = new Seat();
-    Seat seat2 = new Seat();
+  void reservationWithSeats() {
+    // add seats
+    var allSeats = Set.of(new Seat(), new Seat());
+    var seatRepository = new SeatRepository();
+    seatRepository.add(allSeats);
+    // check if seat has been added
+    var seat = seatRepository.find(1);
+    assertEquals(0, seat.getReservations().size());
 
-    SeatRepository seatRepository = new SeatRepository();
-    seatRepository.add(seat1);
-    seatRepository.add(seat2);
-
-    Seat seat = seatRepository.find(1);
-    assertEquals(1, seat.getReservations().size());
-
-    Set<Seat> seats = new HashSet<>();
-    seats.add(seat1);
-    seats.add(seat2);
-
-    Reservation reservation = new Reservation();
-    reservation.setSeats(seats);
-
-    ReservationRepository reservationRepository = new ReservationRepository();
+    // create reservation with the given 2 seats
+    var reservation = new Reservation();
+    reservation.setSeats(allSeats);
+    // persist reservation
+    var reservationRepository = new ReservationRepository();
     reservationRepository.add(reservation);
 
-    seat = seatRepository.find(1);
-    assertEquals(1, seat.getReservations().size());
+    // refresh seat repository
+    seatRepository = new SeatRepository();
+    var freshSeat = seatRepository.find(1);
+    assertEquals(1, freshSeat.getReservations().size());
   }
 }
