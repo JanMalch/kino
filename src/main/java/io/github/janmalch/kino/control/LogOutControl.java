@@ -41,11 +41,8 @@ public class LogOutControl implements Control<Token> {
       return result.failure(invalidLogout);
     }
 
-    try {
-      blacklist.addToBlackList(token.getTokenString());
-    } catch (MalformedClaimException e) {
-      return result.failure(invalidLogout);
-    }
+    blacklist.addToBlackList(token);
+
     var expiredToken = factory.invalidate();
 
     return result.success(expiredToken);

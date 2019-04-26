@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import org.jose4j.jwt.MalformedClaimException;
-import org.jose4j.jwt.consumer.InvalidJwtException;
 
 @Startup
 @Singleton
@@ -21,20 +19,6 @@ public class JwtTokenBlacklist {
       instance = new JwtTokenBlacklist();
     }
     return instance;
-  }
-
-  @Deprecated
-  public void addToBlackList(String tokenString) throws MalformedClaimException {
-    clearOutdatedBlacklistedToken();
-    var factory = new JwtTokenFactory();
-    Token token;
-    try {
-      token = factory.parse(tokenString);
-      this.addToBlackList(token);
-    } catch (InvalidJwtException e) {
-      // token could be invalid at this time
-      // this can be expected
-    }
   }
 
   public void addToBlackList(Token token) {
