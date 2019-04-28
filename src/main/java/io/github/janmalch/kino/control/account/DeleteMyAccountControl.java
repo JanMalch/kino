@@ -11,7 +11,6 @@ import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
-import java.util.NoSuchElementException;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +34,16 @@ public class DeleteMyAccountControl implements Control<Token> {
 
     Specification<Account> myName = new UserByEmailSpec(token.getName());
     var account = repository.queryFirst(myName);
-    try {
-      repository.remove(account.get());
-    } catch (NoSuchElementException e) {
+
+    if (account.isEmpty()) {
       return result.failure(
           Problem.builder(Response.Status.BAD_REQUEST)
               .type("Cannot delete my Account")
               .instance()
               .build());
     }
+
+    repository.remove(account.get());
 
     blacklist.addToBlackList(token);
     var expiredToken = factory.invalidate();
