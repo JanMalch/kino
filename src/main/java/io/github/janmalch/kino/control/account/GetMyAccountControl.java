@@ -8,7 +8,6 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
-import io.github.janmalch.kino.security.Token;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +17,17 @@ public class GetMyAccountControl implements Control<Account> {
   private Logger log = LoggerFactory.getLogger(GetMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
-  private final Token token;
+  private final String email;
 
-  public GetMyAccountControl(Token token) {
-    this.token = token;
+  public GetMyAccountControl(String email) {
+    this.email = email;
   }
 
   @Override
   public <T> T execute(ResultBuilder<T, Account> result) {
-    log.info("Retrieving my Account " + token.getName());
+    log.info("Retrieving my Account " + email);
 
-    Specification<Account> myName = new UserByEmailSpec(token.getName());
+    Specification<Account> myName = new UserByEmailSpec(email);
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {

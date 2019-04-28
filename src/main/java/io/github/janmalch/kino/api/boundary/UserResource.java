@@ -51,7 +51,7 @@ public class UserResource {
 
     var myAccountToken = securityContext.getUserPrincipal();
 
-    GetMyAccountControl control = new GetMyAccountControl((Token) myAccountToken);
+    GetMyAccountControl control = new GetMyAccountControl(myAccountToken.getName());
 
     return control.execute(new ResponseResultBuilder<>());
   }
@@ -67,7 +67,7 @@ public class UserResource {
     log.info(data.toString());
     var myAccountToken = securityContext.getUserPrincipal();
 
-    EditMyAccountControl control = new EditMyAccountControl((Token) myAccountToken, data);
+    EditMyAccountControl control = new EditMyAccountControl(myAccountToken.getName(), data);
 
     return control.execute(new ResponseResultBuilder<>());
   }
