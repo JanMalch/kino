@@ -1,5 +1,6 @@
 language: java
 jdk: openjdk11
+dist: xenial
 
 sudo: false # faster builds
 install: true
