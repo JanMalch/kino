@@ -9,29 +9,34 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
+import io.github.janmalch.kino.security.JwtTokenBlacklist;
+import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
+import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.util.Mapper;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EditMyAccountControl implements Control<Account> {
+public class EditMyAccountControl implements Control<Token> {
 
   private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
+  private JwtTokenBlacklist blacklist = JwtTokenBlacklist.getInstance();
+  private JwtTokenFactory factory = new JwtTokenFactory();
 
-  private final String email;
+  private final Token token;
   private final AccountDto data;
 
-  public EditMyAccountControl(String email, AccountDto data) {
-    this.email = email;
+  public EditMyAccountControl(Token token, AccountDto data) {
+    this.token = token;
     this.data = data;
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Account> result) {
-    log.info("Editing my Account " + email);
-    Specification<Account> myName = new UserByEmailSpec(email);
+  public <T> T execute(ResultBuilder<T, Token> result) {
+    log.info("Editing my Account " + token.getName());
+    Specification<Account> myName = new UserByEmailSpec(token.getName());
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {
@@ -44,8 +49,13 @@ public class EditMyAccountControl implements Control<Account> {
 
     var mapper = new UpdateMyAccountMapper();
     var entity = mapper.updateEntity(data, myAccount.get());
-    repository.update(entity);
-    return result.success(entity, "My Account was successfully updated");
+    if (!data.getEmail().equals(token.getName())) {
+      repository.update(entity);
+      blacklist.addToBlackList(token);
+      return result.success(
+          factory.generateToken(data.getEmail()), "My Account was successfully updated");
+    }
+    return result.success(null, "My Account was successfully updated");
   }
 
   static class UpdateMyAccountMapper implements Mapper<Account, AccountDto> {

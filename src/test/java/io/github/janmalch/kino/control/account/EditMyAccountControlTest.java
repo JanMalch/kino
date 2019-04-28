@@ -45,19 +45,17 @@ class EditMyAccountControlTest {
     Token token = factory.generateToken("existing@example.com");
 
     var control = new EditMyAccountControl(token, updateAccountDto);
-    var builder = new ResponseResultBuilder<Account>();
+    var builder = new ResponseResultBuilder<Token>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
     var success = (Success) response.getEntity();
-    Account myAccount = (Account) success.getData();
-    assertEquals(myAccount.getEmail(), updateAccountDto.getEmail());
-    assertEquals(myAccount.getRole(), Role.CUSTOMER);
-    assertTrue(
-        pm.isSamePassword("NewPassword", myAccount.getHashedPassword(), myAccount.getSalt()));
+    Token myAccountToken = (Token) success.getData();
+    assertNotNull(myAccountToken);
+    assertEquals(myAccountToken.getName(), updateAccountDto.getEmail());
   }
 
   @Test
-  void updateMyAccountWithnoNewDataAvailable() {
+  void updateMyAccountWithNoNewDataAvailable() {
     Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
     PasswordManager pm = new PasswordManager();
     var salt = pm.generateSalt();
@@ -73,18 +71,18 @@ class EditMyAccountControlTest {
     repository.add(existing);
 
     var updateAccountDto = new AccountDto();
+    updateAccountDto.setEmail("existing@example.com");
 
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("existing@example.com");
 
     var control = new EditMyAccountControl(token, updateAccountDto);
-    var builder = new ResponseResultBuilder<Account>();
+    var builder = new ResponseResultBuilder<Token>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
     var success = (Success) response.getEntity();
-    Account myAccount = (Account) success.getData();
-    assertEquals(myAccount.getEmail(), existing.getEmail());
-    assertEquals(myAccount.getFirstName(), existing.getFirstName());
+    Token myAccountToken = (Token) success.getData();
+    assertNull(myAccountToken);
   }
 
   @Test
@@ -107,7 +105,7 @@ class EditMyAccountControlTest {
     Token token = factory.generateToken("TestUser2@mail.de");
 
     var control = new EditMyAccountControl(token, updateAccountDto);
-    var builder = new ResponseResultBuilder<Account>();
+    var builder = new ResponseResultBuilder<Token>();
     var response = control.execute(builder);
     assertEquals(400, response.getStatus());
   }
