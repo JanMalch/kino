@@ -87,8 +87,8 @@ class UserResourceTest {
     var response = resource.editMyAccount(dto, context);
     assertEquals(200, response.getStatus());
     var success = (Success) response.getEntity();
-    Account myAccount = (Account) success.getData();
-    assertEquals(dto.getEmail(), myAccount.getEmail());
+    Token myAccountToken = (Token) success.getData();
+    assertEquals(dto.getEmail(), myAccountToken.getName());
   }
 
   @Test

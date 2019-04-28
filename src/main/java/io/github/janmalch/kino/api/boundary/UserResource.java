@@ -61,13 +61,13 @@ public class UserResource {
   @RolesAllowed("CUSTOMER")
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Updates own profile", response = AccountDto.class)
+  @ApiOperation(value = "Updates own profile", response = TokenDto.class)
   public Response editMyAccount(AccountDto data, @Context SecurityContext securityContext) {
     log.info("------------------ BEGIN EDIT MY-ACCOUNT REQUEST ------------------");
     log.info(data.toString());
     var myAccountToken = securityContext.getUserPrincipal();
 
-    EditMyAccountControl control = new EditMyAccountControl(myAccountToken.getName(), data);
+    EditMyAccountControl control = new EditMyAccountControl((Token) myAccountToken, data);
 
     return control.execute(new ResponseResultBuilder<>());
   }

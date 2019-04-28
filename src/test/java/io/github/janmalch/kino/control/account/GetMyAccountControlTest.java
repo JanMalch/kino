@@ -26,7 +26,7 @@ class GetMyAccountControlTest {
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("existing@example.com");
 
-    var control = new GetMyAccountControl(token);
+    var control = new GetMyAccountControl(token.getName());
     var builder = new ResponseResultBuilder<Account>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
@@ -47,7 +47,7 @@ class GetMyAccountControlTest {
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("TestUser2@mail.de");
 
-    var control = new GetMyAccountControl(token);
+    var control = new GetMyAccountControl(token.getName());
     var builder = new ResponseResultBuilder<Account>();
     var response = control.execute(builder);
     assertEquals(400, response.getStatus());
