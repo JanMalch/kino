@@ -4,8 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import io.github.janmalch.kino.api.boundary.UserResource;
+import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.api.model.LoginDto;
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -28,12 +29,14 @@ class LogInControlTest {
 
   private void createUser() {
     var resource = new UserResource();
-    var dto = new SignUpDto();
+    var dto = new AccountDto();
     dto.setEmail("logIn@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
     dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
+    dto.setRole(Role.GUEST);
+
     var signUpResponse = resource.signUp(dto);
     if (signUpResponse.getStatus() != 200) {
       fail("Failed to create user");
