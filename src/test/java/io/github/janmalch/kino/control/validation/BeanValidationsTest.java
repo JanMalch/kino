@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.validation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.AccountDto;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ class BeanValidationsTest {
 
   @Test
   void requireNotEmptyAll() {
-    SignUpDto data = new SignUpDto();
+    AccountDto data = new AccountDto();
     data.setEmail("test@example.com");
     data.setFirstName(""); // firstName is empty, which is not allowed
     data.setLastName("Account");
@@ -25,7 +25,7 @@ class BeanValidationsTest {
 
   @Test
   void requireNotEmptySelective() {
-    SignUpDto data = new SignUpDto();
+    AccountDto data = new AccountDto();
     data.setFirstName("Test");
     data.setEmail("test@example.com");
     // everything else will be null, but only those 2 will be checked

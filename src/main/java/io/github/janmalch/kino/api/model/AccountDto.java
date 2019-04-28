@@ -1,14 +1,17 @@
 package io.github.janmalch.kino.api.model;
 
+import io.github.janmalch.kino.entity.Role;
 import java.time.LocalDate;
 import javax.json.bind.annotation.JsonbDateFormat;
 
-public class SignUpDto {
+public class AccountDto {
 
   private String firstName;
   private String lastName;
   private String password;
   private String email;
+
+  private Role role;
 
   @JsonbDateFormat(value = "yyyy-MM-dd", locale = "de-DE")
   private LocalDate birthday;
@@ -53,9 +56,17 @@ public class SignUpDto {
     this.birthday = birthday;
   }
 
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
   @Override
   public String toString() {
-    return "SignUpDto{"
+    return "AccountDto{"
         + "firstName='"
         + firstName
         + '\''
@@ -70,6 +81,9 @@ public class SignUpDto {
         + '\''
         + ", birthday="
         + birthday
+        + '\''
+        + ", Role='"
+        + role
         + '}';
   }
 }

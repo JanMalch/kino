@@ -2,21 +2,23 @@ package io.github.janmalch.kino.control.validation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.problem.Problem;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-class SignUpDtoValidatorTest {
+class AccountDtoValidatorTest {
 
   @Test
   void validateValid() {
-    SignUpDto data = new SignUpDto();
+    AccountDto data = new AccountDto();
     data.setEmail("test@example.com");
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
+    data.setRole(Role.GUEST);
     data.setBirthday(LocalDate.now());
     SignUpDtoValidator validator = new SignUpDtoValidator();
     Optional<Problem> result = validator.validate(data);
@@ -25,11 +27,12 @@ class SignUpDtoValidatorTest {
 
   @Test
   void validatePropIsNull() {
-    SignUpDto data = new SignUpDto();
+    AccountDto data = new AccountDto();
     // email will be null
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
+    data.setRole(Role.GUEST);
     data.setBirthday(LocalDate.now());
     SignUpDtoValidator validator = new SignUpDtoValidator();
     Optional<Problem> result = validator.validate(data);

@@ -3,8 +3,9 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.entity.Account;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.UserRepository;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.time.LocalDate;
@@ -14,12 +15,13 @@ class SignUpControlTest {
 
   @Test
   void validateSignUpDto() {
-    var data = new SignUpDto();
+    var data = new AccountDto();
     data.setEmail("test@example.com");
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
     data.setBirthday(LocalDate.now());
+    data.setRole(Role.GUEST);
     var control = new SignUpControl(data);
     var result = control.validateSignUpDto();
     assertTrue(result.isEmpty());
@@ -27,7 +29,7 @@ class SignUpControlTest {
 
   @Test
   void executeWithInvalidData() {
-    var data = new SignUpDto();
+    var data = new AccountDto();
     data.setEmail("test@example.com");
     data.setFirstName("Test");
     // lastName missing
@@ -48,11 +50,12 @@ class SignUpControlTest {
     existing.setEmail("existing@example.com");
     repository.add(existing);
 
-    var data = new SignUpDto();
+    var data = new AccountDto();
     data.setEmail("existing@example.com");
     data.setFirstName("Test");
     data.setLastName("Account");
     data.setPassword("Start123");
+    data.setRole(Role.GUEST);
     data.setBirthday(LocalDate.now());
 
     var control = new SignUpControl(data);

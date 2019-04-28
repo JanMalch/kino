@@ -15,7 +15,7 @@ class DtoTests {
 
   @Test
   void signUpDto() {
-    var signUp = new SignUpDto();
+    var signUp = new AccountDto();
     signUp.setEmail("test@example.com");
     assertEquals("test@example.com", signUp.getEmail());
     assertTrue(signUp.toString().contains("test@example.com"));
