@@ -33,7 +33,7 @@ public interface Repository<D> extends TransactionProvider {
    */
   default int remove(D item) {
     var em = getEntityManager();
-    inTransaction(() -> em.remove(item));
+    inTransaction(() -> em.remove(em.contains(item) ? item : em.merge(item)));
     return 1;
   }
 
