@@ -39,7 +39,8 @@ class AuthResourceTest {
 
     var signUpResponse = resource.signUp(dto);
     if (signUpResponse.getStatus() != 200) {
-      fail("Failed to create user");
+      System.out.println(signUpResponse.toString());
+      fail("Failed to create user. " + signUpResponse.getEntity());
     }
   }
 
