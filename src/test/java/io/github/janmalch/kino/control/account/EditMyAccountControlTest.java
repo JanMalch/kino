@@ -46,7 +46,11 @@ class EditMyAccountControlTest {
     var control = new EditMyAccountControl(token, updateAccountDto);
     var builder = new ResponseResultBuilder<Token>();
     var response = control.execute(builder);
-    assertEquals(200, response.getStatus());
+
+    if (response.getStatus() != 200) {
+      fail("updateMyAccount has failed " + response.getEntity());
+    }
+    // assertEquals(200, response.getStatus());
     var success = (Success) response.getEntity();
     Token myAccountToken = (Token) success.getData();
     assertNotNull(myAccountToken);
