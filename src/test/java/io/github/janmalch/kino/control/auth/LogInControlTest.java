@@ -34,6 +34,7 @@ class LogInControlTest {
     dto.setLastName("Dude");
     dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
+
     var signUpResponse = resource.signUp(dto);
     if (signUpResponse.getStatus() != 200) {
       fail("Failed to create user");

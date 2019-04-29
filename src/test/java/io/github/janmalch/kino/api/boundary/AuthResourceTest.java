@@ -20,7 +20,7 @@ class AuthResourceTest {
   @Test
   void successForJwtResultBuilder() {
     var builder = new AuthResource.JwtResultBuilder();
-    var token = new JwtTokenFactory().generateToken("test@example.com");
+    var token = new JwtTokenFactory().generateToken("test@1example.com");
     var response = builder.success(token);
     assertEquals(200, response.getStatus());
     var success = (Success) response.getEntity();
@@ -31,14 +31,16 @@ class AuthResourceTest {
   private void createUser() {
     var resource = new UserResource();
     var dto = new SignUpDto();
-    dto.setEmail("test@example.com");
+    dto.setEmail("test2@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
     dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
+
     var signUpResponse = resource.signUp(dto);
     if (signUpResponse.getStatus() != 200) {
-      fail("Failed to create user");
+      System.out.println(signUpResponse.toString());
+      fail("Failed to create user. " + signUpResponse.getEntity());
     }
   }
 
@@ -48,7 +50,7 @@ class AuthResourceTest {
 
     var resource = new AuthResource();
     var dto = new LoginDto();
-    dto.setEmail("test@example.com");
+    dto.setEmail("test2@example.com");
     dto.setPassword("Start123");
     var response = resource.logIn(dto);
     assertEquals(200, response.getStatus());
@@ -61,7 +63,7 @@ class AuthResourceTest {
   void loginFail() {
     var resource = new AuthResource();
     var dto = new LoginDto();
-    dto.setEmail("test@example.com");
+    dto.setEmail("test4@example.com");
     dto.setPassword("Start123");
     var response = resource.logIn(dto);
     assertEquals(400, response.getStatus());
