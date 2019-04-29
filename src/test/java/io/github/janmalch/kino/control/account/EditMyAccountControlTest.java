@@ -60,7 +60,7 @@ class EditMyAccountControlTest {
     var salt = pm.generateSalt();
     var existing = new Account();
     var hashedPassword = pm.hashPassword("Password", salt);
-    existing.setEmail("existing@example.com");
+    existing.setEmail("existing1@example.com");
     existing.setFirstName("Test");
     existing.setLastName("Account");
     existing.setRole(Role.CUSTOMER);
@@ -70,10 +70,10 @@ class EditMyAccountControlTest {
     repository.add(existing);
 
     var updateAccountDto = new SignUpDto();
-    updateAccountDto.setEmail("existing@example.com");
+    updateAccountDto.setEmail("existing1@example.com");
 
     JwtTokenFactory factory = new JwtTokenFactory();
-    Token token = factory.generateToken("existing@example.com");
+    Token token = factory.generateToken("existing1@example.com");
 
     var control = new EditMyAccountControl(token, updateAccountDto);
     var builder = new ResponseResultBuilder<Token>();
@@ -88,7 +88,7 @@ class EditMyAccountControlTest {
   void editMyAccountNotInRepository() {
     Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
     var existing = new Account();
-    existing.setEmail("existing@example.com");
+    existing.setEmail("existing2@example.com");
     existing.setFirstName("Test");
     existing.setLastName("Account");
     existing.setBirthday(LocalDate.now());

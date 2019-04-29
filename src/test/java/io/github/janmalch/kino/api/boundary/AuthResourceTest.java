@@ -50,7 +50,7 @@ class AuthResourceTest {
 
     var resource = new AuthResource();
     var dto = new LoginDto();
-    dto.setEmail("test3@example.com");
+    dto.setEmail("test2@example.com");
     dto.setPassword("Start123");
     var response = resource.logIn(dto);
     assertEquals(200, response.getStatus());
