@@ -2,9 +2,8 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
@@ -20,13 +19,12 @@ class UserResourceTest {
   @Test
   void signUp() {
     var resource = new UserResource();
-    var dto = new AccountDto();
+    var dto = new SignUpDto();
     dto.setEmail("signUp@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
     dto.setBirthday(LocalDate.now());
     dto.setPassword("Start123");
-    dto.setRole(Role.GUEST);
     var response = resource.signUp(dto);
     assertEquals(200, response.getStatus());
 
@@ -72,12 +70,11 @@ class UserResourceTest {
     existing.setBirthday(LocalDate.now());
     repository.add(existing);
 
-    var dto = new AccountDto();
+    var dto = new SignUpDto();
     dto.setEmail("test@example.com");
     dto.setFirstName("Test");
     dto.setLastName("Dude");
     dto.setBirthday(LocalDate.now());
-    dto.setRole(Role.CUSTOMER);
 
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("existing@example.com");

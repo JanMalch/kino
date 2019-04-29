@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.SignUpDtoValidator;
@@ -24,9 +24,9 @@ public class SignUpControl implements Control<Void> {
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
-  private final AccountDto data;
+  private final SignUpDto data;
 
-  public SignUpControl(AccountDto data) {
+  public SignUpControl(SignUpDto data) {
     this.data = data;
   }
 
@@ -77,18 +77,18 @@ public class SignUpControl implements Control<Void> {
                 .build());
   }
 
-  public static class SignUpMapper implements Mapper<Account, AccountDto> {
+  public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
     private final PasswordManager pm = new PasswordManager();
     private final ReflectionMapper mapper = new ReflectionMapper();
 
     @Override
-    public Account mapToEntity(AccountDto accountDto) {
-      var account = mapper.map(accountDto, Account.class);
+    public Account mapToEntity(SignUpDto signUpDto) {
+      var account = mapper.map(signUpDto, Account.class);
       account.setRole(Role.CUSTOMER);
 
       var salt = pm.generateSalt();
-      var hashedPw = pm.hashPassword(accountDto.getPassword(), salt);
+      var hashedPw = pm.hashPassword(signUpDto.getPassword(), salt);
       account.setSalt(salt);
       account.setHashedPassword(hashedPw);
 

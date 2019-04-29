@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.api.model.TokenDto;
 import io.github.janmalch.kino.control.account.DeleteMyAccountControl;
 import io.github.janmalch.kino.control.account.EditMyAccountControl;
@@ -31,7 +31,7 @@ public class UserResource {
   @Path("sign-up")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response signUp(AccountDto data) {
+  public Response signUp(SignUpDto data) {
     log.info("------------------ BEGIN SIGN UP REQUEST ------------------");
     log.info(data.toString());
     var control = new SignUpControl(data);
@@ -45,7 +45,7 @@ public class UserResource {
   @RolesAllowed("CUSTOMER")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Returns own profile", response = AccountDto.class)
+  @ApiOperation(value = "Returns own profile", response = SignUpDto.class)
   public Response getMyAccount(@Context SecurityContext securityContext) {
     log.info("------------------ BEGIN GET MY-ACCOUNT REQUEST ------------------");
 
@@ -62,7 +62,7 @@ public class UserResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Updates own profile", response = TokenDto.class)
-  public Response editMyAccount(AccountDto data, @Context SecurityContext securityContext) {
+  public Response editMyAccount(SignUpDto data, @Context SecurityContext securityContext) {
     log.info("------------------ BEGIN EDIT MY-ACCOUNT REQUEST ------------------");
     log.info(data.toString());
     var myAccountToken = securityContext.getUserPrincipal();

@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.validation;
 
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.util.Contract;
 import java.util.Optional;
@@ -10,10 +10,10 @@ import java.util.Optional;
  * @see BeanValidations#requireNotEmpty(String...)
  */
 @Deprecated
-public class SignUpDtoValidator implements Validator<AccountDto> {
+public class SignUpDtoValidator implements Validator<SignUpDto> {
 
   @Override
-  public Optional<Problem> validate(AccountDto data) {
+  public Optional<Problem> validate(SignUpDto data) {
     Contract.require(data != null, "SignUp data is null");
 
     var validator = new BeanValidations<>(data, "sign-up");

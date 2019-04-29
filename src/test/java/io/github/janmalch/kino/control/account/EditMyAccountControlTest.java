@@ -3,7 +3,7 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.Repository;
@@ -33,13 +33,12 @@ class EditMyAccountControlTest {
     existing.setBirthday(LocalDate.now());
     repository.add(existing);
 
-    var updateAccountDto = new AccountDto();
+    var updateAccountDto = new SignUpDto();
     updateAccountDto.setEmail("updatedEmail@example.com");
     updateAccountDto.setFirstName("Test1");
     updateAccountDto.setLastName("Account1");
     updateAccountDto.setPassword("NewPassword");
     updateAccountDto.setBirthday(LocalDate.now());
-    updateAccountDto.setRole(Role.ADMIN); // should not be changed
 
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("existing@example.com");
@@ -70,7 +69,7 @@ class EditMyAccountControlTest {
     existing.setBirthday(LocalDate.now());
     repository.add(existing);
 
-    var updateAccountDto = new AccountDto();
+    var updateAccountDto = new SignUpDto();
     updateAccountDto.setEmail("existing@example.com");
 
     JwtTokenFactory factory = new JwtTokenFactory();
@@ -95,7 +94,7 @@ class EditMyAccountControlTest {
     existing.setBirthday(LocalDate.now());
     repository.add(existing);
 
-    var updateAccountDto = new AccountDto();
+    var updateAccountDto = new SignUpDto();
     updateAccountDto.setEmail("updatedEmail@example.com");
     updateAccountDto.setFirstName("Test1");
     updateAccountDto.setLastName("Account1");

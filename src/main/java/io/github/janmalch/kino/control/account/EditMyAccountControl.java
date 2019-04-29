@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
@@ -26,9 +26,9 @@ public class EditMyAccountControl implements Control<Token> {
   private JwtTokenFactory factory = new JwtTokenFactory();
 
   private final Token token;
-  private final AccountDto data;
+  private final SignUpDto data;
 
-  public EditMyAccountControl(Token token, AccountDto data) {
+  public EditMyAccountControl(Token token, SignUpDto data) {
     this.token = token;
     this.data = data;
   }
@@ -58,10 +58,10 @@ public class EditMyAccountControl implements Control<Token> {
     return result.success(null, "My Account was successfully updated");
   }
 
-  static class UpdateMyAccountMapper implements Mapper<Account, AccountDto> {
+  static class UpdateMyAccountMapper implements Mapper<Account, SignUpDto> {
     private final PasswordManager pm = new PasswordManager();
 
-    public Account updateEntity(AccountDto partialUpdate, Account existingEntity) {
+    public Account updateEntity(SignUpDto partialUpdate, Account existingEntity) {
       if (partialUpdate.getEmail() != null) {
         existingEntity.setEmail(partialUpdate.getEmail());
       }
