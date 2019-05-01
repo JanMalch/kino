@@ -2,7 +2,7 @@ package io.github.janmalch.kino.api.model;
 
 import io.github.janmalch.kino.entity.Role;
 
-public class AccountDto extends SignUpDto {
+public class AccountInfoDto extends SignUpDto {
   private Role role;
   private long id;
 
@@ -24,7 +24,7 @@ public class AccountDto extends SignUpDto {
 
   @Override
   public String toString() {
-    return "AccountDto{"
+    return "AccountInfoDto{"
         + "id='"
         + id
         + '\''
@@ -33,9 +33,6 @@ public class AccountDto extends SignUpDto {
         + '\''
         + ", lastName='"
         + getLastName()
-        + '\''
-        + ", password='"
-        + getPassword()
         + '\''
         + ", email='"
         + getEmail()
