@@ -29,7 +29,7 @@ class AuthResourceTest {
   }
 
   private void createUser() {
-    var resource = new UserResource();
+    var resource = new AccountResource();
     var dto = new SignUpDto();
     dto.setEmail("test2@example.com");
     dto.setFirstName("Test");
