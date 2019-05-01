@@ -1,11 +1,13 @@
 package io.github.janmalch.kino.problem;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
 import javax.annotation.Nullable;
 import javax.ws.rs.core.Response;
 
+@JsonSerialize(using = ProblemSerializer.class)
 public interface Problem {
 
   URI DEFAULT_TYPE = URI.create("http://localhost:8080/kino");
