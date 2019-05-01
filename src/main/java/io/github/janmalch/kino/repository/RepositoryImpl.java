@@ -15,11 +15,6 @@ final class RepositoryImpl<T> implements Repository<T> {
   }
 
   @Override
-  public T find(long id) {
-    return em.find(entityType, id);
-  }
-
-  @Override
   public Class<T> getEntityType() {
     return entityType;
   }

@@ -50,8 +50,22 @@ public interface Repository<D> extends TransactionProvider {
   }
 
   default D find(long id) {
-    throw new UnsupportedOperationException(
-        "Finding entities by primary key is not supported for this Repository");
+    var entityType = getEntityType();
+    var em = getEntityManager();
+    return em.find(entityType, id);
+  }
+
+  default List<D> findAll() {
+    var entityType = getEntityType();
+    var em = getEntityManager();
+
+    var cb = em.getCriteriaBuilder();
+    var cq = cb.createQuery(entityType);
+    var rootEntry = cq.from(entityType);
+
+    var all = cq.select(rootEntry);
+    var allQuery = em.createQuery(all);
+    return allQuery.getResultList();
   }
 
   default List<D> query(Specification<D> specification) {
@@ -69,20 +83,6 @@ public interface Repository<D> extends TransactionProvider {
   }
 
   default Class<D> getEntityType() {
-    throw new UnsupportedOperationException(
-        "Finding entities by primary key is not supported for this Repository");
-  }
-
-  default List<D> findAll() {
-    var entityType = getEntityType();
-    var em = getEntityManager();
-
-    var cb = em.getCriteriaBuilder();
-    var cq = cb.createQuery(entityType);
-    var rootEntry = cq.from(entityType);
-
-    var all = cq.select(rootEntry);
-    var allQuery = em.createQuery(all);
-    return allQuery.getResultList();
+    throw new UnsupportedOperationException("Entity type not provided by this repository");
   }
 }
