@@ -20,6 +20,11 @@ final class RepositoryImpl<T> implements Repository<T> {
   }
 
   @Override
+  public Class<T> getEntityType() {
+    return entityType;
+  }
+
+  @Override
   public EntityManager getEntityManager() {
     return em;
   }

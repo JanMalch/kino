@@ -67,4 +67,22 @@ public interface Repository<D> extends TransactionProvider {
       return Optional.empty();
     }
   }
+
+  default Class<D> getEntityType() {
+    throw new UnsupportedOperationException(
+        "Finding entities by primary key is not supported for this Repository");
+  }
+
+  default List<D> findAll() {
+    var entityType = getEntityType();
+    var em = getEntityManager();
+
+    var cb = em.getCriteriaBuilder();
+    var cq = cb.createQuery(entityType);
+    var rootEntry = cq.from(entityType);
+
+    var all = cq.select(rootEntry);
+    var allQuery = em.createQuery(all);
+    return allQuery.getResultList();
+  }
 }
