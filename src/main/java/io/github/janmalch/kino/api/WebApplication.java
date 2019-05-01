@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.api;
 
+import io.github.janmalch.kino.repository.RepositoryProducer;
 import io.github.janmalch.kino.security.AuthorizationFilter;
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
@@ -22,6 +23,7 @@ public class WebApplication extends ResourceConfig {
     register(AuthorizationFilter.class);
     register(APIExceptionMapper.class);
 
+    register(RepositoryProducer.class);
     register(LoggerProducer.class);
 
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
