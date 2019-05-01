@@ -1,13 +1,11 @@
 package io.github.janmalch.kino.api;
 
-import io.github.janmalch.kino.api.boundary.PingResource;
-import io.github.janmalch.kino.api.boundary.UserResource;
 import io.github.janmalch.kino.security.AuthorizationFilter;
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 
-@ApplicationPath("/")
+@ApplicationPath("api")
 public class WebApplication extends ResourceConfig {
 
   public WebApplication() {
@@ -20,9 +18,11 @@ public class WebApplication extends ResourceConfig {
     beanConfig.setResourcePackage("io.github.janmalch.kino.api.boundary");
     beanConfig.setScan(true);
 
-    register(PingResource.class);
-    register(UserResource.class);
+    packages("io.github.janmalch.kino.api.boundary");
     register(AuthorizationFilter.class);
+    register(APIExceptionMapper.class);
+
+    register(LoggerProducer.class);
 
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
     register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
