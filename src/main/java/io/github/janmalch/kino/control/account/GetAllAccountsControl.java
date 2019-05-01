@@ -1,13 +1,12 @@
 package io.github.janmalch.kino.control.account;
 
-import static io.github.janmalch.kino.util.functions.FunctionUtils.mapToDto;
-
 import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +19,11 @@ public class GetAllAccountsControl implements Control<List<AccountInfoDto>> {
   @Override
   public <T> T execute(ResultBuilder<T, List<AccountInfoDto>> result) {
     var repositoryList = repository.findAll();
+    var mapper = new ReflectionMapper();
 
     for (Account acc : repositoryList) {
-      accountList.add(mapToDto(acc));
+      var dto = mapper.map(acc, AccountInfoDto.class);
+      accountList.add(dto);
     }
     return result.success(accountList);
   }
