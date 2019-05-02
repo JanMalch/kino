@@ -12,7 +12,7 @@ public class Account {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
-  @OneToMany(mappedBy = "account")
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Reservation> reservations;
 
   private String firstName;
