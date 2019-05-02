@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.api.model.TokenDto;
@@ -112,6 +113,32 @@ public class AccountResource {
   public Response getAllAccounts() {
     log.info("------------------ BEGIN GET ALL ACCOUNTS ------------------");
     GetAllAccountsControl control = new GetAllAccountsControl();
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("{id}")
+  @Secured
+  @RolesAllowed("ADMIN")
+  @DELETE
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Deletes an account", response = Object.class)
+  public Response deleteAccount(@PathParam("id") long id) {
+    log.info("------------------ BEGIN DELETE ACCOUNT BY ID REQUEST ------------------");
+    DeleteAccountByIdControl control = new DeleteAccountByIdControl(id);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("{id}")
+  @Secured
+  @RolesAllowed("ADMIN")
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Edit an account", response = AccountDto.class)
+  public Response editAccountById(AccountDto data) {
+    log.info("------------------ BEGIN DELETE ACCOUNT BY ID REQUEST ------------------");
+    EditAccountById control = new EditAccountById(data);
     return control.execute(new ResponseResultBuilder<>());
   }
 }
