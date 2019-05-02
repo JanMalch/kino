@@ -3,10 +3,9 @@ package io.github.janmalch.kino.control.account;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.problem.Problem;
+import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,15 +22,8 @@ public class DeleteAccountByIdControl implements Control<Void> {
   @Override
   public <T> T execute(ResultBuilder<T, Void> result) {
     log.info("Deleting Account ID: " + id);
-    var repoAcc = repository.find(id);
-    if (repoAcc == null) {
-      return result.failure(
-          Problem.builder(Response.Status.NOT_FOUND)
-              .type("Cannot delete Account")
-              .instance()
-              .build());
-    }
-    repository.remove(repoAcc);
+    var account = Problems.requireEntity(repository.find(id), id, "No account found");
+    repository.remove(account);
     return result.success(null, "Account successfully deleted");
   }
 }
