@@ -43,7 +43,8 @@ public interface Problem {
   }
 
   static ProblemBuilder builder(Response.StatusType status) {
-    return Problem.builder().status(status).title(status.getReasonPhrase());
+    var type = status.toEnum().name().toLowerCase().replaceAll("_", "-");
+    return Problem.builder().type(type).status(status).title(status.getReasonPhrase());
   }
 
   static Problem valueOf(Response.StatusType status) {

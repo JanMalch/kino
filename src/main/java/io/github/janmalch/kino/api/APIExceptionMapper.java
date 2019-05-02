@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api;
 
 import io.github.janmalch.kino.problem.Problem;
+import io.github.janmalch.kino.problem.ThrowableProblem;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -13,9 +14,17 @@ public class APIExceptionMapper implements ExceptionMapper<Exception> {
 
   @Override
   public Response toResponse(Exception e) {
-    Problem problem = Problem.builder(Response.Status.INTERNAL_SERVER_ERROR).instance().build();
     log.warn("Exception handled by APIExceptionMapper");
-    log.warn(Problem.toString(problem), e);
-    return new ResponseResultBuilder<>().failure(problem);
+    var problem = Problem.builder(Response.Status.INTERNAL_SERVER_ERROR).instance().build();
+
+    if (e instanceof ThrowableProblem) {
+      problem = ((ThrowableProblem) e).getProblem();
+      log.warn(Problem.toString(problem) + "\n", e.getCause());
+    } else {
+      log.warn(Problem.toString(problem) + "\n", e);
+    }
+
+    var builder = new ResponseResultBuilder<>();
+    return builder.failure(problem);
   }
 }
