@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-public class Seat {
+public class Seat implements Identifiable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;

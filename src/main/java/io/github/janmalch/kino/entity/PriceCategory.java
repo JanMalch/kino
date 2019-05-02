@@ -5,7 +5,7 @@ import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
-public class PriceCategory {
+public class PriceCategory implements Identifiable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
