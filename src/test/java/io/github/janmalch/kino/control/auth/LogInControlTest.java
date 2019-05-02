@@ -3,7 +3,7 @@ package io.github.janmalch.kino.control.auth;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import io.github.janmalch.kino.api.boundary.UserResource;
+import io.github.janmalch.kino.api.boundary.AccountResource;
 import io.github.janmalch.kino.api.model.LoginDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
@@ -27,7 +27,7 @@ class LogInControlTest {
   }
 
   private void createUser() {
-    var resource = new UserResource();
+    var resource = new AccountResource();
     var dto = new SignUpDto();
     dto.setEmail("logIn@example.com");
     dto.setFirstName("Test");
