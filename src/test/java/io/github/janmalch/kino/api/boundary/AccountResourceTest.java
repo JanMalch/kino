@@ -2,13 +2,16 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenFactory;
+import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.security.TokenSecurityContext;
 import io.github.janmalch.kino.success.Success;
@@ -32,7 +35,7 @@ class AccountResourceTest {
 
     // check if user exists
     Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
-    var spec = new UserByEmailSpec("signUp@example.com");
+    var spec = new AccountByEmailSpec("signUp@example.com");
     var account = repository.queryFirst(spec);
     assertTrue(account.isPresent());
     assertNotEquals("Start123", account.get().getHashedPassword());
@@ -154,5 +157,51 @@ class AccountResourceTest {
     var data = success.getData();
     assertEquals(200, response.getStatus());
     assertNotNull(data);
+  }
+
+  @Test
+  void deleteAccountById() throws IOException, ClassNotFoundException {
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
+    EntityWiper ew = new EntityWiper();
+    ew.deleteAll();
+
+    var existing = new Account();
+    existing.setEmail("Test3@User.com");
+    existing.setFirstName("Test");
+    existing.setLastName("Account");
+    existing.setBirthday(LocalDate.now());
+    repository.add(existing);
+
+    var resource = new AccountResource();
+    var response = resource.deleteAccount(existing.getId());
+    assertEquals(200, response.getStatus());
+  }
+
+  @Test
+  void editAccountById() throws IOException, ClassNotFoundException {
+    Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
+    PasswordManager pm = new PasswordManager();
+
+    EntityWiper ew = new EntityWiper();
+    ew.deleteAll();
+
+    var existing = new Account();
+    var salt = pm.generateSalt();
+    existing.setEmail("Test4@User.com");
+    existing.setFirstName("Test");
+    existing.setLastName("Account");
+    existing.setBirthday(LocalDate.now());
+    existing.setSalt(salt);
+    repository.add(existing);
+
+    AccountDto dto = new AccountDto();
+    dto.setId(existing.getId());
+    dto.setEmail("TestUser1@email.de");
+    dto.setRole(Role.MODERATOR);
+    dto.setPassword("NewPassword");
+
+    var resource = new AccountResource();
+    var response = resource.editAccountById(dto);
+    assertEquals(200, response.getStatus());
   }
 }
