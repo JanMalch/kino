@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
+import static io.github.janmalch.kino.DomainAssertions.assertEntityMissing;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.AccountDto;
@@ -23,8 +24,7 @@ class EditAccountByIdTest {
 
     var control = new EditAccountById(acc);
     var builder = new EitherResultBuilder<Void>();
-    var response = control.execute(builder);
-    assertEquals(404, response.getStatus().getStatusCode());
+    assertEntityMissing(() -> control.execute(builder));
   }
 
   @Test

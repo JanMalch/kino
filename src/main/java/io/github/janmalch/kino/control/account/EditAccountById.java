@@ -4,11 +4,10 @@ import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.problem.Problem;
+import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
-import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,14 +24,8 @@ public class EditAccountById implements Control<Void> {
   @Override
   public <T> T execute(ResultBuilder<T, Void> result) {
     log.info("Editing Account ID: " + dto.getId());
-    var repoAcc = repository.find(dto.getId());
-    if (repoAcc == null) {
-      return result.failure(
-          Problem.builder(Response.Status.NOT_FOUND)
-              .type("Cannot delete Account")
-              .instance()
-              .build());
-    }
+    var repoAcc =
+        Problems.requireEntity(repository.find(dto.getId()), dto.getId(), "No account found");
 
     var mapper = new UpdateAccountMapper();
     var updatedAccount = mapper.updateMapper(dto, repoAcc);

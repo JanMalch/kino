@@ -48,8 +48,6 @@ public class DeleteMyAccountControl implements Control<Token> {
     blacklist.addToBlackList(token);
     var expiredToken = factory.invalidate();
 
-    // TODO delete Reservation and Co
-
     return result.success(expiredToken);
   }
 }

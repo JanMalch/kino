@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
+import static io.github.janmalch.kino.DomainAssertions.assertEntityMissing;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.AccountInfoDto;
@@ -42,5 +43,12 @@ class GetAccountByIdControlTest {
     assertEquals(200, response.getStatus().getStatusCode());
     assertEquals("abc@example.com", data.getEmail());
     assertEquals(existing.getId(), data.getId());
+  }
+
+  @Test
+  void executeFail() {
+    var control = new GetAccountByIdControl(-1);
+    var builder = new EitherResultBuilder<AccountInfoDto>();
+    assertEntityMissing(() -> control.execute(builder));
   }
 }
