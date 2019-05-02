@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.entity.Movie;
@@ -11,7 +11,7 @@ class ReflectionMapperTest {
 
   @Test
   void map() {
-    var mapper = new ReflectionMapper();
+    var mapper = new ReflectionMapper<Movie, MovieDto>();
     var entity = new Movie();
     entity.setId(1L);
     entity.setName("Captain Marvel");
@@ -24,7 +24,7 @@ class ReflectionMapperTest {
 
   @Test
   void update() {
-    var mapper = new ReflectionMapper();
+    var mapper = new ReflectionMapper<Movie, MovieDto>();
 
     var entity = new Movie();
     entity.setId(1L);
@@ -36,7 +36,8 @@ class ReflectionMapperTest {
     domain.setName("Wonder Woman");
     domain.setPriceCategory(createOverlongPriceCategory());
 
-    var newEntity = mapper.update(domain, entity, Movie.class);
+    var reverseMapper = new ReflectionMapper<MovieDto, Movie>();
+    var newEntity = reverseMapper.update(domain, entity, Movie.class);
     assertEquals(1L, newEntity.getId());
     assertEquals("Wonder Woman", newEntity.getName());
     assertEquals(
