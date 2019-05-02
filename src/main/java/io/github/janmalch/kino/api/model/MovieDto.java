@@ -1,6 +1,8 @@
 package io.github.janmalch.kino.api.model;
 
 import io.github.janmalch.kino.entity.PriceCategory;
+import java.util.List;
+import java.util.Objects;
 
 public class MovieDto {
 
@@ -10,6 +12,7 @@ public class MovieDto {
   private String endDate;
   private Float duration;
   private Integer ageRating;
+  private List<PresentationDto> presentations;
 
   public String getName() {
     return name;
@@ -59,23 +62,60 @@ public class MovieDto {
     this.ageRating = ageRating;
   }
 
+  public List<PresentationDto> getPresentations() {
+    return presentations;
+  }
+
+  public void setPresentations(List<PresentationDto> presentations) {
+    this.presentations = presentations;
+  }
+
   @Override
   public String toString() {
     return "MovieDto{"
         + "name='"
         + name
         + '\''
-        + ", priceCategory='"
+        + ", priceCategory="
         + priceCategory
-        + '\''
-        + ", startDate="
+        + ", startDate='"
         + startDate
-        + ", endDate="
+        + '\''
+        + ", endDate='"
         + endDate
+        + '\''
         + ", duration="
         + duration
         + ", ageRating="
         + ageRating
+        + ", presentations="
+        + presentations
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    MovieDto movieDto = (MovieDto) o;
+    return Objects.equals(getName(), movieDto.getName())
+        && Objects.equals(getPriceCategory(), movieDto.getPriceCategory())
+        && Objects.equals(getStartDate(), movieDto.getStartDate())
+        && Objects.equals(getEndDate(), movieDto.getEndDate())
+        && Objects.equals(getDuration(), movieDto.getDuration())
+        && Objects.equals(getAgeRating(), movieDto.getAgeRating())
+        && Objects.equals(getPresentations(), movieDto.getPresentations());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        getName(),
+        getPriceCategory(),
+        getStartDate(),
+        getEndDate(),
+        getDuration(),
+        getAgeRating(),
+        getPresentations());
   }
 }
