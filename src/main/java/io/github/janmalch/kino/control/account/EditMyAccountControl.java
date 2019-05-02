@@ -7,8 +7,8 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
@@ -36,7 +36,7 @@ public class EditMyAccountControl implements Control<Token> {
   @Override
   public <T> T execute(ResultBuilder<T, Token> result) {
     log.info("Editing my Account " + token.getName());
-    Specification<Account> myName = new UserByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName());
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {
@@ -47,7 +47,7 @@ public class EditMyAccountControl implements Control<Token> {
               .build());
     }
 
-    var mapper = new UpdateMyAccountMapper();
+    var mapper = new UpdateAccountMapper();
     var entity = mapper.updateEntity(data, myAccount.get());
     if (!data.getEmail().equals(token.getName())) {
       repository.update(entity);
@@ -58,10 +58,10 @@ public class EditMyAccountControl implements Control<Token> {
     return result.success(null, "My Account was successfully updated");
   }
 
-  static class UpdateMyAccountMapper implements Mapper<Account, SignUpDto> {
+  public static class UpdateAccountMapper implements Mapper<Account, SignUpDto> {
     private final PasswordManager pm = new PasswordManager();
 
-    public Account updateEntity(SignUpDto partialUpdate, Account existingEntity) {
+    Account updateEntity(SignUpDto partialUpdate, Account existingEntity) {
       if (partialUpdate.getEmail() != null) {
         existingEntity.setEmail(partialUpdate.getEmail());
       }

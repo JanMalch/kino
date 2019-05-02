@@ -6,11 +6,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-public class UserByEmailSpec implements Specification<Account> {
+public class AccountByEmailSpec implements Specification<Account> {
 
   private final String email;
 
-  public UserByEmailSpec(String email) {
+  public AccountByEmailSpec(String email) {
     this.email = email;
   }
 
