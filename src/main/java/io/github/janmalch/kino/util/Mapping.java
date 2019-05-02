@@ -3,10 +3,14 @@ package io.github.janmalch.kino.util;
 import java.util.Collections;
 import java.util.Map;
 
-public class ReflectionMapper<S, R> implements Mapping<S, R> {
+/**
+ * @param <S> the source type
+ * @param <R> the resulting type
+ */
+public interface Mapping<S, R> {
 
-  /** @see ReflectionMapper#update(Object, Object, Class, Map) */
-  public R update(S update, R existing, Class<R> targetClass) {
+  /** @see Mapping#update(Object, Object, Class, Map) */
+  default R update(S update, R existing, Class<R> targetClass) {
     return this.update(update, existing, targetClass, Collections.emptyMap());
   }
 
@@ -22,18 +26,12 @@ public class ReflectionMapper<S, R> implements Mapping<S, R> {
    * @return an instance of the same type as the existing
    * @see BeanUtils#isNullOrEmpty(Object)
    */
-  public R update(S update, R existing, Class<R> targetClass, Map<String, Object> supplies) {
-    // clone the existing into the target
-    var target = BeanUtils.clone(existing, targetClass);
-    // get updated props (not null or empty)
-    var updatedProps = BeanUtils.getNonEmptyBeanProperties(update);
-    BeanUtils.setBeanProperties(target, updatedProps);
-    BeanUtils.setBeanProperties(target, supplies);
-    return target;
+  default R update(S update, R existing, Class<R> targetClass, Map<String, Object> supplies) {
+    throw new UnsupportedOperationException();
   }
 
-  /** @see ReflectionMapper#map(Object, Class, Map) */
-  public R map(S source, Class<R> targetClass) {
+  /** @see Mapping#map(Object, Class, Map) */
+  default R map(S source, Class<R> targetClass) {
     return this.map(source, targetClass, Collections.emptyMap());
   }
 
@@ -46,9 +44,7 @@ public class ReflectionMapper<S, R> implements Mapping<S, R> {
    * @param supplies additional supplied values that will overwrite
    * @return an instance of the given targetClass, with the values from the source object
    */
-  public R map(S source, Class<R> targetClass, Map<String, Object> supplies) {
-    var result = BeanUtils.clone(source, targetClass);
-    BeanUtils.setBeanProperties(result, supplies);
-    return result;
+  default R map(S source, Class<R> targetClass, Map<String, Object> supplies) {
+    throw new UnsupportedOperationException();
   }
 }
