@@ -7,7 +7,7 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
@@ -39,7 +39,7 @@ public class LogInControl implements Control<Token> {
   public <T> T execute(ResultBuilder<T, Token> result) {
     log.info("New login from " + data.getEmail());
 
-    var query = new UserByEmailSpec(data.getEmail());
+    var query = new AccountByEmailSpec(data.getEmail());
     var referredUser = repository.queryFirst(query);
     if (referredUser.isEmpty()) {
       return result.failure(invalidLogin);

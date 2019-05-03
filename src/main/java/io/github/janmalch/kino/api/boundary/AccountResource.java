@@ -1,12 +1,11 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.api.model.TokenDto;
-import io.github.janmalch.kino.control.account.DeleteMyAccountControl;
-import io.github.janmalch.kino.control.account.EditMyAccountControl;
-import io.github.janmalch.kino.control.account.GetMyAccountControl;
-import io.github.janmalch.kino.control.account.SignUpControl;
+import io.github.janmalch.kino.control.account.*;
 import io.github.janmalch.kino.security.Secured;
 import io.github.janmalch.kino.security.Token;
 import io.swagger.annotations.Api;
@@ -20,12 +19,12 @@ import javax.ws.rs.core.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Path("user")
+@Path("account")
 @Api
-public class UserResource {
+public class AccountResource {
 
   // TODO: refactor to @Inject
-  private Logger log = LoggerFactory.getLogger(UserResource.class);
+  private Logger log = LoggerFactory.getLogger(AccountResource.class);
 
   @POST
   @Path("sign-up")
@@ -82,11 +81,64 @@ public class UserResource {
       value = "Deletes own profile and returns an invalid Cookie",
       response = TokenDto.class)
   public Response deleteMyAccount(@Context SecurityContext securityContext) {
-    log.info("------------------ BEGIN EDIT MY-ACCOUNT REQUEST ------------------");
+    log.info("------------------ BEGIN DELETE MY-ACCOUNT REQUEST ------------------");
     var myAccountToken = securityContext.getUserPrincipal();
 
     DeleteMyAccountControl control = new DeleteMyAccountControl((Token) myAccountToken);
 
     return control.execute(new AuthResource.JwtResultBuilder());
+  }
+
+  @Path("{id}")
+  @Secured
+  @RolesAllowed("MODERATOR")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Retrieves the account for the given ID", response = AccountInfoDto.class)
+  public Response getAccountById(@PathParam("id") long id) {
+    log.info("------------------ BEGIN GET ACCOUNT BY ID REQUEST ------------------");
+    GetAccountByIdControl control = new GetAccountByIdControl(id);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("")
+  @Secured
+  @RolesAllowed("MODERATOR")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(
+      value = "Retrieves all accounts",
+      response = AccountInfoDto.class,
+      responseContainer = "List")
+  public Response getAllAccounts() {
+    log.info("------------------ BEGIN GET ALL ACCOUNTS ------------------");
+    GetAllAccountsControl control = new GetAllAccountsControl();
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("{id}")
+  @Secured
+  @RolesAllowed("ADMIN")
+  @DELETE
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Deletes an account", response = Object.class)
+  public Response deleteAccount(@PathParam("id") long id) {
+    log.info("------------------ BEGIN DELETE ACCOUNT BY ID REQUEST ------------------");
+    DeleteAccountByIdControl control = new DeleteAccountByIdControl(id);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("{id}")
+  @Secured
+  @RolesAllowed("ADMIN")
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Edit an account", response = AccountDto.class)
+  public Response editAccountById(AccountDto data) {
+    log.info("------------------ BEGIN DELETE ACCOUNT BY ID REQUEST ------------------");
+    EditAccountById control = new EditAccountById(data);
+    return control.execute(new ResponseResultBuilder<>());
   }
 }

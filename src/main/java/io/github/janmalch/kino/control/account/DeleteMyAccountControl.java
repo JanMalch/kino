@@ -6,8 +6,8 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
@@ -32,7 +32,7 @@ public class DeleteMyAccountControl implements Control<Token> {
   public <T> T execute(ResultBuilder<T, Token> result) {
     log.info("Deleting my Account " + token.getName());
 
-    Specification<Account> myName = new UserByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName());
     var account = repository.queryFirst(myName);
 
     if (account.isEmpty()) {
@@ -47,8 +47,6 @@ public class DeleteMyAccountControl implements Control<Token> {
 
     blacklist.addToBlackList(token);
     var expiredToken = factory.invalidate();
-
-    // TODO delete Reservation and Co
 
     return result.success(expiredToken);
   }

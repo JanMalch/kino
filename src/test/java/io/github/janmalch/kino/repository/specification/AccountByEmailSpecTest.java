@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class UserByEmailSpecTest {
+class AccountByEmailSpecTest {
 
   @Test
   void toQuery() {
-    var spec = new UserByEmailSpec("test@example.com");
+    var spec = new AccountByEmailSpec("test@example.com");
     assertNotNull(spec.toQuery());
   }
 }

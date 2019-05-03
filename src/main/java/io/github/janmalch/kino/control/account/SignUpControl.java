@@ -9,8 +9,8 @@ import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
@@ -59,7 +59,7 @@ public class SignUpControl implements Control<Void> {
   }
 
   Optional<Problem> checkIfEmailExists() {
-    Specification<Account> presentCheck = new UserByEmailSpec(data.getEmail());
+    Specification<Account> presentCheck = new AccountByEmailSpec(data.getEmail());
     Optional<Account> referredUser = repository.queryFirst(presentCheck);
 
     // if a value is present, it means that the user exists and a Problem will be created
@@ -80,7 +80,7 @@ public class SignUpControl implements Control<Void> {
   public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
     private final PasswordManager pm = new PasswordManager();
-    private final ReflectionMapper mapper = new ReflectionMapper();
+    private final ReflectionMapper<SignUpDto, Account> mapper = new ReflectionMapper<>();
 
     @Override
     public Account mapToEntity(SignUpDto signUpDto) {

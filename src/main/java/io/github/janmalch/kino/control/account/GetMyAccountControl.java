@@ -6,8 +6,8 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class GetMyAccountControl implements Control<Account> {
   public <T> T execute(ResultBuilder<T, Account> result) {
     log.info("Retrieving my Account " + email);
 
-    Specification<Account> myName = new UserByEmailSpec(email);
+    Specification<Account> myName = new AccountByEmailSpec(email);
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {
