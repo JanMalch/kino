@@ -14,7 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("prices")
+@Path("price")
 @Api
 public class PriceCategoryResource {
 
