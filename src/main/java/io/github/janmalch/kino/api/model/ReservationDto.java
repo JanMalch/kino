@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ReservationDto {
@@ -22,5 +23,18 @@ public class ReservationDto {
 
   public void setSeatIds(Set<Long> seatIds) {
     this.seatIds = seatIds;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof ReservationDto)) return false;
+    ReservationDto that = (ReservationDto) o;
+    return presentationId == that.presentationId && seatIds.equals(that.seatIds);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(seatIds, presentationId);
   }
 }
