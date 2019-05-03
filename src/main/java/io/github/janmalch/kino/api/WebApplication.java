@@ -1,7 +1,9 @@
 package io.github.janmalch.kino.api;
 
 import io.github.janmalch.kino.api.boundary.AccountResource;
+import io.github.janmalch.kino.api.boundary.AuthResource;
 import io.github.janmalch.kino.api.boundary.PingResource;
+import io.github.janmalch.kino.api.boundary.PriceCategoryResource;
 import io.github.janmalch.kino.security.AuthorizationFilter;
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
@@ -23,6 +25,9 @@ public class WebApplication extends ResourceConfig {
     register(PingResource.class);
     register(AccountResource.class);
     register(AuthorizationFilter.class);
+    register(AuthResource.class);
+    register(PriceCategoryResource.class);
+    register(ValidationExceptionMapper.class);
 
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
     register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
