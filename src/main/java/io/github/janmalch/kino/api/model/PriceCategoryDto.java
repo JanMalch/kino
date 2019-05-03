@@ -2,12 +2,9 @@ package io.github.janmalch.kino.api.model;
 
 import java.util.Objects;
 
-public class PriceCategoryDto {
+public class PriceCategoryDto extends PriceCategoryBaseDto {
 
   private long id;
-  private String name;
-  private float regularPrice;
-  private float reducedPrice;
 
   public long getId() {
     return id;
@@ -17,42 +14,18 @@ public class PriceCategoryDto {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public float getRegularPrice() {
-    return regularPrice;
-  }
-
-  public void setRegularPrice(float regularPrice) {
-    this.regularPrice = regularPrice;
-  }
-
-  public float getReducedPrice() {
-    return reducedPrice;
-  }
-
-  public void setReducedPrice(float reducedPrice) {
-    this.reducedPrice = reducedPrice;
-  }
-
   @Override
   public String toString() {
     return "PriceCategoryDto{"
         + "id="
         + id
         + ", name='"
-        + name
+        + getName()
         + '\''
         + ", regularPrice="
-        + regularPrice
+        + getRegularPrice()
         + ", reducedPrice="
-        + reducedPrice
+        + getReducedPrice()
         + '}';
   }
 
