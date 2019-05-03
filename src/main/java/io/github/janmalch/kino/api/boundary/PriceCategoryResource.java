@@ -10,6 +10,7 @@ import io.github.janmalch.kino.success.Success;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -43,12 +44,10 @@ public class PriceCategoryResource {
   @POST
   @Secured
   @RolesAllowed("MODERATOR")
+  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(
-      value = "Adds a new price category",
-      response = PriceCategoryDto.class,
-      responseContainer = "List")
-  public Response createPriceCategory(PriceCategoryBaseDto dto) {
+  @ApiOperation(value = "Adds a new price category", response = Success.class)
+  public Response createPriceCategory(@Valid PriceCategoryBaseDto dto) {
     var control = new NewEntityControl<>(dto, PriceCategory.class);
     return control.execute(new ResponseResultBuilder<>());
   }
@@ -57,9 +56,10 @@ public class PriceCategoryResource {
   @PUT
   @Secured
   @RolesAllowed("MODERATOR")
+  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Updates the given price category", response = Success.class)
-  public Response updatePriceCategory(PriceCategoryDto dto, @PathParam("id") long id) {
+  public Response updatePriceCategory(@Valid PriceCategoryDto dto, @PathParam("id") long id) {
     var control = new UpdateEntityControl<>(id, dto, PriceCategory.class);
     return control.execute(new ResponseResultBuilder<>());
   }

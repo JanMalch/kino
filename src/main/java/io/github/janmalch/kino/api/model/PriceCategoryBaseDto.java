@@ -1,10 +1,19 @@
 package io.github.janmalch.kino.api.model;
 
 import java.util.Objects;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class PriceCategoryBaseDto {
+  @NotNull
+  @Size(min = 1)
   private String name;
+
+  @DecimalMin("1.0")
   private float regularPrice;
+
+  @DecimalMin("1.0")
   private float reducedPrice;
 
   public String getName() {
