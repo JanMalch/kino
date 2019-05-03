@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
-public class Account {
+public class Account implements Identifiable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;

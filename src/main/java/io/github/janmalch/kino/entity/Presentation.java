@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class Presentation {
+public class Presentation implements Identifiable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;

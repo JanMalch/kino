@@ -80,7 +80,7 @@ public class SignUpControl implements Control<Void> {
   public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
     private final PasswordManager pm = new PasswordManager();
-    private final ReflectionMapper mapper = new ReflectionMapper();
+    private final ReflectionMapper<SignUpDto, Account> mapper = new ReflectionMapper<>();
 
     @Override
     public Account mapToEntity(SignUpDto signUpDto) {

@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-public class Reservation {
+public class Reservation implements Identifiable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
