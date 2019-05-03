@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.reservation;
 import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
+import io.github.janmalch.kino.control.generic.NewEntityControl;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.entity.Reservation;
@@ -10,25 +11,23 @@ import io.github.janmalch.kino.entity.Seat;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
-import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.util.Mapper;
+import io.github.janmalch.kino.util.Mapping;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NewReservationControl implements Control<Long> {
 
   private final ReservationDto reservationDto;
-  private final Repository<Reservation> repository;
-  private final Token token;
+  private final String mail;
 
-  public NewReservationControl(Token token, ReservationDto reservationDto) {
+  public NewReservationControl(String mail, ReservationDto reservationDto) {
     this.reservationDto = reservationDto;
-    this.repository = RepositoryFactory.createRepository(Reservation.class);
-    this.token = token;
+    this.mail = mail;
   }
 
   @Override
@@ -37,11 +36,9 @@ public class NewReservationControl implements Control<Long> {
     if (validationProblem.isPresent()) {
       return result.failure(validationProblem.get());
     }
-    var mapper = new NewReservationMapper();
-    var entity = mapper.mapToEntity(reservationDto);
 
-    repository.add(entity);
-    return result.success(entity.getId(), "Created new reservation");
+    var mapper = new NewReservationMapper();
+    return new NewEntityControl<>(reservationDto, Reservation.class, mapper).execute(result);
   }
 
   Optional<Problem> validate() {
@@ -49,40 +46,31 @@ public class NewReservationControl implements Control<Long> {
     return Optional.empty();
   }
 
-  class NewReservationMapper implements Mapper<Reservation, ReservationDto> {
+  class NewReservationMapper implements Mapping<ReservationDto, Reservation> {
 
     @Override
-    public Reservation mapToEntity(ReservationDto domain) {
-      var reservation = new Reservation();
-
-      reservation.setReservationDate(new Date());
-      reservation.setAccount(extractAccount());
-      reservation.setSeats(extractSeats(domain.getSeatIds()));
-      reservation.setPresentation(extractPresentation(domain.getPresentationId()));
-      return reservation;
-    }
-
-    private Set<Seat> extractSeats(Set<Long> seatIds) {
+    public Reservation map(
+        ReservationDto source, Class<Reservation> targetClass, Map<String, Object> supplies) {
       Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
-      Seat seat;
-      Set<Seat> seats = new HashSet<>();
-
-      for (Long id : seatIds) {
-        seat = seatRepository.find(id);
-        seats.add(seat);
-      }
-      return seats;
-    }
-
-    private Presentation extractPresentation(Long presentationId) {
       Repository<Presentation> presentationRepository =
           RepositoryFactory.createRepository(Presentation.class);
-      return presentationRepository.find(presentationId);
+
+      Set<Seat> seats =
+          source.getSeatIds().stream().map(seatRepository::find).collect(Collectors.toSet());
+      Presentation presentation = presentationRepository.find(source.getPresentationId());
+
+      Reservation reservation = new Reservation();
+      reservation.setSeats(seats);
+      reservation.setPresentation(presentation);
+      reservation.setAccount(extractAccount());
+      reservation.setReservationDate(new Date());
+
+      return reservation;
     }
 
     private Account extractAccount() {
       Repository<Account> accountRepository = RepositoryFactory.createRepository(Account.class);
-      Specification<Account> accountSpec = new UserByEmailSpec(token.getName());
+      Specification<Account> accountSpec = new AccountByEmailSpec(mail);
       var optionalAccount = accountRepository.queryFirst(accountSpec);
       return optionalAccount.get();
     }
