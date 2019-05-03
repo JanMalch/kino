@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class GetSeatsWithStatusControl implements Control<List<SeatForPresentationDto>> {
 
   private final long presentationId;
-  private final ReflectionMapper mapper = new ReflectionMapper();
+  private final ReflectionMapper<Seat, SeatForPresentationDto> mapper = new ReflectionMapper<>();
   private final Repository<Presentation> repository =
       RepositoryFactory.createRepository(Presentation.class);
 
