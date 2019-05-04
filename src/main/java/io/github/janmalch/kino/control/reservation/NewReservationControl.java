@@ -16,10 +16,7 @@ import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.util.Mapping;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 
@@ -64,7 +61,7 @@ public class NewReservationControl implements Control<Long> {
             .collect(Collectors.toSet());
 
     // Alle verfügbaren Sitze aus den angeforderten entfernen
-    var unavailableSeats = Set.copyOf(reservationDto.getSeatIds());
+    var unavailableSeats = new HashSet<>(reservationDto.getSeatIds());
     unavailableSeats.removeAll(availableIds);
     // Nicht verfügbare Sitze bleiben übrig
     if (unavailableSeats.size() > 0) {
