@@ -5,7 +5,6 @@ import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.reservation.NewReservationControl;
 import io.github.janmalch.kino.security.Secured;
-import io.github.janmalch.kino.security.Token;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
@@ -32,7 +31,7 @@ public class ReservationResource {
   public Response newReservation(
       @Context SecurityContext securityContext, ReservationDto reservationDto) {
     Control<Long> control =
-        new NewReservationControl((Token) securityContext.getUserPrincipal(), reservationDto);
+        new NewReservationControl(securityContext.getUserPrincipal().getName(), reservationDto);
     return control.execute(new ResponseResultBuilder<>());
   }
 }
