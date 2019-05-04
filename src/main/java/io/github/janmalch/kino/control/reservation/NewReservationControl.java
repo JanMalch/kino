@@ -45,11 +45,6 @@ public class NewReservationControl implements Control<Long> {
   }
 
   Optional<Problem> validate() {
-    // more validation needed?
-    return validateSeatsAvailable();
-  }
-
-  Optional<Problem> validateSeatsAvailable() {
     var seatsForPresentationControl =
         new GetSeatsWithStatusControl(reservationDto.getPresentationId());
     var result = seatsForPresentationControl.execute(new EitherResultBuilder<>());
@@ -57,27 +52,29 @@ public class NewReservationControl implements Control<Long> {
       return Optional.of(result.getProblem());
     }
 
-    var requestedSeats = reservationDto.getSeatIds();
-
-    // Überschneidung zwischen den Sitzen der Reservierung und den bereits reservierten Sitzen
-    var intersection =
+    var availableIds =
         result
             .getSuccess()
             .getData()
             .stream() // Stream mit allen Sitzen für den Saal
-            .filter(SeatForPresentationDto::isTaken) // nur die bereits gebuchten Sitze auswählen
+            .filter(
+                seatForPresentation ->
+                    !seatForPresentation.isTaken()) // nur die verfügbaren Sitze auswählen
             .map(SeatForPresentationDto::getId) // ID benötigt zum Vergleich
-            .filter(requestedSeats::contains) // Sitze rausnehmen, die NICHT bereits gebucht sind
-            .collect(Collectors.toSet()); // Schnittmenge bleibt übrig
+            .collect(Collectors.toSet());
 
-    if (intersection.size() > 0) {
+    // Alle verfügbaren Sitze aus den angeforderten entfernen
+    var unavailableSeats = Set.copyOf(reservationDto.getSeatIds());
+    unavailableSeats.removeAll(availableIds);
+    // Nicht verfügbare Sitze bleiben übrig
+    if (unavailableSeats.size() > 0) {
       var problem =
           Problem.builder()
-              .type("new-reservation/seats-taken")
-              .title("Seats in reservation are already taken")
+              .type("new-reservation/seats-unavailable")
+              .title("Some seats in the reservation are not available")
               .status(Response.Status.BAD_REQUEST)
-              .detail(String.format("%d seat(s) already taken", intersection.size()))
-              .parameter("taken_seats", intersection)
+              .detail(String.format("%d seat(s) unavailable", unavailableSeats.size()))
+              .parameter("unavailable_seats", unavailableSeats)
               .instance()
               .build();
       return Optional.of(problem);
