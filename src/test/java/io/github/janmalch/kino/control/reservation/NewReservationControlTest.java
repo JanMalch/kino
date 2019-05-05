@@ -8,7 +8,6 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
@@ -31,43 +30,19 @@ public class NewReservationControlTest {
   private Presentation presentation;
   private Set<Seat> seats;
 
-  private CinemaHall createCinemaHall(String name) {
-    CinemaHall cinemaHall = new CinemaHall();
-    cinemaHall.setName(name);
-    return cinemaHall;
-  }
-
-  private Seat createSeat(int seatNumber) {
-    Seat seat = new Seat();
-    seat.setSeatNumber(seatNumber);
-    return seat;
-  }
-
-  private Set<Seat> createSeats(int number) {
-    var seats = new HashSet<Seat>();
-    for (int i = 0; i < number; i++) {
-      seats.add(createSeat(i + 1));
-    }
-    return seats;
-  }
-
-  private Presentation createPresentation() {
-    return new Presentation();
-  }
-
   @BeforeEach
   public void setUp() {
     var account = new Account();
     account.setEmail(MAIL);
     accountRepository.add(account);
 
-    cinemaHall = createCinemaHall("first");
+    cinemaHall = ReservationTestUtil.createCinemaHall("first");
 
-    seats = createSeats(NUMBER_OF_SEATS);
+    seats = ReservationTestUtil.createSeats(NUMBER_OF_SEATS);
     seats.forEach(s -> s.setCinemaHall(cinemaHall));
     cinemaHall.setSeats(new ArrayList<>(seats));
 
-    presentation = createPresentation();
+    presentation = ReservationTestUtil.createPresentation();
     presentation.setCinemaHall(cinemaHall);
 
     cinemaHallRepository.add(cinemaHall);
