@@ -6,15 +6,14 @@ import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
-import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GenericEntityControlTest {
 
   @BeforeEach
-  void setup() throws IOException, ClassNotFoundException {
-    new EntityWiper().deleteAll();
+  void setup() {
+    new EntityWiper().wipeDB();
   }
 
   @Test
