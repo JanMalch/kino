@@ -84,27 +84,6 @@ public class NewReservationControlTest {
     return seats.stream().limit(dtoSeatIdAmount).map(Seat::getId).collect(Collectors.toSet());
   }
 
-  /*  @BeforeEach
-  public void setUp() {
-
-    seats = getSeats(6);
-    seatIds = seats.stream().map(Seat::getId).collect(Collectors.toSet());
-
-    CinemaHall cinemaHall = new CinemaHall();
-    cinemaHall.setSeats(new ArrayList<>(seats));
-    cinemaHallRepository.add(cinemaHall);
-
-
-    Presentation presentation = new Presentation();
-    presentation.setCinemaHall(cinemaHall);
-    presentationRepository.add(presentation);
-    presentationId = presentation.getId();
-
-    var account = new Account();
-    account.setEmail(mail);
-    accountRepository.add(account);
-  }*/
-
   @AfterEach
   public void tearDown() {
     var ew = new EntityWiper();
