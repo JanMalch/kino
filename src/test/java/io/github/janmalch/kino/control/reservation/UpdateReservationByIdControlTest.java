@@ -14,7 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UpdateReservationControlTest {
+public class UpdateReservationByIdControlTest {
 
   private final Repository<Presentation> presentationRepository =
       RepositoryFactory.createRepository(Presentation.class);
@@ -90,7 +90,7 @@ public class UpdateReservationControlTest {
     updateReservationDto.setPresentationId(existingReservation.getPresentation().getId());
 
     var updateControl =
-        new UpdateReservationControl(existingReservation.getId(), updateReservationDto);
+        new UpdateReservationByIdControl(existingReservation.getId(), updateReservationDto);
     var updateResult = updateControl.execute(new EitherResultBuilder<>());
 
     assertTrue(updateResult.isSuccess());

@@ -13,12 +13,12 @@ import io.github.janmalch.kino.util.Mapping;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class UpdateReservationControl implements Control<Void> {
+public class UpdateReservationByIdControl implements Control<Void> {
 
   private final ReservationDto reservationDto;
   private final long id;
 
-  public UpdateReservationControl(long id, ReservationDto reservationDto) {
+  public UpdateReservationByIdControl(long id, ReservationDto reservationDto) {
     this.reservationDto = reservationDto;
     this.id = id;
   }
