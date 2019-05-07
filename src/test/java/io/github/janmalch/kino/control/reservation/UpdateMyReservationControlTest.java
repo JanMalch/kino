@@ -2,8 +2,10 @@ package io.github.janmalch.kino.control.reservation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.problem.ThrowableProblem;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,12 @@ public class UpdateMyReservationControlTest {
   @BeforeEach
   public void setUp() {
     util = new ReservationTestUtil();
+  }
+
+  @AfterEach
+  public void tearDown() {
+    var ew = new EntityWiper();
+    ew.wipeDB();
   }
 
   @Test
