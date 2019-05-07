@@ -27,7 +27,7 @@ public class UpdateMyReservationControl implements Control<Void> {
     var optionalReservation = reservationRepository.queryFirst(spec);
     var reservation =
         Problems.requireEntity(
-            optionalReservation.get(), id, "No such " + Reservation.class.getSimpleName());
+            optionalReservation.orElse(null), id, "No such " + Reservation.class.getSimpleName());
 
     return new UpdateReservationByIdControl(reservation.getId(), reservationDto).execute(result);
   }

@@ -2,6 +2,7 @@ package io.github.janmalch.kino.control.reservation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.janmalch.kino.problem.ThrowableProblem;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,11 +38,6 @@ public class UpdateMyReservationControlTest {
         new UpdateMyReservationControl(
             "expected@fail.com", existingReservation.getId(), updateReservationDto);
 
-    try {
-      control.execute(new EitherResultBuilder<>());
-      fail();
-    } catch (Exception problem) {
-      assertNotNull(problem);
-    }
+    assertThrows(ThrowableProblem.class, () -> control.execute(new EitherResultBuilder<>()));
   }
 }
