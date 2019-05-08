@@ -4,29 +4,36 @@ import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Reservation;
-import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.repository.specification.ReservationByEmailAndIdSpec;
+import io.github.janmalch.kino.repository.specification.ReservationsByEmailSpec;
+import io.github.janmalch.kino.util.either.EitherResultBuilder;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class GetMyReservationsControl implements Control<ReservationInfoDto> {
+public class GetMyReservationsControl implements Control<List<ReservationInfoDto>> {
 
   private final String myAccountName;
-  private final long id;
 
-  public GetMyReservationsControl(long id, String myAccountName) {
-    this.id = id;
+  public GetMyReservationsControl(String myAccountName) {
     this.myAccountName = myAccountName;
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, ReservationInfoDto> result) {
+  public <T> T execute(ResultBuilder<T, List<ReservationInfoDto>> result) {
     var reservationRepository = RepositoryFactory.createRepository(Reservation.class);
-    var spec = new ReservationByEmailAndIdSpec(myAccountName, id);
-    var optionalReservation = reservationRepository.queryFirst(spec);
-    var reservation =
-        Problems.requireEntity(
-            optionalReservation.orElse(null), id, "No such " + Reservation.class.getSimpleName());
+    var spec = new ReservationsByEmailSpec(myAccountName);
 
-    return new GetReservationByIdControl(reservation.getId()).execute(result);
+    var reservations = reservationRepository.query(spec);
+    var reservationDtos =
+        reservations
+            .stream()
+            .map(
+                r -> {
+                  var success =
+                      new GetReservationByIdControl(r.getId()).execute(new EitherResultBuilder<>());
+                  return success.getSuccess().getData();
+                })
+            .collect(Collectors.toList());
+    return result.success(reservationDtos);
   }
 }
