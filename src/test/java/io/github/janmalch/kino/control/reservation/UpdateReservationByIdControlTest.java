@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.reservation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.entity.EntityWiper;
+import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
@@ -13,10 +14,15 @@ import org.junit.jupiter.api.Test;
 public class UpdateReservationByIdControlTest {
 
   private ReservationTestUtil util;
+  private String cinemaHallName = "first";
+  private String accountName = "update@byid.com";
+  private Presentation presentation;
+  private int numberOfSeats = 5;
 
   @BeforeEach
   public void setUp() {
     util = new ReservationTestUtil();
+    presentation = util.provideReservationSetup(cinemaHallName, numberOfSeats, accountName);
   }
 
   @AfterEach
@@ -27,9 +33,9 @@ public class UpdateReservationByIdControlTest {
 
   @Test
   public void testExecute_Valid() {
-
-    var existingReservation = util.provideNewReservation();
-    var updateReservationDto = util.getReservationDto(existingReservation);
+    var existingReservation = util.provideNewReservation(accountName, presentation.getId());
+    var updateReservationDto =
+        util.getReservationDto(existingReservation, presentation.getCinemaHall().getSeats());
 
     var updateControl =
         new UpdateReservationByIdControl(existingReservation.getId(), updateReservationDto);
