@@ -136,8 +136,8 @@ public class AccountResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Edit an account", response = AccountDto.class)
-  public Response editAccountById(AccountDto data) {
-    log.info("------------------ BEGIN DELETE ACCOUNT BY ID REQUEST ------------------");
+  public Response editAccountById(@PathParam("id") long id, AccountDto data) {
+    log.info("------------------ BEGIN EDIT ACCOUNT BY ID REQUEST ------------------");
     EditAccountById control = new EditAccountById(data);
     return control.execute(new ResponseResultBuilder<>());
   }
