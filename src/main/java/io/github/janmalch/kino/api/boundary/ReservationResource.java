@@ -60,6 +60,20 @@ public class ReservationResource {
   }
 
   @Path("{id}")
+  @DELETE
+  @Secured
+  @RolesAllowed("CUSTOMER")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "")
+  public Response deleteMyReservationById(
+      @PathParam("id") long id, @Context SecurityContext securityContext) {
+    var control =
+        new DeleteMyReservationByIdControl(id, securityContext.getUserPrincipal().getName());
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("{id}")
   @GET
   @Secured
   @RolesAllowed("MODERATOR")
@@ -90,6 +104,18 @@ public class ReservationResource {
   @ApiOperation(value = "")
   public Response updateReservationById(@PathParam("id") long id, ReservationDto reservationDto) {
     var control = new UpdateReservationByIdControl(id, reservationDto);
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  @Path("{id}")
+  @DELETE
+  @Secured
+  @RolesAllowed("MODERATOR")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "")
+  public Response deleteReservationById(@PathParam("id") long id) {
+    var control = new DeleteReservationByIdControl(id);
     return control.execute(new ResponseResultBuilder<>());
   }
 }
