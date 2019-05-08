@@ -3,9 +3,11 @@ package io.github.janmalch.kino.repository.specification;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.entity.Account;
+import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +22,12 @@ public class ReservationsByEmailSpecTest {
     account.setEmail(mail);
     accountRepository.add(account);
     accountRepository.getEntityManager().clear();
+  }
+
+  @AfterEach
+  public void tearDown() {
+    var ew = new EntityWiper();
+    ew.wipeDB();
   }
 
   @Test
