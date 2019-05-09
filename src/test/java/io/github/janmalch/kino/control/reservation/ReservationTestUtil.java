@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class ReservationTestUtil {
+public class ReservationTestUtil {
 
-  Presentation provideReservationSetup(
+  public Presentation provideReservationSetup(
       String cinemaHallName, int numberOfSeats, String accountMail) {
     var cinemaHall = provideExistingCinemaHallWithSeats(cinemaHallName, numberOfSeats);
     provideExistingAccount(accountMail);
     return provideExistingPresentationForCinemaHall(cinemaHall);
   }
 
-  ReservationDto getReservationDto(Reservation existingReservation, List<Seat> seats) {
+  public ReservationDto getReservationDto(Reservation existingReservation, List<Seat> seats) {
     var updateSeatIds = seats.stream().map(Seat::getId).collect(Collectors.toSet());
     var reservedSeatIds =
         existingReservation.getSeats().stream().map(Seat::getId).collect(Collectors.toSet());
@@ -34,7 +34,17 @@ class ReservationTestUtil {
     return updateReservationDto;
   }
 
-  Reservation provideNewReservation(String accountName, long presentationId) {
+  public ReservationDto provideNewReservationDto(long presentationId) {
+    var presentation = RepositoryFactory.createRepository(Presentation.class).find(presentationId);
+
+    var newReservationDto = new ReservationDto();
+    newReservationDto.setSeatIds(getNumberOfSeatIds(3, presentation.getCinemaHall().getSeats()));
+    newReservationDto.setPresentationId(presentation.getId());
+
+    return newReservationDto;
+  }
+
+  public Reservation provideNewReservation(String accountName, long presentationId) {
     var presentation = RepositoryFactory.createRepository(Presentation.class).find(presentationId);
 
     var newReservationDto = new ReservationDto();
