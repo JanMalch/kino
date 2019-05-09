@@ -3,6 +3,7 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.entity.PriceCategory;
 import io.github.janmalch.kino.success.Success;
@@ -56,12 +57,22 @@ class MovieResourceTest {
     assertNotNull(fetched.getStartDate(), "Updating should not overwrite with null");
   }
 
+  @Test
+  void getCurrentMovies() {
+    Long movieId = persistNewMovie();
+    var resource = new MovieResource();
+    var response = resource.getCurrentMovies();
+    var result = (MovieOverviewDto) ((Success) response.getEntity()).getData();
+    assertTrue(result.getMovies().containsKey(movieId));
+    assertFalse(result.getWeeks().isEmpty());
+  }
+
   private Long persistNewMovie() {
     var resource = new MovieResource();
     var dto = new MovieDto();
     dto.setName("Captain Marvel");
     dto.setStartDate("2019-01-01");
-    dto.setEndDate("2019-01-02");
+    dto.setEndDate("2019-12-02");
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
     dto.setPriceCategory(createPriceCategory());

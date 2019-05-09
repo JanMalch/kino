@@ -28,6 +28,7 @@ public class WebApplication extends ResourceConfig {
     register(AuthResource.class);
     register(PriceCategoryResource.class);
     register(ValidationExceptionMapper.class);
+    register(new CORSFilter());
 
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
     register(io.swagger.jaxrs.listing.SwaggerSerializers.class);

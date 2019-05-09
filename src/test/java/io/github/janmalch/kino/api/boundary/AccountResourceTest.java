@@ -201,7 +201,7 @@ class AccountResourceTest {
     dto.setPassword("NewPassword");
 
     var resource = new AccountResource();
-    var response = resource.editAccountById(dto);
+    var response = resource.editAccountById(-1, dto);
     assertEquals(200, response.getStatus());
   }
 }
