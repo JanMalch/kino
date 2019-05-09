@@ -6,12 +6,21 @@ import java.util.Objects;
 // TODO: improve redundancy
 public class MovieInfoDto {
 
+  private long id;
   private String name;
   private long priceCategoryId;
   private Date startDate;
   private Date endDate;
   private float duration;
   private int ageRating;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 
   public String getName() {
     return name;
