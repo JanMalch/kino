@@ -2,36 +2,9 @@ package io.github.janmalch.kino.api.model;
 
 import java.util.Objects;
 
-public class SeatForPresentationDto {
+public class SeatForPresentationDto extends SeatForReservationDto {
 
-  private long id;
-  private String row;
-  private int seatNumber;
   private boolean taken;
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getRow() {
-    return row;
-  }
-
-  public void setRow(String row) {
-    this.row = row;
-  }
-
-  public int getSeatNumber() {
-    return seatNumber;
-  }
-
-  public void setSeatNumber(int seatNumber) {
-    this.seatNumber = seatNumber;
-  }
 
   public boolean isTaken() {
     return taken;
@@ -45,12 +18,12 @@ public class SeatForPresentationDto {
   public String toString() {
     return "SeatForPresentationDto{"
         + "id="
-        + id
+        + getId()
         + ", row='"
-        + row
+        + getRow()
         + '\''
         + ", seatNumber="
-        + seatNumber
+        + getSeatNumber()
         + ", taken="
         + taken
         + '}';
