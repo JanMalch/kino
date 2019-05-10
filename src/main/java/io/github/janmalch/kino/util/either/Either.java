@@ -1,7 +1,6 @@
 package io.github.janmalch.kino.util.either;
 
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.success.Success;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import javax.ws.rs.core.Response;
 
 public final class Either<P> {
 
-  private final Success<P> success;
+  private final P success;
   private final Problem problem;
 
   public Either(@NotNull Problem problem) {
@@ -17,7 +16,7 @@ public final class Either<P> {
     this.problem = Objects.requireNonNull(problem);
   }
 
-  public Either(@NotNull Success<P> success) {
+  public Either(@NotNull P success) {
     this.success = Objects.requireNonNull(success);
     this.problem = null;
   }
@@ -31,11 +30,11 @@ public final class Either<P> {
   }
 
   public Response.StatusType getStatus() {
-    return this.isSuccess() ? this.success.getStatus() : this.problem.getStatus();
+    return this.isSuccess() ? Response.Status.OK : this.problem.getStatus();
   }
 
   @Nullable
-  public Success<P> getSuccess() {
+  public P getSuccess() {
     return success;
   }
 

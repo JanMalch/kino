@@ -30,6 +30,6 @@ public class RemoveMovieControl implements Control<Void> {
     }
 
     repository.remove(movie);
-    return result.success(null, "Movie has been removed");
+    return result.success("Movie has been removed");
   }
 }

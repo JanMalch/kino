@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.control.Control;
@@ -11,7 +12,6 @@ import io.github.janmalch.kino.control.movie.RemoveMovieControl;
 import io.github.janmalch.kino.control.movie.UpdateMovieControl;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.security.Secured;
-import io.github.janmalch.kino.success.Success;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
@@ -46,7 +46,7 @@ public class MovieResource {
   @Secured
   @RolesAllowed("MODERATOR")
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Deletes the movie for the given ID", response = Object.class)
+  @ApiOperation(value = "Deletes the movie for the given ID", response = SuccessMessage.class)
   public Response deleteMovie(@PathParam("id") long id) {
     var control = new RemoveMovieControl(id);
     return control.execute(new ResponseResultBuilder<>());
@@ -67,7 +67,9 @@ public class MovieResource {
   @RolesAllowed("MODERATOR")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Partially updates the movie for the given ID", response = Object.class)
+  @ApiOperation(
+      value = "Partially updates the movie for the given ID",
+      response = SuccessMessage.class)
   public Response updateMovie(MovieDto movieDto, @PathParam("id") long id) {
     var control = new UpdateMovieControl(movieDto, id);
     return control.execute(new ResponseResultBuilder<>());
@@ -76,13 +78,9 @@ public class MovieResource {
   @Path("current")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(
-      value = "Returns the list of all running movies",
-      response = MovieOverviewSuccess.class)
+  @ApiOperation(value = "Returns the list of all running movies", response = MovieOverviewDto.class)
   public Response getCurrentMovies() {
     var control = new GetCurrentMoviesControl();
     return control.execute(new ResponseResultBuilder<>());
   }
-
-  static final class MovieOverviewSuccess implements Success<MovieOverviewDto> {}
 }

@@ -1,8 +1,10 @@
 package io.github.janmalch.kino.control.account;
 
 import static io.github.janmalch.kino.DomainAssertions.assertEntityMissing;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
@@ -23,7 +25,7 @@ class EditAccountByIdTest {
     acc.setId(-1);
 
     var control = new EditAccountById(acc);
-    var builder = new EitherResultBuilder<Void>();
+    var builder = new EitherResultBuilder<SuccessMessage>();
     assertEntityMissing(() -> control.execute(builder));
   }
 
@@ -53,10 +55,9 @@ class EditAccountByIdTest {
     dto.setPassword("NewPassword");
 
     var control = new EditAccountById(dto);
-    var builder = new EitherResultBuilder<Void>();
+    var builder = new EitherResultBuilder<SuccessMessage>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus().getStatusCode());
-    var data = response.getSuccess().getData();
-    assertNull(data);
+    assertNotNull(response.getSuccess());
   }
 }

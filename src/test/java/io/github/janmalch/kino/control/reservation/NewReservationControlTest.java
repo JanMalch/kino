@@ -3,7 +3,10 @@ package io.github.janmalch.kino.control.reservation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.ReservationDto;
-import io.github.janmalch.kino.entity.*;
+import io.github.janmalch.kino.entity.EntityWiper;
+import io.github.janmalch.kino.entity.Presentation;
+import io.github.janmalch.kino.entity.Reservation;
+import io.github.janmalch.kino.entity.Seat;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.util.List;
@@ -51,7 +54,7 @@ public class NewReservationControlTest {
 
     assertTrue(result.isSuccess());
 
-    var reservation = reservationRepository.find(result.getSuccess().getData());
+    var reservation = reservationRepository.find(result.getSuccess());
     assertEquals(reservingSeatAmount, reservation.getSeats().size());
 
     var seatRepository = RepositoryFactory.createRepository(Seat.class);

@@ -8,7 +8,6 @@ import io.github.janmalch.kino.control.auth.LogInControl;
 import io.github.janmalch.kino.control.auth.LogOutControl;
 import io.github.janmalch.kino.security.Secured;
 import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.success.Success;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
@@ -65,7 +64,7 @@ public class AuthResource {
     public Response success(Token payload) {
       var dto = new TokenDto();
       dto.setToken(payload.getTokenString());
-      return Response.ok(Success.valueOf(dto)).build();
+      return Response.ok(dto).build();
     }
   }
 }

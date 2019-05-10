@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.control.movie;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
@@ -11,7 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.Response;
 
-public class UpdateMovieControl implements Control<Void> {
+public class UpdateMovieControl implements Control<SuccessMessage> {
 
   private final MovieDto movieDto;
   private final long movieId;
@@ -23,7 +24,7 @@ public class UpdateMovieControl implements Control<Void> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
     var refMovie = repository.find(movieId);
     if (refMovie == null) {
       return result.failure(Problem.builder(Response.Status.NOT_FOUND).instance().build());
@@ -32,7 +33,7 @@ public class UpdateMovieControl implements Control<Void> {
     var mapper = new UpdateMovieMapper();
     var entity = mapper.updateEntity(movieDto, refMovie);
     repository.update(entity);
-    return result.success(null, "Movie successfully updated");
+    return result.success("Movie successfully updated");
   }
 
   static class UpdateMovieMapper implements Mapper<Movie, MovieDto> {

@@ -33,7 +33,7 @@ public class NewMovieControl implements Control<Long> {
     var mapper = new NewMovieMapper();
     var entity = mapper.mapToEntity(movieDto);
     repository.add(entity);
-    return result.success(entity.getId(), "Created new movie");
+    return result.success(entity.getId());
   }
 
   Optional<Problem> validate() {

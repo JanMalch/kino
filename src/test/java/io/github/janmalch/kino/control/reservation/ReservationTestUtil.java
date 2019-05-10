@@ -56,8 +56,7 @@ public class ReservationTestUtil {
 
     assertTrue(newResult.isSuccess());
 
-    return RepositoryFactory.createRepository(Reservation.class)
-        .find(newResult.getSuccess().getData());
+    return RepositoryFactory.createRepository(Reservation.class).find(newResult.getSuccess());
   }
 
   private void provideExistingSeats(int numberOfSeats, CinemaHall cinemaHall) {

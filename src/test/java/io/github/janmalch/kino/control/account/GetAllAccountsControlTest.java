@@ -47,12 +47,11 @@ class GetAllAccountsControlTest {
     var control = new GetAllAccountsControl();
     var builder = new EitherResultBuilder<List<AccountInfoDto>>();
     var response = control.execute(builder);
-    var success = response.getSuccess();
     if (response.getStatus().getStatusCode() != 200) {
       fail("GetAllAccountsControl has failed " + response.getProblem().toString());
     }
-    var data = success.getData();
     assertEquals(200, response.getStatus().getStatusCode());
+    var data = response.getSuccess();
     assertTrue(data.size() > 0);
   }
 
@@ -63,8 +62,7 @@ class GetAllAccountsControlTest {
     var control = new GetAllAccountsControl();
     var builder = new EitherResultBuilder<List<AccountInfoDto>>();
     var response = control.execute(builder);
-    var data = response.getSuccess().getData();
-
+    var data = response.getSuccess();
     assertEquals(0, data.size());
   }
 }

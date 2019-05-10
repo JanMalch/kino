@@ -24,7 +24,6 @@ public class ReservationValidator implements Validator<ReservationDto> {
     var availableIds =
         result
             .getSuccess()
-            .getData()
             .stream() // Stream includes all seats for cinemaHall
             .filter(
                 seatForPresentation ->

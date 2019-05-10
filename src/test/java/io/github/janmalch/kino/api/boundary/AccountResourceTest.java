@@ -3,6 +3,7 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
@@ -14,9 +15,9 @@ import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.security.TokenSecurityContext;
-import io.github.janmalch.kino.success.Success;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class AccountResourceTest {
@@ -59,8 +60,7 @@ class AccountResourceTest {
     var resource = new AccountResource();
     var response = resource.getMyAccount(context);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    Account myAccount = (Account) success.getData();
+    var myAccount = (Account) response.getEntity();
     assertEquals(existing.getEmail(), myAccount.getEmail());
   }
 
@@ -88,8 +88,7 @@ class AccountResourceTest {
     var resource = new AccountResource();
     var response = resource.editMyAccount(dto, context);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    Token myAccountToken = (Token) success.getData();
+    Token myAccountToken = (Token) response.getEntity();
     assertEquals(dto.getEmail(), myAccountToken.getName());
   }
 
@@ -126,8 +125,7 @@ class AccountResourceTest {
 
     var resource = new AccountResource();
     var response = resource.getAccountById(existing.getId());
-    var success = (Success) response.getEntity();
-    var data = success.getData();
+    var data = (AccountInfoDto) response.getEntity();
     assertEquals(200, response.getStatus());
     assertNotNull(data);
   }
@@ -153,8 +151,7 @@ class AccountResourceTest {
 
     var resource = new AccountResource();
     var response = resource.getAllAccounts();
-    var success = (Success) response.getEntity();
-    var data = success.getData();
+    var data = (List<AccountInfoDto>) response.getEntity();
     assertEquals(200, response.getStatus());
     assertNotNull(data);
   }

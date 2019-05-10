@@ -24,6 +24,6 @@ public class DeleteAccountByIdControl implements Control<Void> {
     log.info("Deleting Account ID: " + id);
     var account = Problems.requireEntity(repository.find(id), id, "No account found");
     repository.remove(account);
-    return result.success(null, "Account successfully deleted");
+    return result.success("Account successfully deleted");
   }
 }

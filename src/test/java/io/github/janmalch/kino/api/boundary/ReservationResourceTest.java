@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.api.boundary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.ReservationTestUtil;
@@ -11,11 +11,9 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.security.TokenSecurityContext;
-import io.github.janmalch.kino.success.Success;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,8 +50,7 @@ public class ReservationResourceTest {
 
     var response = resource.newReservation(securityContext, reservationDto);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    var reservationId = (long) success.getData();
+    var reservationId = (long) response.getEntity();
     var reservation = RepositoryFactory.createRepository(Reservation.class).find(reservationId);
     assertEquals(reservationDto.getSeatIds().size(), reservation.getSeats().size());
     assertEquals(reservationDto.getPresentationId(), reservation.getPresentation().getId());
@@ -78,8 +75,7 @@ public class ReservationResourceTest {
 
     var response = resource.getMyReservations(securityContext);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    var reservationInfoDtos = (List<ReservationInfoDto>) success.getData();
+    var reservationInfoDtos = (List<ReservationInfoDto>) response.getEntity();
     assertEquals(2, reservationInfoDtos.size());
   }
 
@@ -93,9 +89,7 @@ public class ReservationResourceTest {
     var response =
         resource.updateMyReservation(
             securityContext, existingReservation.getId(), updateReservationDto);
-    var success = (Success) response.getEntity();
-
-    assertEquals(Response.Status.OK, success.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test
@@ -105,9 +99,7 @@ public class ReservationResourceTest {
 
     var resource = new ReservationResource();
     var response = resource.deleteMyReservationById(reservation.getId(), securityContext);
-    var success = (Success) response.getEntity();
-
-    assertEquals(Response.Status.OK, success.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test
@@ -116,9 +108,7 @@ public class ReservationResourceTest {
 
     var resource = new ReservationResource();
     var response = resource.getReservationById(reservation.getId());
-    var success = (Success) response.getEntity();
-
-    assertEquals(Response.Status.OK, success.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test
@@ -138,10 +128,9 @@ public class ReservationResourceTest {
     }
 
     var response = resource.getAllReservations();
-    var success = (Success) response.getEntity();
-    var reservationDtos = (List<ReservationInfoDto>) success.getData();
+    var reservationDtos = (List<ReservationInfoDto>) response.getEntity();
 
-    assertEquals(Response.Status.OK, success.getStatus());
+    assertEquals(200, response.getStatus());
     assertEquals(reservations.size(), reservationDtos.size());
   }
 
@@ -154,9 +143,7 @@ public class ReservationResourceTest {
     var resource = new ReservationResource();
     var response =
         resource.updateReservationById(existingReservation.getId(), updateReservationDto);
-    var success = (Success) response.getEntity();
-
-    assertEquals(Response.Status.OK, success.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test
@@ -165,8 +152,6 @@ public class ReservationResourceTest {
 
     var resource = new ReservationResource();
     var response = resource.deleteReservationById(existingReservation.getId());
-    var success = (Success) response.getEntity();
-
-    assertEquals(Response.Status.OK, success.getStatus());
+    assertEquals(200, response.getStatus());
   }
 }

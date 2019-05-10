@@ -52,10 +52,9 @@ public class EditMyAccountControl implements Control<Token> {
     if (!data.getEmail().equals(token.getName())) {
       repository.update(entity);
       blacklist.addToBlackList(token);
-      return result.success(
-          factory.generateToken(data.getEmail()), "My Account was successfully updated");
+      return result.success(factory.generateToken(data.getEmail()));
     }
-    return result.success(null, "My Account was successfully updated");
+    return result.success(token);
   }
 
   public static class UpdateAccountMapper implements Mapper<Account, SignUpDto> {
