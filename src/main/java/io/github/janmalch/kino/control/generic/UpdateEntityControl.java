@@ -6,12 +6,12 @@ import io.github.janmalch.kino.entity.Identifiable;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
 public class UpdateEntityControl<P, E extends Identifiable> implements Control<Void> {
 
-  private final Mapping<P, E> mapper;
+  private final Mapper<P, E> mapper;
   private final long id;
   private final P dto;
   private final Class<E> entityClass;
@@ -21,7 +21,7 @@ public class UpdateEntityControl<P, E extends Identifiable> implements Control<V
     this(id, dto, entityClass, new ReflectionMapper<>(entityClass));
   }
 
-  public UpdateEntityControl(long id, P dto, Class<E> entityClass, Mapping<P, E> mapper) {
+  public UpdateEntityControl(long id, P dto, Class<E> entityClass, Mapper<P, E> mapper) {
     this.id = id;
     this.dto = dto;
     this.entityClass = entityClass;

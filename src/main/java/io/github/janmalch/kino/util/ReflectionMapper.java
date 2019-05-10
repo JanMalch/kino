@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.util;
 
-public class ReflectionMapper<S, R> implements Mapping<S, R> {
+public class ReflectionMapper<S, R> implements Mapper<S, R> {
 
   private final Class<R> targetClass;
 

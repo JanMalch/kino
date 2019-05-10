@@ -12,7 +12,7 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ public class NewReservationControl implements Control<Long> {
     return new NewEntityControl<>(reservationDto, Reservation.class, mapper).execute(result);
   }
 
-  class NewReservationMapper implements Mapping<ReservationDto, Reservation> {
+  class NewReservationMapper implements Mapper<ReservationDto, Reservation> {
 
     @Override
     public Reservation map(ReservationDto source) {

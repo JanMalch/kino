@@ -4,7 +4,7 @@ package io.github.janmalch.kino.util;
  * @param <S> the source type
  * @param <R> the resulting type
  */
-public interface Mapping<S, R> {
+public interface Mapper<S, R> {
 
   /**
    * Creates a new instance, based on the data of the existing object. Afterwards all non-empty

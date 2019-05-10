@@ -13,7 +13,7 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.security.PasswordManager;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
@@ -78,7 +78,7 @@ public class SignUpControl implements Control<SuccessMessage> {
                 .build());
   }
 
-  public static class SignUpMapper implements Mapping<SignUpDto, Account> {
+  public static class SignUpMapper implements Mapper<SignUpDto, Account> {
 
     private final PasswordManager pm = new PasswordManager();
     private final ReflectionMapper<SignUpDto, Account> mapper =

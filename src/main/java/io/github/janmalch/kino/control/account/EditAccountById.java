@@ -8,7 +8,7 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public class EditAccountById implements Control<SuccessMessage> {
     return result.success("Account was successfully updated");
   }
 
-  static class UpdateAccountMapper implements Mapping<AccountDto, Account> {
+  static class UpdateAccountMapper implements Mapper<AccountDto, Account> {
     private final EditMyAccountControl.UpdateAccountMapper ua =
         new EditMyAccountControl.UpdateAccountMapper();
 

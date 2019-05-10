@@ -8,7 +8,7 @@ import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.CurrentMoviesSpec;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class GetCurrentMoviesControl implements Control<MovieOverviewDto> {
 
-  private final Mapping<Movie, MovieInfoDto> mapper = new ReflectionMapper<>(MovieInfoDto.class);
+  private final Mapper<Movie, MovieInfoDto> mapper = new ReflectionMapper<>(MovieInfoDto.class);
   private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   @Override

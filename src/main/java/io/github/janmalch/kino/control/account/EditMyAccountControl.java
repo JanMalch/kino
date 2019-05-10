@@ -13,7 +13,7 @@ import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +57,7 @@ public class EditMyAccountControl implements Control<Token> {
     return result.success(token);
   }
 
-  public static class UpdateAccountMapper implements Mapping<SignUpDto, Account> {
+  public static class UpdateAccountMapper implements Mapper<SignUpDto, Account> {
     private final PasswordManager pm = new PasswordManager();
 
     @Override

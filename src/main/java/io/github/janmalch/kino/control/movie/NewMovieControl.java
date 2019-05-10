@@ -7,7 +7,7 @@ import io.github.janmalch.kino.control.validation.BeanValidations;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.MovieRepository;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,7 +70,7 @@ public class NewMovieControl implements Control<Long> {
             });
   }
 
-  static class NewMovieMapper implements Mapping<MovieDto, Movie> {
+  static class NewMovieMapper implements Mapper<MovieDto, Movie> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 

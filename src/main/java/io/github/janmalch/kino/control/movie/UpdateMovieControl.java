@@ -7,7 +7,7 @@ import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.MovieRepository;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.Response;
@@ -36,7 +36,7 @@ public class UpdateMovieControl implements Control<SuccessMessage> {
     return result.success("Movie successfully updated");
   }
 
-  static class UpdateMovieMapper implements Mapping<MovieDto, Movie> {
+  static class UpdateMovieMapper implements Mapper<MovieDto, Movie> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 

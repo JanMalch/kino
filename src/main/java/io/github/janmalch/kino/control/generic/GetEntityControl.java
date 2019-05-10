@@ -5,12 +5,12 @@ import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
 public class GetEntityControl<P, E> implements Control<P> {
 
-  private final Mapping<E, P> mapper;
+  private final Mapper<E, P> mapper;
   private final long id;
   private final Class<E> entityClass;
   private final Repository<E> repository;
@@ -19,7 +19,7 @@ public class GetEntityControl<P, E> implements Control<P> {
     this(id, entityClass, new ReflectionMapper<>(dtoClass));
   }
 
-  public GetEntityControl(long id, Class<E> entityClass, Mapping<E, P> mapper) {
+  public GetEntityControl(long id, Class<E> entityClass, Mapper<E, P> mapper) {
     this.id = id;
     this.entityClass = entityClass;
     this.repository = RepositoryFactory.createRepository(entityClass);
