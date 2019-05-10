@@ -36,6 +36,6 @@ public class UpdateEntityControl<P, E extends Identifiable> implements Control<V
     var update = mapper.update(dto, entity, entityClass);
     update.setId(id);
     repository.update(update);
-    return result.success(null, entityClass.getSimpleName() + " successfully updated");
+    return result.success(entityClass.getSimpleName() + " successfully updated");
   }
 }

@@ -14,7 +14,7 @@ class EitherResultBuilderTest {
     var either = builder.success(1L);
     assertTrue(either.isSuccess());
     assertNotNull(either.getSuccess());
-    assertEquals(1L, either.getSuccess().getData());
+    assertEquals(1L, either.getSuccess());
     assertEquals(200, either.getStatus().getStatusCode());
 
     assertFalse(either.isFailure());

@@ -39,7 +39,7 @@ public class GetMyReservationByIdControlTest {
 
     assertTrue(result.isSuccess());
 
-    var infoDto = result.getSuccess().getData();
+    var infoDto = result.getSuccess();
     assertEquals(existingReservation.getId(), infoDto.getId());
     assertEquals(existingReservation.getPresentation().getId(), infoDto.getPresentationId());
     assertEquals(existingReservation.getSeats().size(), infoDto.getSeats().size());

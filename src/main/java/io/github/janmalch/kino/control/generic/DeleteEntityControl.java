@@ -23,6 +23,6 @@ public class DeleteEntityControl<E> implements Control<Void> {
     var entity =
         Problems.requireEntity(repository.find(id), id, "No such " + entityClass.getSimpleName());
     repository.remove(entity);
-    return result.success(null, entityClass.getSimpleName() + " has been removed");
+    return result.success(entityClass.getSimpleName() + " has been removed");
   }
 }

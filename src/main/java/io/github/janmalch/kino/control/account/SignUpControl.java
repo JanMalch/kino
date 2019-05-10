@@ -50,7 +50,7 @@ public class SignUpControl implements Control<Void> {
     repository.add(user);
 
     // -- build success response --
-    return result.success(null, "Account successfully created");
+    return result.success("Account successfully created");
   }
 
   Optional<Problem> validateSignUpDto() {

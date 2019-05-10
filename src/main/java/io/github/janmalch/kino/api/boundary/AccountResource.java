@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
@@ -122,7 +123,7 @@ public class AccountResource {
   @DELETE
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Deletes an account", response = Object.class)
+  @ApiOperation(value = "Deletes an account", response = SuccessMessage.class)
   public Response deleteAccount(@PathParam("id") long id) {
     log.info("------------------ BEGIN DELETE ACCOUNT BY ID REQUEST ------------------");
     DeleteAccountByIdControl control = new DeleteAccountByIdControl(id);

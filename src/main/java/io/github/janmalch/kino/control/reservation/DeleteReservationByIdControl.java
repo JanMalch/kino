@@ -20,6 +20,6 @@ public class DeleteReservationByIdControl implements Control<Void> {
     var reservation =
         Problems.requireEntity(reservationRepository.find(id), id, "No such reservation found");
     reservationRepository.remove(reservation);
-    return result.success(null, "Reservation successfully deleted");
+    return result.success("Reservation successfully deleted");
   }
 }

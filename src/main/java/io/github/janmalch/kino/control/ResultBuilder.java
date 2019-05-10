@@ -1,19 +1,22 @@
 package io.github.janmalch.kino.control;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.success.Success;
-import javax.annotation.Nullable;
 
 public interface ResultBuilder<T, P> {
-  T success(Success<P> payload);
+  T success(P payload);
 
-  default T success(P data, @Nullable String message) {
-    var success = Success.<P>builder().data(data).message(message).build();
-    return this.success(success);
-  }
-
-  default T success(P data) {
-    return this.success(data, null);
+  /**
+   * Constructs a success response with SuccessMessage payload with the given message
+   *
+   * @param message human-friendly message
+   * @return success for type T with SuccessMessage payload
+   * @throws ClassCastException if the ResultBuilder is not for type SuccessMessage
+   * @see SuccessMessage
+   */
+  default T success(String message) throws ClassCastException {
+    var payload = (P) new SuccessMessage(message);
+    return this.success(payload);
   }
 
   T failure(Problem problem);
