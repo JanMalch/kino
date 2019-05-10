@@ -19,7 +19,6 @@ import javax.ws.rs.core.SecurityContext;
 @Api
 public class ReservationResource {
 
-  @Path("")
   @POST
   @Secured
   @RolesAllowed("CUSTOMER")
@@ -91,7 +90,6 @@ public class ReservationResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("")
   @GET
   @Secured
   @RolesAllowed("MODERATOR")
