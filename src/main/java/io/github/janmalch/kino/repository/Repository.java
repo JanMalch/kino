@@ -85,4 +85,8 @@ public interface Repository<D> extends TransactionProvider {
   default Class<D> getEntityType() {
     throw new UnsupportedOperationException("Entity type not provided by this repository");
   }
+
+  default void close() {
+    getEntityManager().close();
+  }
 }
