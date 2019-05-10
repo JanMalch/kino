@@ -1,39 +1,30 @@
 package io.github.janmalch.kino.util;
 
-import java.util.Map;
-
 /**
  * Generic Mapper interface to map between entity and domain models
  *
  * @param <E> the Entity model
  * @param <D> the Domain model
  */
+@Deprecated(forRemoval = true)
 public interface Mapper<E, D> extends Mapping<E, D> {
+  @Deprecated
   default D mapFromEntity(E entity) {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   default E mapToEntity(D domain) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  default D update(E update, D existing, Class<D> targetClass) {
+  default D update(E update, D existing) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  default D update(E update, D existing, Class<D> targetClass, Map<String, Object> supplies) {
+  default D map(E source) {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  default D map(E source, Class<D> targetClass) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  default D map(E source, Class<D> targetClass, Map<String, Object> supplies) {
-    return this.mapFromEntity(source);
   }
 }
