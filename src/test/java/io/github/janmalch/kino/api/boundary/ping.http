@@ -1,0 +1,9 @@
+GET http://localhost:8080/kino/api/ping
+Accept: */*
+Cache-Control: no-cache
+
+> {% client.assert(response.body.response === "pong"); %}
+
+<> 2019-05-06T035519.200.json
+###
+
