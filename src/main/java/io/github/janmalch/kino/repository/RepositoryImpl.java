@@ -23,4 +23,9 @@ final class RepositoryImpl<T> implements Repository<T> {
   public EntityManager getEntityManager() {
     return em;
   }
+
+  @Override
+  public String toString() {
+    return "RepositoryImpl{" + "entityType=" + entityType + ", em=" + em + '}';
+  }
 }
