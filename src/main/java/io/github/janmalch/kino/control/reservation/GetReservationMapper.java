@@ -4,26 +4,19 @@ import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.api.model.SeatForReservationDto;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.entity.Seat;
-import io.github.janmalch.kino.util.Mapping;
+import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-class GetReservationMapper implements Mapping<Reservation, ReservationInfoDto> {
+class GetReservationMapper implements Mapper<Reservation, ReservationInfoDto> {
 
-  private final ReflectionMapper<Seat, SeatForReservationDto> seatMapper = new ReflectionMapper<>();
+  private final ReflectionMapper<Seat, SeatForReservationDto> seatMapper =
+      new ReflectionMapper<>(SeatForReservationDto.class);
 
   @Override
-  public ReservationInfoDto map(
-      Reservation reservation,
-      Class<ReservationInfoDto> targetClass,
-      Map<String, Object> supplies) {
+  public ReservationInfoDto map(Reservation reservation) {
     var seats = reservation.getSeats();
-    var mappedSeats =
-        seats
-            .stream()
-            .map(s -> seatMapper.map(s, SeatForReservationDto.class))
-            .collect(Collectors.toList());
+    var mappedSeats = seats.stream().map(seatMapper::map).collect(Collectors.toList());
 
     ReservationInfoDto reservationDto = new ReservationInfoDto();
     reservationDto.setSeats(mappedSeats);

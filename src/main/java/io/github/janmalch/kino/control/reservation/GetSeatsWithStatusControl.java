@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 public class GetSeatsWithStatusControl implements Control<List<SeatForPresentationDto>> {
 
   private final long presentationId;
-  private final ReflectionMapper<Seat, SeatForPresentationDto> mapper = new ReflectionMapper<>();
+  private final ReflectionMapper<Seat, SeatForPresentationDto> mapper =
+      new ReflectionMapper<>(SeatForPresentationDto.class);
   private final Repository<Presentation> repository =
       RepositoryFactory.createRepository(Presentation.class);
 
@@ -43,7 +44,7 @@ public class GetSeatsWithStatusControl implements Control<List<SeatForPresentati
             .stream()
             .map(
                 seat -> {
-                  var data = mapper.map(seat, SeatForPresentationDto.class);
+                  var data = mapper.map(seat);
                   var isTaken = reservedSeatIds.contains(seat.getId());
                   data.setTaken(isTaken);
                   return data;

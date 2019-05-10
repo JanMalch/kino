@@ -19,10 +19,10 @@ public class GetAllAccountsControl implements Control<List<AccountInfoDto>> {
   @Override
   public <T> T execute(ResultBuilder<T, List<AccountInfoDto>> result) {
     var repositoryList = repository.findAll();
-    var mapper = new ReflectionMapper<Account, AccountInfoDto>();
+    var mapper = new ReflectionMapper<Account, AccountInfoDto>(AccountInfoDto.class);
 
     for (Account acc : repositoryList) {
-      var dto = mapper.map(acc, AccountInfoDto.class);
+      var dto = mapper.map(acc);
       accountList.add(dto);
     }
     return result.success(accountList);

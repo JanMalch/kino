@@ -18,11 +18,7 @@ public class GetAllReservationsControl implements Control<List<ReservationInfoDt
   public <T> T execute(ResultBuilder<T, List<ReservationInfoDto>> result) {
     var reservations = reservationRepository.findAll();
     var mapper = new GetReservationMapper();
-    var reservationDtos =
-        reservations
-            .stream()
-            .map(r -> mapper.map(r, ReservationInfoDto.class))
-            .collect(Collectors.toList());
+    var reservationDtos = reservations.stream().map(mapper::map).collect(Collectors.toList());
 
     return result.success(reservationDtos);
   }

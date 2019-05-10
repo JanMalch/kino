@@ -47,7 +47,7 @@ public class SignUpControl implements Control<SuccessMessage> {
     }
 
     // -- apply business logic --
-    var user = new SignUpMapper().mapToEntity(data);
+    var user = new SignUpMapper().map(data);
     repository.add(user);
 
     // -- build success response --
@@ -78,18 +78,19 @@ public class SignUpControl implements Control<SuccessMessage> {
                 .build());
   }
 
-  public static class SignUpMapper implements Mapper<Account, SignUpDto> {
+  public static class SignUpMapper implements Mapper<SignUpDto, Account> {
 
     private final PasswordManager pm = new PasswordManager();
-    private final ReflectionMapper<SignUpDto, Account> mapper = new ReflectionMapper<>();
+    private final ReflectionMapper<SignUpDto, Account> mapper =
+        new ReflectionMapper<>(Account.class);
 
     @Override
-    public Account mapToEntity(SignUpDto signUpDto) {
-      var account = mapper.map(signUpDto, Account.class);
+    public Account map(SignUpDto source) {
+      var account = mapper.map(source);
       account.setRole(Role.CUSTOMER);
 
       var salt = pm.generateSalt();
-      var hashedPw = pm.hashPassword(signUpDto.getPassword(), salt);
+      var hashedPw = pm.hashPassword(source.getPassword(), salt);
       account.setSalt(salt);
       account.setHashedPassword(hashedPw);
 

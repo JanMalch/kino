@@ -1,39 +1,33 @@
 package io.github.janmalch.kino.util;
 
-import java.util.Map;
-
 /**
- * Generic Mapper interface to map between entity and domain models
- *
- * @param <E> the Entity model
- * @param <D> the Domain model
+ * @param <S> the source type
+ * @param <R> the resulting type
  */
-public interface Mapper<E, D> extends Mapping<E, D> {
-  default D mapFromEntity(E entity) {
+public interface Mapper<S, R> {
+
+  /**
+   * Creates a new instance, based on the data of the existing object. Afterwards all non-empty
+   * properties from the update object will be applied to the new instance. Finally all supplied
+   * values will overwrite those in the new instance.
+   *
+   * @param update the update data, may be partial
+   * @param existing the existing object with the initial values
+   * @return an instance of the same type as the existing
+   * @see BeanUtils#isNullOrEmpty(Object)
+   */
+  default R update(S update, R existing) {
     throw new UnsupportedOperationException();
   }
 
-  default E mapToEntity(D domain) {
+  /**
+   * Creates a new instance, based on the data of the existing source object. Finally all supplied
+   * values will overwrite those in the new instance.
+   *
+   * @param source the source object
+   * @return an instance of the given targetClass, with the values from the source object
+   */
+  default R map(S source) {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  default D update(E update, D existing, Class<D> targetClass) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  default D update(E update, D existing, Class<D> targetClass, Map<String, Object> supplies) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  default D map(E source, Class<D> targetClass) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  default D map(E source, Class<D> targetClass, Map<String, Object> supplies) {
-    return this.mapFromEntity(source);
   }
 }

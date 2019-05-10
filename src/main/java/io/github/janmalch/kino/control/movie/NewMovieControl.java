@@ -31,7 +31,7 @@ public class NewMovieControl implements Control<Long> {
     }
 
     var mapper = new NewMovieMapper();
-    var entity = mapper.mapToEntity(movieDto);
+    var entity = mapper.map(movieDto);
     repository.add(entity);
     return result.success(entity.getId());
   }
@@ -70,19 +70,19 @@ public class NewMovieControl implements Control<Long> {
             });
   }
 
-  static class NewMovieMapper implements Mapper<Movie, MovieDto> {
+  static class NewMovieMapper implements Mapper<MovieDto, Movie> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
-    public Movie mapToEntity(MovieDto domain) {
+    public Movie map(MovieDto source) {
       var movie = new Movie();
-      movie.setName(domain.getName());
-      movie.setAgeRating(domain.getAgeRating());
-      movie.setDuration(domain.getDuration());
+      movie.setName(source.getName());
+      movie.setAgeRating(source.getAgeRating());
+      movie.setDuration(source.getDuration());
       try {
-        movie.setEndDate(dayFormat.parse(domain.getEndDate()));
-        movie.setStartDate(dayFormat.parse(domain.getStartDate()));
+        movie.setEndDate(dayFormat.parse(source.getEndDate()));
+        movie.setStartDate(dayFormat.parse(source.getStartDate()));
       } catch (ParseException e) {
         // rethrow as unchecked as this should be handled by the validator
         throw new RuntimeException(e);

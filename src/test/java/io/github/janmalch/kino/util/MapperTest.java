@@ -1,35 +1,26 @@
 package io.github.janmalch.kino.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MapperTest {
 
   @Test
-  @DisplayName("mapFromEntity should fail if not overwritten")
-  void mapFromEntity() {
-    var mapper = new TestMapper();
-    try {
-      mapper.mapFromEntity(new Object());
-      fail();
-    } catch (UnsupportedOperationException e) {
-      // expected when not overwritten
-    }
+  void update() {
+    assertThrows(
+        UnsupportedOperationException.class,
+        () -> new TestMapperTest().update(1L, "2"),
+        "Interface should provide default implementation to minimize duplicate code");
   }
 
   @Test
-  @DisplayName("mapToEntity should fail if not overwritten")
-  void mapToEntity() {
-    var mapper = new TestMapper();
-    try {
-      mapper.mapToEntity(new Object());
-      fail();
-    } catch (UnsupportedOperationException e) {
-      // expected when not overwritten
-    }
+  void map() {
+    assertThrows(
+        UnsupportedOperationException.class,
+        () -> new TestMapperTest().map(1L),
+        "Interface should provide default implementation to minimize duplicate code");
   }
 
-  private static class TestMapper implements Mapper<Object, Object> {}
+  private static class TestMapperTest implements Mapper<Long, String> {}
 }
