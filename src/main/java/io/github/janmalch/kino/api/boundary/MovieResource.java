@@ -2,13 +2,16 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.control.*;
-import io.github.janmalch.kino.control.movie.GetMovieControl;
+import io.github.janmalch.kino.api.model.MovieOverviewDto;
+import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.generic.GetEntityControl;
+import io.github.janmalch.kino.control.movie.GetCurrentMoviesControl;
 import io.github.janmalch.kino.control.movie.NewMovieControl;
 import io.github.janmalch.kino.control.movie.RemoveMovieControl;
 import io.github.janmalch.kino.control.movie.UpdateMovieControl;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.security.Secured;
+import io.github.janmalch.kino.success.Success;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
@@ -54,7 +57,7 @@ public class MovieResource {
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Retrieves the movie for the given ID", response = Movie.class)
   public Response getMovie(@PathParam("id") long id) {
-    var control = new GetMovieControl(id);
+    var control = new GetEntityControl<>(id, Movie.class, Movie.class);
     return control.execute(new ResponseResultBuilder<>());
   }
 
@@ -69,4 +72,17 @@ public class MovieResource {
     var control = new UpdateMovieControl(movieDto, id);
     return control.execute(new ResponseResultBuilder<>());
   }
+
+  @Path("current")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(
+      value = "Returns the list of all running movies",
+      response = MovieOverviewSuccess.class)
+  public Response getCurrentMovies() {
+    var control = new GetCurrentMoviesControl();
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
+  static final class MovieOverviewSuccess implements Success<MovieOverviewDto> {}
 }

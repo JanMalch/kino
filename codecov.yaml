@@ -1,0 +1,3 @@
+ignore:
+  - "**/io/github/janmalch/kino/api/model/*"
+  - "**/io/github/janmalch/kino/entity/*"
