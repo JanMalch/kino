@@ -40,7 +40,14 @@ public class NewMovieControl implements Control<Long> {
     var validator = new BeanValidations<>(movieDto, "new-movie");
     var dayFormat = new SimpleDateFormat("yyyy-MM-dd");
     return validator
-        .requireNotEmpty(/* check all fields for null/empty */ )
+        .requireNotEmpty(
+            "id",
+            "name",
+            "priceCategory",
+            "startDate",
+            "endDate",
+            "duration",
+            "ageRating") // exclude presentations from validation. can be empty
         .or(
             () -> {
               Date endDate;

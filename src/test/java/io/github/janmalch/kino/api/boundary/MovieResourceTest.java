@@ -6,7 +6,6 @@ import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.PriceCategoryDto;
-import io.github.janmalch.kino.entity.Movie;
 import org.junit.jupiter.api.Test;
 
 class MovieResourceTest {
@@ -35,7 +34,7 @@ class MovieResourceTest {
     var resource = new MovieResource();
     var response = resource.getMovie(movieId);
 
-    var expectedEntity = (Movie) response.getEntity();
+    var expectedEntity = (MovieDto) response.getEntity();
 
     assertEquals("Captain Marvel", expectedEntity.getName());
   }
@@ -51,7 +50,7 @@ class MovieResourceTest {
     assertEquals(200, response.getStatus());
 
     // check if update has successfully been merged
-    var fetched = (Movie) resource.getMovie(movieId).getEntity();
+    var fetched = (MovieDto) resource.getMovie(movieId).getEntity();
     assertEquals("Wonder Woman", fetched.getName());
     assertNotNull(fetched.getStartDate(), "Updating should not overwrite with null");
   }
