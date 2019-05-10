@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.account;
 import static io.github.janmalch.kino.DomainAssertions.assertEntityMissing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Reservation;
@@ -49,7 +50,7 @@ class DeleteAccountByIdControlTest {
     assertEquals(1, getReservation.size());
 
     var control = new DeleteAccountByIdControl(existing.getId());
-    var builder = new EitherResultBuilder<Void>();
+    var builder = new EitherResultBuilder<SuccessMessage>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus().getStatusCode());
 
@@ -60,7 +61,7 @@ class DeleteAccountByIdControlTest {
   @Test
   void executeFail() {
     var control = new DeleteAccountByIdControl(-1);
-    var builder = new EitherResultBuilder<Void>();
+    var builder = new EitherResultBuilder<SuccessMessage>();
     assertEntityMissing(() -> control.execute(builder));
   }
 }

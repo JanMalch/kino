@@ -11,10 +11,9 @@ public interface ResultBuilder<T, P> {
    *
    * @param message human-friendly message
    * @return success for type T with SuccessMessage payload
-   * @throws ClassCastException if the ResultBuilder is not for type SuccessMessage
    * @see SuccessMessage
    */
-  default T success(String message) throws ClassCastException {
+  default T success(String message) {
     var payload = (P) new SuccessMessage(message);
     return this.success(payload);
   }
