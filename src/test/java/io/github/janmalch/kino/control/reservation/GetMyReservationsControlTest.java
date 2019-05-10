@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Presentation;
@@ -53,20 +54,20 @@ public class GetMyReservationsControlTest {
 
     assertTrue(success.isSuccess());
 
-    assertEquals(2, success.getSuccess().getData().size());
+    assertEquals(2, success.getSuccess().size());
 
     control = new GetMyReservationsControl("her@account.com");
     success = control.execute(new EitherResultBuilder<>());
 
     assertTrue(success.isSuccess());
 
-    assertEquals(1, success.getSuccess().getData().size());
+    assertEquals(1, success.getSuccess().size());
 
     control = new GetMyReservationsControl("his@account.com");
     success = control.execute(new EitherResultBuilder<>());
 
     assertTrue(success.isSuccess());
 
-    assertEquals(0, success.getSuccess().getData().size());
+    assertEquals(0, success.getSuccess().size());
   }
 }

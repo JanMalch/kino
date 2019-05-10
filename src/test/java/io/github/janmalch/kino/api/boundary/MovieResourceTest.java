@@ -2,11 +2,11 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.entity.PriceCategory;
-import io.github.janmalch.kino.success.Success;
 import org.junit.jupiter.api.Test;
 
 class MovieResourceTest {
@@ -23,8 +23,9 @@ class MovieResourceTest {
 
     var resource = new MovieResource();
     var response = resource.deleteMovie(movieId);
-    var success = (Success) response.getEntity();
-    assertNull(success.getData());
+    var entity = (SuccessMessage) response.getEntity();
+    assertEquals("Movie has been removed", entity.getMessage());
+    assertNotNull(entity.getType());
   }
 
   @Test
@@ -34,8 +35,7 @@ class MovieResourceTest {
     var resource = new MovieResource();
     var response = resource.getMovie(movieId);
 
-    var success = (Success) response.getEntity();
-    var expectedEntity = (Movie) success.getData();
+    var expectedEntity = (Movie) response.getEntity();
 
     assertEquals("Captain Marvel", expectedEntity.getName());
   }
@@ -51,8 +51,7 @@ class MovieResourceTest {
     assertEquals(200, response.getStatus());
 
     // check if update has successfully been merged
-    var success = (Success) resource.getMovie(movieId).getEntity();
-    var fetched = (Movie) success.getData();
+    var fetched = (Movie) resource.getMovie(movieId).getEntity();
     assertEquals("Wonder Woman", fetched.getName());
     assertNotNull(fetched.getStartDate(), "Updating should not overwrite with null");
   }
@@ -62,7 +61,7 @@ class MovieResourceTest {
     Long movieId = persistNewMovie();
     var resource = new MovieResource();
     var response = resource.getCurrentMovies();
-    var result = (MovieOverviewDto) ((Success) response.getEntity()).getData();
+    var result = (MovieOverviewDto) response.getEntity();
     assertTrue(result.getMovies().containsKey(movieId));
     assertFalse(result.getWeeks().isEmpty());
   }
@@ -77,8 +76,7 @@ class MovieResourceTest {
     dto.setDuration(2.5F);
     dto.setPriceCategory(createPriceCategory());
     var response = resource.newMovie(dto);
-    var success = (Success) response.getEntity();
-    return (Long) success.getData();
+    return (Long) response.getEntity();
   }
 
   private PriceCategory createPriceCategory() {

@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.*;
@@ -53,7 +54,7 @@ public class ReservationResource {
   @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Updates users reservation for given ID")
+  @ApiOperation(value = "Updates users reservation for given ID", response = SuccessMessage.class)
   public Response updateMyReservation(
       @Context SecurityContext securityContext,
       @PathParam("id") long id,
@@ -70,7 +71,7 @@ public class ReservationResource {
   @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Deletes users reservation for given ID")
+  @ApiOperation(value = "Deletes users reservation for given ID", response = SuccessMessage.class)
   public Response deleteMyReservationById(
       @PathParam("id") long id, @Context SecurityContext securityContext) {
     var control =
@@ -111,7 +112,7 @@ public class ReservationResource {
   @RolesAllowed("MODERATOR")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Updates reservation for given ID")
+  @ApiOperation(value = "Updates reservation for given ID", response = SuccessMessage.class)
   public Response updateReservationById(@PathParam("id") long id, ReservationDto reservationDto) {
     var control = new UpdateReservationByIdControl(id, reservationDto);
     return control.execute(new ResponseResultBuilder<>());
@@ -123,7 +124,7 @@ public class ReservationResource {
   @RolesAllowed("MODERATOR")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Deletes reservation for given ID")
+  @ApiOperation(value = "Deletes reservation for given ID", response = SuccessMessage.class)
   public Response deleteReservationById(@PathParam("id") long id) {
     var control = new DeleteReservationByIdControl(id);
     return control.execute(new ResponseResultBuilder<>());

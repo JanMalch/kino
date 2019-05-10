@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
@@ -11,7 +12,7 @@ import io.github.janmalch.kino.util.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EditAccountById implements Control<Void> {
+public class EditAccountById implements Control<SuccessMessage> {
   private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
@@ -22,7 +23,7 @@ public class EditAccountById implements Control<Void> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
     log.info("Editing Account ID: " + dto.getId());
     var repoAcc =
         Problems.requireEntity(repository.find(dto.getId()), dto.getId(), "No account found");
@@ -30,7 +31,7 @@ public class EditAccountById implements Control<Void> {
     var mapper = new UpdateAccountMapper();
     var updatedAccount = mapper.updateMapper(dto, repoAcc);
     repository.update(updatedAccount);
-    return result.success(null, "Account was successfully updated");
+    return result.success("Account was successfully updated");
   }
 
   static class UpdateAccountMapper implements Mapper<Account, AccountDto> {

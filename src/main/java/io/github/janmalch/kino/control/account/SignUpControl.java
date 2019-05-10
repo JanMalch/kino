@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
@@ -19,7 +20,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignUpControl implements Control<Void> {
+public class SignUpControl implements Control<SuccessMessage> {
 
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -31,7 +32,7 @@ public class SignUpControl implements Control<Void> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
     // -- validate prerequisites --
     var invalidDataProblem = validateSignUpDto();
     if (invalidDataProblem.isPresent()) {
@@ -50,7 +51,7 @@ public class SignUpControl implements Control<Void> {
     repository.add(user);
 
     // -- build success response --
-    return result.success(null, "Account successfully created");
+    return result.success("Account successfully created");
   }
 
   Optional<Problem> validateSignUpDto() {

@@ -12,7 +12,6 @@ import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.success.Success;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -48,8 +47,7 @@ class DeleteMyAccountControlTest {
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
 
-    var success = (Success) response.getEntity();
-    Token expiredToken = (Token) success.getData();
+    Token expiredToken = (Token) response.getEntity();
     assertEquals("", expiredToken.getTokenString());
     assertEquals("", expiredToken.getName());
     assertTrue(expiredToken.getExpiration().getTime() < System.currentTimeMillis());

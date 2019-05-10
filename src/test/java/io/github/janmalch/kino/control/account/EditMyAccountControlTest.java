@@ -11,7 +11,6 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.success.Success;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -51,8 +50,7 @@ class EditMyAccountControlTest {
       fail("updateMyAccount has failed " + response.getEntity());
     }
     // assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    Token myAccountToken = (Token) success.getData();
+    Token myAccountToken = (Token) response.getEntity();
     assertNotNull(myAccountToken);
     assertEquals(myAccountToken.getName(), updateAccountDto.getEmail());
   }
@@ -83,9 +81,8 @@ class EditMyAccountControlTest {
     var builder = new ResponseResultBuilder<Token>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    Token myAccountToken = (Token) success.getData();
-    assertNull(myAccountToken);
+    Token myAccountToken = (Token) response.getEntity();
+    assertNotNull(myAccountToken);
   }
 
   @Test

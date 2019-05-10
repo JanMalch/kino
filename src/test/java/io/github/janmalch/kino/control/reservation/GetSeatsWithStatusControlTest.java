@@ -29,7 +29,7 @@ class GetSeatsWithStatusControlTest {
     var presentationId = setupPresentation();
     var control = new GetSeatsWithStatusControl(presentationId);
     var either = control.execute(new EitherResultBuilder<>());
-    var result = either.getSuccess().getData();
+    var result = either.getSuccess();
 
     var expectedTaken = result.stream().filter(SeatForPresentationDto::isTaken).count();
     assertEquals(2, expectedTaken);

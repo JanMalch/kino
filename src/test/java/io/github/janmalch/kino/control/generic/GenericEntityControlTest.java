@@ -24,7 +24,7 @@ class GenericEntityControlTest {
     var newEntityControl = new NewEntityControl<>(dto, Account.class);
     var newResult = newEntityControl.execute(new EitherResultBuilder<>());
     assertTrue(newResult.isSuccess());
-    var id = newResult.getSuccess().getData();
+    var id = newResult.getSuccess();
 
     // update
     var updateDto = new AccountDto();
@@ -37,14 +37,14 @@ class GenericEntityControlTest {
     var getEntityControl = new GetEntityControl<>(id, Account.class, AccountDto.class);
     var getResult = getEntityControl.execute(new EitherResultBuilder<>());
     assertTrue(getResult.isSuccess());
-    assertNotNull(getResult.getSuccess().getData());
-    assertTrue(getResult.getSuccess().getData().toString().contains("Jan"));
+    assertNotNull(getResult.getSuccess());
+    assertTrue(getResult.getSuccess().toString().contains("Jan"));
 
     // get all
     var getAllEntitiesControl = new GetEntitiesControl<>(Account.class, AccountDto.class);
     var getAllResult = getAllEntitiesControl.execute(new EitherResultBuilder<>());
     assertTrue(getAllResult.isSuccess());
-    assertEquals(1, getAllResult.getSuccess().getData().size());
+    assertEquals(1, getAllResult.getSuccess().size());
 
     // delete
     var deleteEntityControl = new DeleteEntityControl<>(id, Account.class);
@@ -54,6 +54,6 @@ class GenericEntityControlTest {
     // get all again
     var getAllAgainResult = getAllEntitiesControl.execute(new EitherResultBuilder<>());
     assertTrue(getAllAgainResult.isSuccess());
-    assertEquals(0, getAllAgainResult.getSuccess().getData().size());
+    assertEquals(0, getAllAgainResult.getSuccess().size());
   }
 }

@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Presentation;
@@ -38,7 +39,7 @@ public class GetReservationByIdControlTest {
 
     assertTrue(result.isSuccess());
 
-    var reservationDto = result.getSuccess().getData();
+    var reservationDto = result.getSuccess();
     assertEquals(reservation.getId(), reservationDto.getId());
     assertEquals(reservation.getPresentation().getId(), reservationDto.getPresentationId());
     assertEquals(reservation.getSeats().size(), reservationDto.getSeats().size());

@@ -18,15 +18,11 @@ public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViol
         exception
             .getConstraintViolations()
             .stream()
-            .peek(cv -> System.out.println(cv.getConstraintDescriptor().getAnnotation()))
             .collect(
                 Collectors.toMap(
                     (ConstraintViolation<?> cv) -> getLast(cv.getPropertyPath()),
                     ConstraintViolation::getMessage));
 
-    /*exception.getConstraintViolations().forEach(cv -> {
-        problemBuilder.parameter(getLast(cv.getPropertyPath()).toString(), cv.getMessage());
-    });*/
     var problem =
         Problem.builder()
             .type("invalid-data")

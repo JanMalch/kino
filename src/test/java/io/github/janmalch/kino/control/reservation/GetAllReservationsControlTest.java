@@ -48,7 +48,7 @@ public class GetAllReservationsControlTest {
 
     assertTrue(result.isSuccess());
 
-    var reservationDtos = result.getSuccess().getData();
+    var reservationDtos = result.getSuccess();
     assertEquals(reservations.size(), reservationDtos.size());
   }
 }

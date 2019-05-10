@@ -11,7 +11,6 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.security.TokenSecurityContext;
-import io.github.janmalch.kino.success.Success;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +22,7 @@ class AuthResourceTest {
     var token = new JwtTokenFactory().generateToken("test@1example.com");
     var response = builder.success(token);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    var entity = (TokenDto) success.getData();
+    var entity = (TokenDto) response.getEntity();
     assertEquals(token.getTokenString(), entity.getToken());
   }
 
@@ -54,8 +52,7 @@ class AuthResourceTest {
     dto.setPassword("Start123");
     var response = resource.logIn(dto);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    var tokenDto = (TokenDto) success.getData();
+    var tokenDto = (TokenDto) response.getEntity();
     assertNotNull(tokenDto.getToken());
   }
 
@@ -86,8 +83,7 @@ class AuthResourceTest {
     var resource = new AuthResource();
     var response = resource.logOut(context);
     assertEquals(200, response.getStatus());
-    var success = (Success) response.getEntity();
-    var tokenDto = (TokenDto) success.getData();
+    var tokenDto = (TokenDto) response.getEntity();
     assertNotNull(tokenDto.getToken());
   }
 }

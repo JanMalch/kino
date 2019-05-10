@@ -1,12 +1,13 @@
 package io.github.janmalch.kino.control.reservation;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 
-public class DeleteReservationByIdControl implements Control<Void> {
+public class DeleteReservationByIdControl implements Control<SuccessMessage> {
 
   private long id;
 
@@ -15,11 +16,11 @@ public class DeleteReservationByIdControl implements Control<Void> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
     var reservationRepository = RepositoryFactory.createRepository(Reservation.class);
     var reservation =
         Problems.requireEntity(reservationRepository.find(id), id, "No such reservation found");
     reservationRepository.remove(reservation);
-    return result.success(null, "Reservation successfully deleted");
+    return result.success("Reservation successfully deleted");
   }
 }
