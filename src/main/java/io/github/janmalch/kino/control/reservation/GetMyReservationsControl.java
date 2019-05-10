@@ -20,13 +20,14 @@ public class GetMyReservationsControl implements Control<List<ReservationInfoDto
   @Override
   public <T> T execute(ResultBuilder<T, List<ReservationInfoDto>> result) {
     var reservationRepository = RepositoryFactory.createRepository(Reservation.class);
+    var mapper = new GetReservationMapper();
     var spec = new ReservationsByEmailSpec(myAccountName);
 
     var reservations = reservationRepository.query(spec);
     var reservationDtos =
         reservations
             .stream()
-            .map(r -> new GetReservationMapper().map(r, ReservationInfoDto.class))
+            .map(r -> mapper.map(r, ReservationInfoDto.class))
             .collect(Collectors.toList());
     return result.success(reservationDtos);
   }
