@@ -3,6 +3,7 @@ package io.github.janmalch.kino.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.entity.PriceCategory;
 import org.junit.jupiter.api.Test;
@@ -47,15 +48,15 @@ class ReflectionMapperTest {
   }
 
   private PriceCategory createNormalPriceCategory() {
-    PriceCategory priceCategory = new PriceCategory();
+    var priceCategory = new PriceCategory();
     priceCategory.setName("normal");
     priceCategory.setRegularPrice(9.99f);
     priceCategory.setReducedPrice(7.99f);
     return priceCategory;
   }
 
-  private PriceCategory createOverlongPriceCategory() {
-    PriceCategory priceCategory = new PriceCategory();
+  private PriceCategoryDto createOverlongPriceCategory() {
+    var priceCategory = new PriceCategoryDto();
     priceCategory.setName("overlong");
     priceCategory.setRegularPrice(12.99f);
     priceCategory.setReducedPrice(10.99f);
