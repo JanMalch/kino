@@ -11,7 +11,9 @@ public interface TransactionProvider {
     var em = getEntityManager();
     em.getTransaction().begin();
     var result = supplier.get();
+    em.clear();
     em.getTransaction().commit();
+    em.close();
     return result;
   }
 
@@ -19,6 +21,8 @@ public interface TransactionProvider {
     var em = getEntityManager();
     em.getTransaction().begin();
     supplier.execute();
+    em.clear();
     em.getTransaction().commit();
+    em.close();
   }
 }
