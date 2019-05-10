@@ -6,7 +6,6 @@ import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,15 +17,11 @@ public class GetAllReservationsControl implements Control<List<ReservationInfoDt
   @Override
   public <T> T execute(ResultBuilder<T, List<ReservationInfoDto>> result) {
     var reservations = reservationRepository.findAll();
+    var mapper = new GetReservationMapper();
     var reservationDtos =
         reservations
             .stream()
-            .map(
-                r -> {
-                  var control = new GetReservationByIdControl(r.getId());
-                  var optional = control.execute(new EitherResultBuilder<>());
-                  return optional.getSuccess().getData();
-                })
+            .map(r -> mapper.map(r, ReservationInfoDto.class))
             .collect(Collectors.toList());
 
     return result.success(reservationDtos);
