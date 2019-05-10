@@ -9,7 +9,7 @@ addons:
     organization: "janmalch-github" # the key of the org
 
 script:
-  - mvn clean package
+  - mvn clean deploy
   - sonar-scanner
 # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 
