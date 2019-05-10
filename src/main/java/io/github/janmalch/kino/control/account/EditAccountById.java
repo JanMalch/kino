@@ -8,7 +8,7 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
-import io.github.janmalch.kino.util.Mapper;
+import io.github.janmalch.kino.util.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,23 +29,28 @@ public class EditAccountById implements Control<SuccessMessage> {
         Problems.requireEntity(repository.find(dto.getId()), dto.getId(), "No account found");
 
     var mapper = new UpdateAccountMapper();
-    var updatedAccount = mapper.updateMapper(dto, repoAcc);
+    var updatedAccount = mapper.update(dto, repoAcc);
     repository.update(updatedAccount);
     return result.success("Account was successfully updated");
   }
 
-  static class UpdateAccountMapper implements Mapper<Account, AccountDto> {
+  static class UpdateAccountMapper implements Mapping<AccountDto, Account> {
     private final EditMyAccountControl.UpdateAccountMapper ua =
         new EditMyAccountControl.UpdateAccountMapper();
 
-    public Account updateMapper(AccountDto partialDto, Account entity) {
+    @Override
+    public Account update(AccountDto update, Account existing) {
+      ua.update(update, existing);
 
-      ua.updateEntity(partialDto, entity);
-
-      if (partialDto.getRole() != null) {
-        entity.setRole(partialDto.getRole());
+      if (update.getRole() != null) {
+        existing.setRole(update.getRole());
       }
-      return entity;
+      return existing;
+    }
+
+    @Override
+    public Account map(AccountDto source) {
+      throw new UnsupportedOperationException();
     }
   }
 }

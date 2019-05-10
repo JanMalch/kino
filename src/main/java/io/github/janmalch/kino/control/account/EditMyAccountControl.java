@@ -13,7 +13,7 @@ import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.util.Mapper;
+import io.github.janmalch.kino.util.Mapping;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class EditMyAccountControl implements Control<Token> {
     }
 
     var mapper = new UpdateAccountMapper();
-    var entity = mapper.updateEntity(data, myAccount.get());
+    var entity = mapper.update(data, myAccount.get());
     if (!data.getEmail().equals(token.getName())) {
       repository.update(entity);
       blacklist.addToBlackList(token);
@@ -57,28 +57,34 @@ public class EditMyAccountControl implements Control<Token> {
     return result.success(token);
   }
 
-  public static class UpdateAccountMapper implements Mapper<Account, SignUpDto> {
+  public static class UpdateAccountMapper implements Mapping<SignUpDto, Account> {
     private final PasswordManager pm = new PasswordManager();
 
-    Account updateEntity(SignUpDto partialUpdate, Account existingEntity) {
-      if (partialUpdate.getEmail() != null) {
-        existingEntity.setEmail(partialUpdate.getEmail());
+    @Override
+    public Account update(SignUpDto update, Account existing) {
+      if (update.getEmail() != null) {
+        existing.setEmail(update.getEmail());
       }
-      if (partialUpdate.getFirstName() != null) {
-        existingEntity.setFirstName(partialUpdate.getFirstName());
+      if (update.getFirstName() != null) {
+        existing.setFirstName(update.getFirstName());
       }
-      if (partialUpdate.getLastName() != null) {
-        existingEntity.setLastName(partialUpdate.getLastName());
+      if (update.getLastName() != null) {
+        existing.setLastName(update.getLastName());
       }
-      if (partialUpdate.getBirthday() != null) {
-        existingEntity.setBirthday(partialUpdate.getBirthday());
+      if (update.getBirthday() != null) {
+        existing.setBirthday(update.getBirthday());
       }
-      if (partialUpdate.getPassword() != null) {
-        var salt = existingEntity.getSalt();
-        var hashedPw = pm.hashPassword(partialUpdate.getPassword(), salt);
-        existingEntity.setHashedPassword(hashedPw);
+      if (update.getPassword() != null) {
+        var salt = existing.getSalt();
+        var hashedPw = pm.hashPassword(update.getPassword(), salt);
+        existing.setHashedPassword(hashedPw);
       }
-      return existingEntity;
+      return existing;
+    }
+
+    @Override
+    public Account map(SignUpDto source) {
+      throw new UnsupportedOperationException();
     }
   }
 }
