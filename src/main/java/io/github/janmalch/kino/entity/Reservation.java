@@ -2,6 +2,7 @@ package io.github.janmalch.kino.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -66,5 +67,22 @@ public class Reservation implements Identifiable {
 
   public void setSeats(Set<Seat> seats) {
     this.seats = seats;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Reservation)) return false;
+    Reservation that = (Reservation) o;
+    return id == that.id
+        && seats.equals(that.seats)
+        && account.equals(that.account)
+        && presentation.equals(that.presentation)
+        && reservationDate.equals(that.reservationDate);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, seats, account, presentation, reservationDate);
   }
 }
