@@ -2,6 +2,7 @@ DROP TABLE if exists movie;
 DROP TABLE if exists pricecategory;
 DROP TABLE if exists presentation;
 DROP TABLE if exists cinemahall;
+DROP TABLE if exists seat;
 
 -- PRICECATEGORY
 INSERT INTO `pricecategory` (`id`, `name`, `reducedPrice`, `regularPrice`)
@@ -16,6 +17,40 @@ VALUES ('1', 'Saal 1'),
        ('2', 'Saal 2'),
        ('3', 'Saal 3'),
        ('4', 'Europasaal');
+
+-- SEAT
+-- Sitze für Saal 1
+INSERT INTO `seat` (`id`, `row`, `seatNumber`, `CINEMAHALL_ID`)
+VALUES ('1', 'A', '1', '1'),
+       ('2', 'A', '2', '1'),
+       ('3', 'B', '1', '1'),
+       ('4', 'B', '2', '1');
+
+-- Sitze für Saal 2
+INSERT INTO `seat` (`id`, `row`, `seatNumber`, `CINEMAHALL_ID`)
+VALUES ('5', 'A', '1', '2'),
+       ('6', 'A', '2', '2'),
+       ('7', 'B', '1', '2'),
+       ('8', 'B', '2', '2');
+
+-- Sitze für Saal 3
+INSERT INTO `seat` (`id`, `row`, `seatNumber`, `CINEMAHALL_ID`)
+VALUES ('9', 'A', '1', '3'),
+       ('10', 'A', '2', '3'),
+       ('11', 'B', '1', '3'),
+       ('12', 'B', '2', '3');
+
+-- Sitze für Europasaal
+INSERT INTO `seat` (`id`, `row`, `seatNumber`, `CINEMAHALL_ID`)
+VALUES ('13', 'A', '1', '4'),
+       ('14', 'A', '2', '4'),
+       ('15', 'A', '3', '4'),
+       ('16', 'B', '1', '4'),
+       ('17', 'B', '2', '4'),
+       ('18', 'B', '3', '4'),
+       ('19', 'C', '1', '4'),
+       ('20', 'C', '2', '4'),
+       ('21', 'C', '3', '4');
 
 -- MOVIE
 INSERT INTO `movie` (`id`, `ageRating`, `duration`, `endDate`, `name`, `startDate`, `PRICECATEGORY_ID`)
@@ -32,4 +67,5 @@ INSERT INTO `presentation` (`id`, `date`, `CINEMAHALL_ID`, `MOVIE_ID`)
 VALUES ('1', '2019-05-12 16:00:00', '1', '1'), -- Captain Marvel, Saal 1
        ('2', '2019-05-12 16:00:00', '2', '2'), -- Brightburn, Saal 2
        ('3', '2019-05-14 18:00:00', '1', '1'), -- Captain Marvel, Saal 1
-       ('4', '2019-05-18 20:00:00', '1', '2'); -- Brightburn, Saal 1
+       ('4', '2019-05-18 20:00:00', '1', '2');
+-- Brightburn, Saal 1
