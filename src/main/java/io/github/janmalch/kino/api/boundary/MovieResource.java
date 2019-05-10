@@ -28,7 +28,6 @@ public class MovieResource {
   // TODO: refactor to @Inject
   private Logger log = LoggerFactory.getLogger(MovieResource.class);
 
-  @Path("")
   @POST
   @Secured
   @RolesAllowed("MODERATOR")

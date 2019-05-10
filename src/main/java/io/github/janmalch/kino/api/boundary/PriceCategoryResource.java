@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 @Api
 public class PriceCategoryResource {
 
-  @Path("")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(
@@ -40,7 +39,6 @@ public class PriceCategoryResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("")
   @POST
   @Secured
   @RolesAllowed("MODERATOR")

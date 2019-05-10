@@ -102,7 +102,6 @@ public class AccountResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("")
   @Secured
   @RolesAllowed("MODERATOR")
   @GET
