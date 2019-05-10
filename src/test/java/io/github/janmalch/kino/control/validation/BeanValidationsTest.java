@@ -34,13 +34,4 @@ class BeanValidationsTest {
     var result = validator.requireNotEmpty("firstName", "email");
     assertTrue(result.isEmpty());
   }
-
-  @Test
-  void isNullOrEmpty() {
-    assertTrue(BeanValidations.isNullOrEmpty(null));
-    assertTrue(BeanValidations.isNullOrEmpty(""));
-    assertFalse(BeanValidations.isNullOrEmpty("a"));
-    assertFalse(BeanValidations.isNullOrEmpty(5));
-    assertFalse(BeanValidations.isNullOrEmpty(false));
-  }
 }

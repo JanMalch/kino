@@ -16,6 +16,14 @@ public class EntityWiper {
   private EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
   private EntityManager em = factory.createEntityManager();
 
+  /**
+   * Deletes all tables from Database, but only if none of them have integrity constraints
+   *
+   * @deprecated use {@link #wipeDB()} instead
+   * @throws IOException
+   * @throws ClassNotFoundException
+   */
+  @Deprecated
   public void deleteAll() throws IOException, ClassNotFoundException {
     var sum =
         getClasses("io.github.janmalch.kino.entity")
@@ -32,6 +40,13 @@ public class EntityWiper {
                 })
             .sum();
     System.out.println(">>>> DELETED " + sum + " entries in total!");
+  }
+
+  /** Drops all objects from database */
+  public void wipeDB() {
+    em.getTransaction().begin();
+    em.createNativeQuery("DROP ALL OBJECTS").executeUpdate();
+    em.getTransaction().commit();
   }
 
   // https://dzone.com/articles/get-all-classes-within-package
@@ -54,7 +69,8 @@ public class EntityWiper {
     List<File> dirs = new ArrayList<>();
     while (resources.hasMoreElements()) {
       URL resource = (URL) resources.nextElement();
-      dirs.add(new File(resource.getFile()));
+      String fileString = resource.getFile().replaceAll("%20", " ");
+      dirs.add(new File(fileString));
     }
     ArrayList<Class<?>> classes = new ArrayList<>();
     for (File directory : dirs) {

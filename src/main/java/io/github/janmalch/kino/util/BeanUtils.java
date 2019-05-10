@@ -4,10 +4,7 @@ import static io.github.janmalch.kino.util.functions.FunctionUtils.uncheck;
 
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -111,12 +108,19 @@ public class BeanUtils {
   }
 
   /**
-   * Returns true, if the given value is null or its string representation is empty
+   * Returns true, if the given value is null or if its an empty collection or its string
+   * representation is empty
    *
    * @param value the value to check
    * @return if value is null or string representation is empty
    */
   public static boolean isNullOrEmpty(Object value) {
-    return value == null || value.toString().trim().isEmpty();
+    if (value == null) {
+      return true;
+    }
+    if (value instanceof Collection) {
+      return ((Collection) value).isEmpty();
+    }
+    return value.toString().trim().isEmpty();
   }
 }
