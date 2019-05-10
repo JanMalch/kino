@@ -65,9 +65,7 @@ public interface Repository<D> extends TransactionProvider {
 
     var all = cq.select(rootEntry);
     var allQuery = em.createQuery(all);
-    var results = allQuery.getResultList();
-    em.close();
-    return results;
+    return allQuery.getResultList();
   }
 
   default List<D> query(Specification<D> specification) {
