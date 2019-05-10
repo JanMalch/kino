@@ -87,7 +87,7 @@ class AccountResourceTest {
 
     var resource = new AccountResource();
     var response = resource.editMyAccount(dto, context);
-    assertEquals(201, response.getStatus());
+    assertEquals(200, response.getStatus());
     Token myAccountToken = (Token) response.getEntity();
     assertEquals(dto.getEmail(), myAccountToken.getName());
   }
