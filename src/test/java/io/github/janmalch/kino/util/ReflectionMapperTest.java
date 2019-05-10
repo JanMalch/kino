@@ -11,20 +11,20 @@ class ReflectionMapperTest {
 
   @Test
   void map() {
-    var mapper = new ReflectionMapper<Movie, MovieDto>();
+    var mapper = new ReflectionMapper<Movie, MovieDto>(MovieDto.class);
     var entity = new Movie();
     entity.setId(1L);
     entity.setName("Captain Marvel");
     entity.setPriceCategory(createNormalPriceCategory());
     entity.setDuration(2.5F);
 
-    var domain = mapper.map(entity, MovieDto.class);
+    var domain = mapper.map(entity);
     assertEquals("Captain Marvel", domain.getName());
   }
 
   @Test
   void update() {
-    var mapper = new ReflectionMapper<Movie, MovieDto>();
+    var mapper = new ReflectionMapper<Movie, MovieDto>(MovieDto.class);
 
     var entity = new Movie();
     entity.setId(1L);
@@ -32,12 +32,12 @@ class ReflectionMapperTest {
     entity.setPriceCategory(createNormalPriceCategory());
     entity.setDuration(2.5F);
 
-    var domain = mapper.map(entity, MovieDto.class);
+    var domain = mapper.map(entity);
     domain.setName("Wonder Woman");
     domain.setPriceCategory(createOverlongPriceCategory());
 
-    var reverseMapper = new ReflectionMapper<MovieDto, Movie>();
-    var newEntity = reverseMapper.update(domain, entity, Movie.class);
+    var reverseMapper = new ReflectionMapper<MovieDto, Movie>(Movie.class);
+    var newEntity = reverseMapper.update(domain, entity);
     assertEquals(1L, newEntity.getId());
     assertEquals("Wonder Woman", newEntity.getName());
     assertEquals(

@@ -9,8 +9,7 @@ import io.github.janmalch.kino.entity.Seat;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.BeanUtils;
-import io.github.janmalch.kino.util.Mapping;
-import java.util.Map;
+import io.github.janmalch.kino.util.Mapper;
 import java.util.stream.Collectors;
 
 public class UpdateReservationByIdControl implements Control<Void> {
@@ -35,14 +34,11 @@ public class UpdateReservationByIdControl implements Control<Void> {
     return new UpdateEntityControl<>(id, reservationDto, Reservation.class, mapper).execute(result);
   }
 
-  class UpdateReservationMapper implements Mapping<ReservationDto, Reservation> {
+  class UpdateReservationMapper implements Mapper<ReservationDto, Reservation> {
+
     @Override
-    public Reservation update(
-        ReservationDto update,
-        Reservation existing,
-        Class<Reservation> targetClass,
-        Map<String, Object> supplies) {
-      var reservation = BeanUtils.clone(existing, targetClass);
+    public Reservation update(ReservationDto update, Reservation existing) {
+      var reservation = BeanUtils.clone(existing, Reservation.class);
       Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
 
       var updatedSeats =

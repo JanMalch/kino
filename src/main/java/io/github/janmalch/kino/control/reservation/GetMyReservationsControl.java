@@ -24,11 +24,7 @@ public class GetMyReservationsControl implements Control<List<ReservationInfoDto
     var spec = new ReservationsByEmailSpec(myAccountName);
 
     var reservations = reservationRepository.query(spec);
-    var reservationDtos =
-        reservations
-            .stream()
-            .map(r -> mapper.map(r, ReservationInfoDto.class))
-            .collect(Collectors.toList());
+    var reservationDtos = reservations.stream().map(mapper::map).collect(Collectors.toList());
     return result.success(reservationDtos);
   }
 }
