@@ -81,11 +81,12 @@ public class SignUpControl implements Control<SuccessMessage> {
   public static class SignUpMapper implements Mapper<Account, SignUpDto> {
 
     private final PasswordManager pm = new PasswordManager();
-    private final ReflectionMapper<SignUpDto, Account> mapper = new ReflectionMapper<>();
+    private final ReflectionMapper<SignUpDto, Account> mapper =
+        new ReflectionMapper<>(Account.class);
 
     @Override
     public Account mapToEntity(SignUpDto signUpDto) {
-      var account = mapper.map(signUpDto, Account.class);
+      var account = mapper.map(signUpDto);
       account.setRole(Role.CUSTOMER);
 
       var salt = pm.generateSalt();

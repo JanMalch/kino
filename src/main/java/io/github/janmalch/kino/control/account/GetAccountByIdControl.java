@@ -22,8 +22,8 @@ public class GetAccountByIdControl implements Control<AccountInfoDto> {
   public <T> T execute(ResultBuilder<T, AccountInfoDto> result) {
     var account = Problems.requireEntity(repository.find(id), id, "No account found");
 
-    var mapper = new ReflectionMapper<Account, AccountInfoDto>();
-    var data = mapper.map(account, AccountInfoDto.class);
+    var mapper = new ReflectionMapper<Account, AccountInfoDto>(AccountInfoDto.class);
+    var data = mapper.map(account);
     return result.success(data);
   }
 }

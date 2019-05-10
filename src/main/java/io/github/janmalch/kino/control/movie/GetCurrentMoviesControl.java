@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class GetCurrentMoviesControl implements Control<MovieOverviewDto> {
 
-  private final Mapping<Movie, MovieInfoDto> mapper = new ReflectionMapper<>();
+  private final Mapping<Movie, MovieInfoDto> mapper = new ReflectionMapper<>(MovieInfoDto.class);
   private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   @Override
@@ -34,7 +34,7 @@ public class GetCurrentMoviesControl implements Control<MovieOverviewDto> {
                 Collectors.toMap(
                     Movie::getId,
                     entity -> {
-                      var dto = mapper.map(entity, MovieInfoDto.class);
+                      var dto = mapper.map(entity);
                       var id =
                           entity.getPriceCategory() == null
                               ? -1

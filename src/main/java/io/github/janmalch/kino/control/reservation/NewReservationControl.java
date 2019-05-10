@@ -14,7 +14,6 @@ import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.util.Mapping;
 import java.util.Date;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,8 +42,7 @@ public class NewReservationControl implements Control<Long> {
   class NewReservationMapper implements Mapping<ReservationDto, Reservation> {
 
     @Override
-    public Reservation map(
-        ReservationDto source, Class<Reservation> targetClass, Map<String, Object> supplies) {
+    public Reservation map(ReservationDto source) {
       Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
       Repository<Presentation> presentationRepository =
           RepositoryFactory.createRepository(Presentation.class);
@@ -67,6 +65,11 @@ public class NewReservationControl implements Control<Long> {
       Specification<Account> accountSpec = new AccountByEmailSpec(mail);
       var optionalAccount = accountRepository.queryFirst(accountSpec);
       return optionalAccount.get();
+    }
+
+    @Override
+    public Reservation update(ReservationDto update, Reservation existing) {
+      throw new UnsupportedOperationException();
     }
   }
 }

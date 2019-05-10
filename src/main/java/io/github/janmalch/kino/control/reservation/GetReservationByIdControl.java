@@ -21,7 +21,7 @@ public class GetReservationByIdControl implements Control<ReservationInfoDto> {
   public <T> T execute(ResultBuilder<T, ReservationInfoDto> result) {
     var reservation = reservationRepository.find(id);
     var mapper = new GetReservationMapper();
-    var reservationInfoDto = mapper.map(reservation, ReservationInfoDto.class);
+    var reservationInfoDto = mapper.map(reservation);
 
     return result.success(reservationInfoDto);
   }

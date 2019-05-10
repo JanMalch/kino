@@ -12,23 +12,21 @@ public class NewEntityControl<P, E extends Identifiable> implements Control<Long
 
   private final Mapping<P, E> mapper;
   private final P dto;
-  private final Class<E> entityClass;
   private final Repository<E> repository;
 
   public NewEntityControl(P dto, Class<E> entityClass) {
-    this(dto, entityClass, new ReflectionMapper<>());
+    this(dto, entityClass, new ReflectionMapper<>(entityClass));
   }
 
   public NewEntityControl(P dto, Class<E> entityClass, Mapping<P, E> mapper) {
     this.dto = dto;
-    this.entityClass = entityClass;
     this.repository = RepositoryFactory.createRepository(entityClass);
     this.mapper = mapper;
   }
 
   @Override
   public <T> T execute(ResultBuilder<T, Long> result) {
-    var entity = mapper.map(dto, entityClass);
+    var entity = mapper.map(dto);
     repository.add(entity);
     return result.success(entity.getId());
   }

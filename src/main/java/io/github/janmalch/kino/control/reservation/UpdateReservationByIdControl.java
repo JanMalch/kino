@@ -10,7 +10,6 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.BeanUtils;
 import io.github.janmalch.kino.util.Mapping;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UpdateReservationByIdControl implements Control<Void> {
@@ -36,13 +35,10 @@ public class UpdateReservationByIdControl implements Control<Void> {
   }
 
   class UpdateReservationMapper implements Mapping<ReservationDto, Reservation> {
+
     @Override
-    public Reservation update(
-        ReservationDto update,
-        Reservation existing,
-        Class<Reservation> targetClass,
-        Map<String, Object> supplies) {
-      var reservation = BeanUtils.clone(existing, targetClass);
+    public Reservation update(ReservationDto update, Reservation existing) {
+      var reservation = BeanUtils.clone(existing, Reservation.class);
       Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
 
       var updatedSeats =
@@ -50,6 +46,11 @@ public class UpdateReservationByIdControl implements Control<Void> {
       reservation.setSeats(updatedSeats);
 
       return reservation;
+    }
+
+    @Override
+    public Reservation map(ReservationDto source) {
+      throw new UnsupportedOperationException();
     }
   }
 }

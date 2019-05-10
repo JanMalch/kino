@@ -13,17 +13,15 @@ public class GetEntityControl<P, E> implements Control<P> {
   private final Mapping<E, P> mapper;
   private final long id;
   private final Class<E> entityClass;
-  private final Class<P> dtoClass;
   private final Repository<E> repository;
 
   public GetEntityControl(long id, Class<E> entityClass, Class<P> dtoClass) {
-    this(id, entityClass, dtoClass, new ReflectionMapper<>());
+    this(id, entityClass, new ReflectionMapper<>(dtoClass));
   }
 
-  public GetEntityControl(long id, Class<E> entityClass, Class<P> dtoClass, Mapping<E, P> mapper) {
+  public GetEntityControl(long id, Class<E> entityClass, Mapping<E, P> mapper) {
     this.id = id;
     this.entityClass = entityClass;
-    this.dtoClass = dtoClass;
     this.repository = RepositoryFactory.createRepository(entityClass);
     this.mapper = mapper;
   }
@@ -32,7 +30,7 @@ public class GetEntityControl<P, E> implements Control<P> {
   public <T> T execute(ResultBuilder<T, P> result) {
     var entity =
         Problems.requireEntity(repository.find(id), id, "No such " + entityClass.getSimpleName());
-    var dto = mapper.map(entity, dtoClass);
+    var dto = mapper.map(entity);
     return result.success(dto);
   }
 }
