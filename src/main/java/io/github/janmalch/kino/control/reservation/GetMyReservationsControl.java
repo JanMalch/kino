@@ -6,7 +6,6 @@ import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.ReservationsByEmailSpec;
-import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,12 +26,7 @@ public class GetMyReservationsControl implements Control<List<ReservationInfoDto
     var reservationDtos =
         reservations
             .stream()
-            .map(
-                r -> {
-                  var success =
-                      new GetReservationByIdControl(r.getId()).execute(new EitherResultBuilder<>());
-                  return success.getSuccess().getData();
-                })
+            .map(r -> new GetReservationMapper().map(r, ReservationInfoDto.class))
             .collect(Collectors.toList());
     return result.success(reservationDtos);
   }
