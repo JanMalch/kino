@@ -47,10 +47,5 @@ public class EditAccountById implements Control<SuccessMessage> {
       }
       return existing;
     }
-
-    @Override
-    public Account map(AccountDto source) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

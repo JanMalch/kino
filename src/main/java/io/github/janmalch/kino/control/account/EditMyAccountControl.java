@@ -81,10 +81,5 @@ public class EditMyAccountControl implements Control<Token> {
       }
       return existing;
     }
-
-    @Override
-    public Account map(SignUpDto source) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

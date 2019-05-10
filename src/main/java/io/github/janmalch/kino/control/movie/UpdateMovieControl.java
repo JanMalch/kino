@@ -70,10 +70,5 @@ public class UpdateMovieControl implements Control<SuccessMessage> {
 
       return existing;
     }
-
-    @Override
-    public Movie map(MovieDto source) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

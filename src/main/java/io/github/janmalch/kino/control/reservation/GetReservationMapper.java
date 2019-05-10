@@ -14,11 +14,6 @@ class GetReservationMapper implements Mapper<Reservation, ReservationInfoDto> {
       new ReflectionMapper<>(SeatForReservationDto.class);
 
   @Override
-  public ReservationInfoDto update(Reservation update, ReservationInfoDto existing) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public ReservationInfoDto map(Reservation reservation) {
     var seats = reservation.getSeats();
     var mappedSeats = seats.stream().map(seatMapper::map).collect(Collectors.toList());

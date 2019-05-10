@@ -96,10 +96,5 @@ public class SignUpControl implements Control<SuccessMessage> {
 
       return account;
     }
-
-    @Override
-    public Account update(SignUpDto update, Account existing) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

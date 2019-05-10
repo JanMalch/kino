@@ -66,10 +66,5 @@ public class NewReservationControl implements Control<Long> {
       var optionalAccount = accountRepository.queryFirst(accountSpec);
       return optionalAccount.get();
     }
-
-    @Override
-    public Reservation update(ReservationDto update, Reservation existing) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

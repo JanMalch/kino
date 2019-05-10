@@ -47,10 +47,5 @@ public class UpdateReservationByIdControl implements Control<Void> {
 
       return reservation;
     }
-
-    @Override
-    public Reservation map(ReservationDto source) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

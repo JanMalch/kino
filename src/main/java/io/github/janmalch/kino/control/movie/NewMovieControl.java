@@ -89,10 +89,5 @@ public class NewMovieControl implements Control<Long> {
       }
       return movie;
     }
-
-    @Override
-    public Movie update(MovieDto update, Movie existing) {
-      throw new UnsupportedOperationException();
-    }
   }
 }

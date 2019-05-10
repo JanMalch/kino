@@ -16,7 +16,9 @@ public interface Mapper<S, R> {
    * @return an instance of the same type as the existing
    * @see BeanUtils#isNullOrEmpty(Object)
    */
-  R update(S update, R existing);
+  default R update(S update, R existing) {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * Creates a new instance, based on the data of the existing source object. Finally all supplied
@@ -25,5 +27,7 @@ public interface Mapper<S, R> {
    * @param source the source object
    * @return an instance of the given targetClass, with the values from the source object
    */
-  R map(S source);
+  default R map(S source) {
+    throw new UnsupportedOperationException();
+  }
 }
