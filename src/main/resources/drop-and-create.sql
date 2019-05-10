@@ -12,7 +12,7 @@ create table Account
     firstName      varchar(255),
     hashedPassword varchar(255),
     lastName       varchar(255),
-    role           integer,
+    role           varchar(255),
     salt           tinyblob,
     primary key (id)
 );
