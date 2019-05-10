@@ -65,7 +65,7 @@ public class ReservationResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("{id}")
+  @Path("my-reservation/{id}")
   @DELETE
   @Secured
   @RolesAllowed("CUSTOMER")
