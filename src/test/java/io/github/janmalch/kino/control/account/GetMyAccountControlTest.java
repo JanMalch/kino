@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
@@ -27,7 +28,7 @@ class GetMyAccountControlTest {
     Token token = factory.generateToken("existing@example.com");
 
     var control = new GetMyAccountControl(token.getName());
-    var builder = new ResponseResultBuilder<Account>();
+    var builder = new ResponseResultBuilder<SignUpDto>();
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
     var myAccount = response.getEntity();
@@ -48,7 +49,7 @@ class GetMyAccountControlTest {
     Token token = factory.generateToken("TestUser2@mail.de");
 
     var control = new GetMyAccountControl(token.getName());
-    var builder = new ResponseResultBuilder<Account>();
+    var builder = new ResponseResultBuilder<SignUpDto>();
     var response = control.execute(builder);
     assertEquals(400, response.getStatus());
     var myAccount = response.getEntity();
