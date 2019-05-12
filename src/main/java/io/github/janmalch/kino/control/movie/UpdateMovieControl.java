@@ -6,7 +6,8 @@ import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.MovieRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,7 +17,7 @@ public class UpdateMovieControl implements Control<SuccessMessage> {
 
   private final MovieDto movieDto;
   private final long movieId;
-  private final MovieRepository repository = new MovieRepository();
+  private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   public UpdateMovieControl(MovieDto movieDto, long movieId) {
     this.movieDto = movieDto;

@@ -60,7 +60,7 @@ class AccountResourceTest {
     var resource = new AccountResource();
     var response = resource.getMyAccount(context);
     assertEquals(200, response.getStatus());
-    var myAccount = (Account) response.getEntity();
+    var myAccount = (SignUpDto) response.getEntity();
     assertEquals(existing.getEmail(), myAccount.getEmail());
   }
 

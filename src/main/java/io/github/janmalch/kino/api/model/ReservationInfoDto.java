@@ -5,16 +5,16 @@ import java.util.List;
 
 public class ReservationInfoDto {
 
-  private List<SeatForReservationDto> seats;
+  private List<SeatDto> seats;
   private long id;
   private Date reservationDate;
   private long presentationId;
 
-  public List<SeatForReservationDto> getSeats() {
+  public List<SeatDto> getSeats() {
     return seats;
   }
 
-  public void setSeats(List<SeatForReservationDto> seats) {
+  public void setSeats(List<SeatDto> seats) {
     this.seats = seats;
   }
 

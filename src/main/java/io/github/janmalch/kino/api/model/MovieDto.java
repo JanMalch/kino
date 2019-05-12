@@ -1,15 +1,25 @@
 package io.github.janmalch.kino.api.model;
 
-import io.github.janmalch.kino.entity.PriceCategory;
+import java.util.List;
 
 public class MovieDto {
 
+  private long id;
   private String name;
-  private PriceCategory priceCategory;
+  private PriceCategoryDto priceCategory;
   private String startDate;
   private String endDate;
   private Float duration;
   private Integer ageRating;
+  private List<PresentationDto> presentations;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 
   public String getName() {
     return name;
@@ -19,11 +29,11 @@ public class MovieDto {
     this.name = name;
   }
 
-  public PriceCategory getPriceCategory() {
+  public PriceCategoryDto getPriceCategory() {
     return priceCategory;
   }
 
-  public void setPriceCategory(PriceCategory priceCategory) {
+  public void setPriceCategory(PriceCategoryDto priceCategory) {
     this.priceCategory = priceCategory;
   }
 
@@ -57,6 +67,14 @@ public class MovieDto {
 
   public void setAgeRating(Integer ageRating) {
     this.ageRating = ageRating;
+  }
+
+  public List<PresentationDto> getPresentations() {
+    return presentations;
+  }
+
+  public void setPresentations(List<PresentationDto> presentations) {
+    this.presentations = presentations;
   }
 
   @Override

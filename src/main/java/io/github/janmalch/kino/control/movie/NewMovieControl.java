@@ -6,7 +6,8 @@ import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.BeanValidations;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.MovieRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +18,7 @@ import javax.ws.rs.core.Response;
 public class NewMovieControl implements Control<Long> {
 
   private final MovieDto movieDto;
-  private final MovieRepository repository = new MovieRepository();
+  private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   public NewMovieControl(MovieDto movieDto) {
     this.movieDto = movieDto;
@@ -40,7 +41,14 @@ public class NewMovieControl implements Control<Long> {
     var validator = new BeanValidations<>(movieDto, "new-movie");
     var dayFormat = new SimpleDateFormat("yyyy-MM-dd");
     return validator
-        .requireNotEmpty(/* check all fields for null/empty */ )
+        .requireNotEmpty(
+            "id",
+            "name",
+            "priceCategory",
+            "startDate",
+            "endDate",
+            "duration",
+            "ageRating") // exclude presentations from validation. can be empty
         .or(
             () -> {
               Date endDate;

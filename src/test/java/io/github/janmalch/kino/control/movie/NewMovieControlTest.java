@@ -3,7 +3,7 @@ package io.github.janmalch.kino.control.movie;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.entity.PriceCategory;
+import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.text.ParseException;
 import org.junit.jupiter.api.Test;
@@ -51,8 +51,8 @@ class NewMovieControlTest {
     }
   }
 
-  private PriceCategory createPriceCategory() {
-    PriceCategory priceCategory = new PriceCategory();
+  private PriceCategoryDto createPriceCategory() {
+    var priceCategory = new PriceCategoryDto();
     priceCategory.setName("normal");
     priceCategory.setRegularPrice(9.99f);
     priceCategory.setReducedPrice(7.99f);

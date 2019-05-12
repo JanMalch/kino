@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.api.model;
 
-public class SeatForReservationDto {
+public class SeatDto {
+
   private long id;
   private String row;
   private int seatNumber;

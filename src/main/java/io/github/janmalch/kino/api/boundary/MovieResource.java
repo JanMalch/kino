@@ -6,10 +6,7 @@ import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.generic.GetEntityControl;
-import io.github.janmalch.kino.control.movie.GetCurrentMoviesControl;
-import io.github.janmalch.kino.control.movie.NewMovieControl;
-import io.github.janmalch.kino.control.movie.RemoveMovieControl;
-import io.github.janmalch.kino.control.movie.UpdateMovieControl;
+import io.github.janmalch.kino.control.movie.*;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
@@ -55,9 +52,9 @@ public class MovieResource {
   @Path("{id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Retrieves the movie for the given ID", response = Movie.class)
+  @ApiOperation(value = "Retrieves the movie for the given ID", response = MovieDto.class)
   public Response getMovie(@PathParam("id") long id) {
-    var control = new GetEntityControl<>(id, Movie.class, Movie.class);
+    var control = new GetEntityControl<>(id, Movie.class, new MovieDtoMapper());
     return control.execute(new ResponseResultBuilder<>());
   }
 
