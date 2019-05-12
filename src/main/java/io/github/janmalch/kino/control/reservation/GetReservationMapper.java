@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
-import io.github.janmalch.kino.api.model.SeatForReservationDto;
+import io.github.janmalch.kino.api.model.SeatDto;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.entity.Seat;
 import io.github.janmalch.kino.util.Mapper;
@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
 
 class GetReservationMapper implements Mapper<Reservation, ReservationInfoDto> {
 
-  private final ReflectionMapper<Seat, SeatForReservationDto> seatMapper =
-      new ReflectionMapper<>(SeatForReservationDto.class);
+  private final ReflectionMapper<Seat, SeatDto> seatMapper = new ReflectionMapper<>(SeatDto.class);
 
   @Override
   public ReservationInfoDto map(Reservation reservation) {

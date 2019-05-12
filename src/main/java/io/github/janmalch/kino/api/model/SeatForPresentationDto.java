@@ -2,7 +2,7 @@ package io.github.janmalch.kino.api.model;
 
 import java.util.Objects;
 
-public class SeatForPresentationDto extends SeatForReservationDto {
+public class SeatForPresentationDto extends SeatDto {
 
   private boolean taken;
 
