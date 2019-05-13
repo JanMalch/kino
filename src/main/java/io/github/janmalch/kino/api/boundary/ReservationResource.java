@@ -58,7 +58,7 @@ public class ReservationResource {
   @ApiOperation(value = "Returns reservation for given ID", response = ReservationInfoDto.class)
   public Response getReservationById(
       @PathParam("id") long id, @Context SecurityContext securityContext) {
-    var role = securityContext.isUserInRole("MODERATOR") ? Role.MODERATOR : Role.CUSTOMER;
+    var role = securityContext.isUserInRole(Role.MODERATOR.name()) ? Role.MODERATOR : Role.CUSTOMER;
     var accountName = securityContext.getUserPrincipal().getName();
     var control = new GetReservationByIdControl(id, role, accountName);
     return control.execute(new ResponseResultBuilder<>());
@@ -90,7 +90,7 @@ public class ReservationResource {
       @PathParam("id") long id,
       @Context SecurityContext securityContext,
       ReservationDto reservationDto) {
-    var role = securityContext.isUserInRole("MODERATOR") ? Role.MODERATOR : Role.CUSTOMER;
+    var role = securityContext.isUserInRole(Role.MODERATOR.name()) ? Role.MODERATOR : Role.CUSTOMER;
     var accountName = securityContext.getUserPrincipal().getName();
     var control = new UpdateReservationByIdControl(id, accountName, role, reservationDto);
     return control.execute(new ResponseResultBuilder<>());
@@ -105,7 +105,7 @@ public class ReservationResource {
   @ApiOperation(value = "Deletes reservation for given ID", response = SuccessMessage.class)
   public Response deleteReservationById(
       @PathParam("id") long id, @Context SecurityContext securityContext) {
-    var role = securityContext.isUserInRole("MODERATOR") ? Role.MODERATOR : Role.CUSTOMER;
+    var role = securityContext.isUserInRole(Role.MODERATOR.name()) ? Role.MODERATOR : Role.CUSTOMER;
     var accountName = securityContext.getUserPrincipal().getName();
     var control = new DeleteReservationByIdControl(id, accountName, role);
     return control.execute(new ResponseResultBuilder<>());

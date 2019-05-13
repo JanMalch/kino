@@ -83,6 +83,8 @@ public class Problems {
 
   public static class Factory {
 
+    private Factory() {}
+
     public static Problem noSuchEntity(long id, String detail) {
       return Problem.builder()
           .type("no-such-entity")
