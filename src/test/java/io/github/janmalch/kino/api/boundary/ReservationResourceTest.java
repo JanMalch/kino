@@ -107,7 +107,7 @@ public class ReservationResourceTest {
     var reservation = util.provideNewReservation(myAccount, presentation.getId());
 
     var resource = new ReservationResource();
-    var response = resource.getReservationById(reservation.getId());
+    var response = resource.getReservationById(reservation.getId(), securityContext);
     assertEquals(200, response.getStatus());
   }
 

@@ -5,6 +5,7 @@ import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.*;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -82,12 +83,15 @@ public class ReservationResource {
   @Path("{id}")
   @GET
   @Secured
-  @RolesAllowed("MODERATOR")
+  @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns reservation for given ID", response = ReservationInfoDto.class)
-  public Response getReservationById(@PathParam("id") long id) {
-    var control = new GetReservationByIdControl(id);
+  public Response getReservationById(
+      @PathParam("id") long id, @Context SecurityContext securityContext) {
+    var role = securityContext.isUserInRole("MODERATOR") ? Role.MODERATOR : Role.CUSTOMER;
+    var accountName = securityContext.getUserPrincipal().getName();
+    var control = new GetReservationByIdControl(id, role, accountName);
     return control.execute(new ResponseResultBuilder<>());
   }
 
