@@ -1,21 +1,23 @@
 package io.github.janmalch.kino.control.movie;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.MovieRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.Response;
 
-public class UpdateMovieControl implements Control<Void> {
+public class UpdateMovieControl implements Control<SuccessMessage> {
 
   private final MovieDto movieDto;
   private final long movieId;
-  private final MovieRepository repository = new MovieRepository();
+  private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   public UpdateMovieControl(MovieDto movieDto, long movieId) {
     this.movieDto = movieDto;
@@ -23,50 +25,51 @@ public class UpdateMovieControl implements Control<Void> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
     var refMovie = repository.find(movieId);
     if (refMovie == null) {
       return result.failure(Problem.builder(Response.Status.NOT_FOUND).instance().build());
     }
 
     var mapper = new UpdateMovieMapper();
-    var entity = mapper.updateEntity(movieDto, refMovie);
+    var entity = mapper.update(movieDto, refMovie);
     repository.update(entity);
-    return result.success(null, "Movie successfully updated");
+    return result.success("Movie successfully updated");
   }
 
-  static class UpdateMovieMapper implements Mapper<Movie, MovieDto> {
+  static class UpdateMovieMapper implements Mapper<MovieDto, Movie> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Movie updateEntity(MovieDto partialUpdate, Movie existingEntity) {
-      if (partialUpdate.getName() != null) {
-        existingEntity.setName(partialUpdate.getName());
+    @Override
+    public Movie update(MovieDto update, Movie existing) {
+      if (update.getName() != null) {
+        existing.setName(update.getName());
       }
-      if (partialUpdate.getAgeRating() != null) {
-        existingEntity.setAgeRating(partialUpdate.getAgeRating());
+      if (update.getAgeRating() != null) {
+        existing.setAgeRating(update.getAgeRating());
       }
-      if (partialUpdate.getDuration() != null) {
-        existingEntity.setDuration(partialUpdate.getDuration());
+      if (update.getDuration() != null) {
+        existing.setDuration(update.getDuration());
       }
-      if (partialUpdate.getStartDate() != null) {
+      if (update.getStartDate() != null) {
         try {
-          existingEntity.setStartDate(dayFormat.parse(partialUpdate.getStartDate()));
+          existing.setStartDate(dayFormat.parse(update.getStartDate()));
         } catch (ParseException e) {
           // rethrow as unchecked as this should be handled by the validator
           throw new RuntimeException(e);
         }
       }
-      if (partialUpdate.getEndDate() != null) {
+      if (update.getEndDate() != null) {
         try {
-          existingEntity.setEndDate(dayFormat.parse(partialUpdate.getEndDate()));
+          existing.setEndDate(dayFormat.parse(update.getEndDate()));
         } catch (ParseException e) {
           // rethrow as unchecked as this should be handled by the validator
           throw new RuntimeException(e);
         }
       }
 
-      return existingEntity;
+      return existing;
     }
   }
 }

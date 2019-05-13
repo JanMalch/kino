@@ -7,12 +7,11 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
-import io.github.janmalch.kino.success.Success;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +37,7 @@ class DeleteMyAccountControlTest {
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("existing@example.com");
 
-    Specification<Account> myName = new UserByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName());
 
     var isInRepo = repository.queryFirst(myName);
     assertFalse(isInRepo.isEmpty());
@@ -48,8 +47,7 @@ class DeleteMyAccountControlTest {
     var response = control.execute(builder);
     assertEquals(200, response.getStatus());
 
-    var success = (Success) response.getEntity();
-    Token expiredToken = (Token) success.getData();
+    Token expiredToken = (Token) response.getEntity();
     assertEquals("", expiredToken.getTokenString());
     assertEquals("", expiredToken.getName());
     assertTrue(expiredToken.getExpiration().getTime() < System.currentTimeMillis());
@@ -75,8 +73,8 @@ class DeleteMyAccountControlTest {
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("nonExisting@example.com");
 
-    Specification<Account> myTokenName = new UserByEmailSpec(token.getName());
-    Specification<Account> myExistingName = new UserByEmailSpec(existing1.getEmail());
+    Specification<Account> myTokenName = new AccountByEmailSpec(token.getName());
+    Specification<Account> myExistingName = new AccountByEmailSpec(existing1.getEmail());
     var tokenQuery = repository.queryFirst(myTokenName);
     assertTrue(tokenQuery.isEmpty());
 

@@ -7,12 +7,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
-public class Account {
+public class Account implements Identifiable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
-  @OneToMany(mappedBy = "account")
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Reservation> reservations;
 
   private String firstName;

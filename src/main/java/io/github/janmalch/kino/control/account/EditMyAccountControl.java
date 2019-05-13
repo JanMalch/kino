@@ -7,8 +7,8 @@ import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenBlacklist;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
@@ -36,7 +36,7 @@ public class EditMyAccountControl implements Control<Token> {
   @Override
   public <T> T execute(ResultBuilder<T, Token> result) {
     log.info("Editing my Account " + token.getName());
-    Specification<Account> myName = new UserByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName());
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {
@@ -47,39 +47,39 @@ public class EditMyAccountControl implements Control<Token> {
               .build());
     }
 
-    var mapper = new UpdateMyAccountMapper();
-    var entity = mapper.updateEntity(data, myAccount.get());
+    var mapper = new UpdateAccountMapper();
+    var entity = mapper.update(data, myAccount.get());
     if (!data.getEmail().equals(token.getName())) {
       repository.update(entity);
       blacklist.addToBlackList(token);
-      return result.success(
-          factory.generateToken(data.getEmail()), "My Account was successfully updated");
+      return result.success(factory.generateToken(data.getEmail()));
     }
-    return result.success(null, "My Account was successfully updated");
+    return result.success(token);
   }
 
-  static class UpdateMyAccountMapper implements Mapper<Account, SignUpDto> {
+  public static class UpdateAccountMapper implements Mapper<SignUpDto, Account> {
     private final PasswordManager pm = new PasswordManager();
 
-    public Account updateEntity(SignUpDto partialUpdate, Account existingEntity) {
-      if (partialUpdate.getEmail() != null) {
-        existingEntity.setEmail(partialUpdate.getEmail());
+    @Override
+    public Account update(SignUpDto update, Account existing) {
+      if (update.getEmail() != null) {
+        existing.setEmail(update.getEmail());
       }
-      if (partialUpdate.getFirstName() != null) {
-        existingEntity.setFirstName(partialUpdate.getFirstName());
+      if (update.getFirstName() != null) {
+        existing.setFirstName(update.getFirstName());
       }
-      if (partialUpdate.getLastName() != null) {
-        existingEntity.setLastName(partialUpdate.getLastName());
+      if (update.getLastName() != null) {
+        existing.setLastName(update.getLastName());
       }
-      if (partialUpdate.getBirthday() != null) {
-        existingEntity.setBirthday(partialUpdate.getBirthday());
+      if (update.getBirthday() != null) {
+        existing.setBirthday(update.getBirthday());
       }
-      if (partialUpdate.getPassword() != null) {
-        var salt = existingEntity.getSalt();
-        var hashedPw = pm.hashPassword(partialUpdate.getPassword(), salt);
-        existingEntity.setHashedPassword(hashedPw);
+      if (update.getPassword() != null) {
+        var salt = existing.getSalt();
+        var hashedPw = pm.hashPassword(update.getPassword(), salt);
+        existing.setHashedPassword(hashedPw);
       }
-      return existingEntity;
+      return existing;
     }
   }
 }

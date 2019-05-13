@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class SignUpControlTest {
 
   @Test
   void executeEmailExists() {
-    var repository = new UserRepository();
+    var repository = RepositoryFactory.createRepository(Account.class);
     var existing = new Account();
     existing.setEmail("existing@example.com");
     repository.add(existing);

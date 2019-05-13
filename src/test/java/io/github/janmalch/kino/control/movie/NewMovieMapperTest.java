@@ -1,16 +1,16 @@
 package io.github.janmalch.kino.control.movie;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.entity.PriceCategory;
+import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
 class NewMovieMapperTest {
 
   @Test
-  void mapToEntity() {
+  void map() {
     var dto = new MovieDto();
     dto.setName("Captain Marvel");
     dto.setPriceCategory(createPriceCategory());
@@ -21,7 +21,7 @@ class NewMovieMapperTest {
 
     var mapper = new NewMovieControl.NewMovieMapper();
     try {
-      mapper.mapToEntity(dto);
+      mapper.map(dto);
       fail("Should not be able to validate without Exception");
     } catch (RuntimeException e) {
       if (!(e.getCause() instanceof ParseException)) {
@@ -31,8 +31,8 @@ class NewMovieMapperTest {
     }
   }
 
-  private PriceCategory createPriceCategory() {
-    PriceCategory priceCategory = new PriceCategory();
+  private PriceCategoryDto createPriceCategory() {
+    var priceCategory = new PriceCategoryDto();
     priceCategory.setName("normal");
     priceCategory.setRegularPrice(9.99f);
     priceCategory.setReducedPrice(7.99f);

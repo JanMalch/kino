@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
+import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
@@ -9,8 +10,8 @@ import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
@@ -19,7 +20,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignUpControl implements Control<Void> {
+public class SignUpControl implements Control<SuccessMessage> {
 
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -31,7 +32,7 @@ public class SignUpControl implements Control<Void> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
     // -- validate prerequisites --
     var invalidDataProblem = validateSignUpDto();
     if (invalidDataProblem.isPresent()) {
@@ -46,11 +47,11 @@ public class SignUpControl implements Control<Void> {
     }
 
     // -- apply business logic --
-    var user = new SignUpMapper().mapToEntity(data);
+    var user = new SignUpMapper().map(data);
     repository.add(user);
 
     // -- build success response --
-    return result.success(null, "Account successfully created");
+    return result.success("Account successfully created");
   }
 
   Optional<Problem> validateSignUpDto() {
@@ -59,7 +60,7 @@ public class SignUpControl implements Control<Void> {
   }
 
   Optional<Problem> checkIfEmailExists() {
-    Specification<Account> presentCheck = new UserByEmailSpec(data.getEmail());
+    Specification<Account> presentCheck = new AccountByEmailSpec(data.getEmail());
     Optional<Account> referredUser = repository.queryFirst(presentCheck);
 
     // if a value is present, it means that the user exists and a Problem will be created
@@ -77,18 +78,19 @@ public class SignUpControl implements Control<Void> {
                 .build());
   }
 
-  public static class SignUpMapper implements Mapper<Account, SignUpDto> {
+  public static class SignUpMapper implements Mapper<SignUpDto, Account> {
 
     private final PasswordManager pm = new PasswordManager();
-    private final ReflectionMapper mapper = new ReflectionMapper();
+    private final ReflectionMapper<SignUpDto, Account> mapper =
+        new ReflectionMapper<>(Account.class);
 
     @Override
-    public Account mapToEntity(SignUpDto signUpDto) {
-      var account = mapper.map(signUpDto, Account.class);
+    public Account map(SignUpDto source) {
+      var account = mapper.map(source);
       account.setRole(Role.CUSTOMER);
 
       var salt = pm.generateSalt();
-      var hashedPw = pm.hashPassword(signUpDto.getPassword(), salt);
+      var hashedPw = pm.hashPassword(source.getPassword(), salt);
       account.setSalt(salt);
       account.setHashedPassword(hashedPw);
 

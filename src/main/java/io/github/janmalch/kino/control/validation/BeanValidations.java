@@ -21,7 +21,7 @@ public class BeanValidations<T> {
     var fields = Set.of(requiredFields);
     return propStream()
         .filter(entry -> fields.isEmpty() || fields.contains(entry.getKey()))
-        .filter(entry -> isNullOrEmpty(entry.getValue()))
+        .filter(entry -> BeanUtils.isNullOrEmpty(entry.getValue()))
         .findFirst()
         .map(
             entry ->
@@ -33,18 +33,6 @@ public class BeanValidations<T> {
                     .parameter("missing", entry.getKey())
                     .instance()
                     .build());
-  }
-
-  /**
-   * Checks whether the given value is null or its <code>value.toString().trim()</code> result is
-   * empty
-   *
-   * @param value the value to check
-   * @return true, if the value is null or toString is empty
-   * @see String#toString()
-   */
-  public static boolean isNullOrEmpty(Object value) {
-    return value == null || value.toString().trim().isEmpty();
   }
 
   Stream<Map.Entry<String, Object>> propStream() {

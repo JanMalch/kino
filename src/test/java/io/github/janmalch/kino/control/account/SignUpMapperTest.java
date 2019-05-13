@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class SignUpMapperTest {
 
   @Test
-  void mapToEntity() {
+  void map() {
     var bday = LocalDate.now();
     var signUpDto = new SignUpDto();
     var pm = new PasswordManager();
@@ -21,7 +21,7 @@ class SignUpMapperTest {
     signUpDto.setBirthday(bday);
 
     var mapper = new SignUpControl.SignUpMapper();
-    var entity = mapper.mapToEntity(signUpDto);
+    var entity = mapper.map(signUpDto);
 
     assertEquals("test@example.com", entity.getEmail());
     assertEquals("Test", entity.getFirstName());

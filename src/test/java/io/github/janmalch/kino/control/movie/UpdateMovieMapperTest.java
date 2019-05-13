@@ -12,7 +12,7 @@ class UpdateMovieMapperTest {
   private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
   @Test
-  void updateEntity() {
+  void update() {
     var mapper = new UpdateMovieControl.UpdateMovieMapper();
 
     var movie = new Movie();
@@ -22,7 +22,7 @@ class UpdateMovieMapperTest {
     movieDto.setStartDate("2019-01-01");
     movieDto.setEndDate("2019-01-02");
 
-    var result = mapper.updateEntity(movieDto, movie);
+    var result = mapper.update(movieDto, movie);
     assertEquals(12, result.getAgeRating());
     assertEquals(2.5F, result.getDuration());
     assertEquals("2019-01-01", dayFormat.format(result.getStartDate()));

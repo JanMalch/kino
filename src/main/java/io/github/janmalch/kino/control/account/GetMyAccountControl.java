@@ -1,18 +1,20 @@
 package io.github.janmalch.kino.control.account;
 
+import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
-import io.github.janmalch.kino.repository.specification.UserByEmailSpec;
+import io.github.janmalch.kino.util.ReflectionMapper;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GetMyAccountControl implements Control<Account> {
+public class GetMyAccountControl implements Control<SignUpDto> {
 
   private Logger log = LoggerFactory.getLogger(GetMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -24,10 +26,10 @@ public class GetMyAccountControl implements Control<Account> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Account> result) {
+  public <T> T execute(ResultBuilder<T, SignUpDto> result) {
     log.info("Retrieving my Account " + email);
 
-    Specification<Account> myName = new UserByEmailSpec(email);
+    Specification<Account> myName = new AccountByEmailSpec(email);
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {
@@ -37,6 +39,8 @@ public class GetMyAccountControl implements Control<Account> {
               .instance()
               .build());
     }
-    return result.success(myAccount.get());
+
+    var dto = new ReflectionMapper<Account, SignUpDto>(SignUpDto.class).map(myAccount.get());
+    return result.success(dto);
   }
 }

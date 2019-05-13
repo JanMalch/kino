@@ -22,9 +22,10 @@ public class WebApplication extends ResourceConfig {
     packages("io.github.janmalch.kino.api.boundary");
     register(AuthorizationFilter.class);
     register(APIExceptionMapper.class);
-
     register(RepositoryProducer.class);
     register(LoggerProducer.class);
+    register(ValidationExceptionMapper.class);
+    register(new CORSFilter());
 
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
     register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
