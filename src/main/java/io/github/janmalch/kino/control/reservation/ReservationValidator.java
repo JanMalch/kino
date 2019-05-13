@@ -29,9 +29,6 @@ public class ReservationValidator implements Validator<ReservationDto> {
     var seatsForPresentationControl =
         new GetSeatsWithStatusControl(reservationDto.getPresentationId());
     var result = seatsForPresentationControl.execute(new EitherResultBuilder<>());
-    if (result.isFailure()) {
-      return Optional.of(result.getProblem());
-    }
 
     var availableIds =
         result
