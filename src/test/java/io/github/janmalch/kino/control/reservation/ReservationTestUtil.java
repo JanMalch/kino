@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.entity.*;
 import io.github.janmalch.kino.repository.RepositoryFactory;
+import io.github.janmalch.kino.security.JwtTokenFactory;
+import io.github.janmalch.kino.security.Token;
+import io.github.janmalch.kino.security.TokenSecurityContext;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +60,18 @@ public class ReservationTestUtil {
     assertTrue(newResult.isSuccess());
 
     return RepositoryFactory.createRepository(Reservation.class).find(newResult.getSuccess());
+  }
+
+  public TokenSecurityContext provideTokenSecurityContext(String mail, Role role) {
+    var account = new Account();
+    account.setEmail(mail);
+    account.setRole(role);
+
+    RepositoryFactory.createRepository(Account.class).add(account);
+
+    JwtTokenFactory factory = new JwtTokenFactory();
+    Token token = factory.generateToken(account.getEmail());
+    return new TokenSecurityContext(token);
   }
 
   private void provideExistingSeats(int numberOfSeats, CinemaHall cinemaHall) {

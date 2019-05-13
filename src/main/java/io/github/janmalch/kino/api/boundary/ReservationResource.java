@@ -5,6 +5,7 @@ import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.*;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,46 +49,18 @@ public class ReservationResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("my-reservation/{id}")
-  @PUT
-  @Secured
-  @RolesAllowed("CUSTOMER")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Updates users reservation for given ID", response = SuccessMessage.class)
-  public Response updateMyReservation(
-      @Context SecurityContext securityContext,
-      @PathParam("id") long id,
-      ReservationDto reservationDto) {
-    var control =
-        new UpdateMyReservationControl(
-            securityContext.getUserPrincipal().getName(), id, reservationDto);
-    return control.execute(new ResponseResultBuilder<>());
-  }
-
-  @Path("my-reservation/{id}")
-  @DELETE
-  @Secured
-  @RolesAllowed("CUSTOMER")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Deletes users reservation for given ID", response = SuccessMessage.class)
-  public Response deleteMyReservationById(
-      @PathParam("id") long id, @Context SecurityContext securityContext) {
-    var control =
-        new DeleteMyReservationByIdControl(id, securityContext.getUserPrincipal().getName());
-    return control.execute(new ResponseResultBuilder<>());
-  }
-
   @Path("{id}")
   @GET
   @Secured
-  @RolesAllowed("MODERATOR")
+  @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns reservation for given ID", response = ReservationInfoDto.class)
-  public Response getReservationById(@PathParam("id") long id) {
-    var control = new GetReservationByIdControl(id);
+  public Response getReservationById(
+      @PathParam("id") long id, @Context SecurityContext securityContext) {
+    var role = securityContext.isUserInRole(Role.MODERATOR.name()) ? Role.MODERATOR : Role.CUSTOMER;
+    var accountName = securityContext.getUserPrincipal().getName();
+    var control = new GetReservationByIdControl(id, role, accountName);
     return control.execute(new ResponseResultBuilder<>());
   }
 
@@ -109,12 +82,17 @@ public class ReservationResource {
   @Path("{id}")
   @PUT
   @Secured
-  @RolesAllowed("MODERATOR")
+  @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Updates reservation for given ID", response = SuccessMessage.class)
-  public Response updateReservationById(@PathParam("id") long id, ReservationDto reservationDto) {
-    var control = new UpdateReservationByIdControl(id, reservationDto);
+  public Response updateReservationById(
+      @PathParam("id") long id,
+      @Context SecurityContext securityContext,
+      ReservationDto reservationDto) {
+    var role = securityContext.isUserInRole(Role.MODERATOR.name()) ? Role.MODERATOR : Role.CUSTOMER;
+    var accountName = securityContext.getUserPrincipal().getName();
+    var control = new UpdateReservationByIdControl(id, accountName, role, reservationDto);
     return control.execute(new ResponseResultBuilder<>());
   }
 
@@ -125,8 +103,11 @@ public class ReservationResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Deletes reservation for given ID", response = SuccessMessage.class)
-  public Response deleteReservationById(@PathParam("id") long id) {
-    var control = new DeleteReservationByIdControl(id);
+  public Response deleteReservationById(
+      @PathParam("id") long id, @Context SecurityContext securityContext) {
+    var role = securityContext.isUserInRole(Role.MODERATOR.name()) ? Role.MODERATOR : Role.CUSTOMER;
+    var accountName = securityContext.getUserPrincipal().getName();
+    var control = new DeleteReservationByIdControl(id, accountName, role);
     return control.execute(new ResponseResultBuilder<>());
   }
 }

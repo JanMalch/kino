@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Presentation;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,10 +32,38 @@ public class GetReservationByIdControlTest {
   }
 
   @Test
-  public void testExecuteValid() {
+  public void executeValidCustomer() {
 
     var reservation = util.provideNewReservation(accountName, presentation.getId());
-    var control = new GetReservationByIdControl(reservation.getId());
+    var control = new GetReservationByIdControl(reservation.getId(), Role.CUSTOMER, accountName);
+    var result = control.execute(new EitherResultBuilder<>());
+
+    assertTrue(result.isSuccess());
+
+    var reservationDto = result.getSuccess();
+    assertEquals(reservation.getId(), reservationDto.getId());
+    assertEquals(reservation.getPresentation().getId(), reservationDto.getPresentationId());
+    assertEquals(reservation.getSeats().size(), reservationDto.getSeats().size());
+    assertEquals(reservation.getReservationDate(), reservationDto.getReservationDate());
+  }
+
+  @Test
+  public void executeInvalidCustomer() {
+
+    var reservation = util.provideNewReservation(accountName, presentation.getId());
+    var control =
+        new GetReservationByIdControl(reservation.getId(), Role.CUSTOMER, "invalid@customer.com");
+    var result = control.execute(new EitherResultBuilder<>());
+
+    assertTrue(result.isFailure());
+  }
+
+  @Test
+  public void executeValidModerator() {
+
+    var reservation = util.provideNewReservation(accountName, presentation.getId());
+    var control =
+        new GetReservationByIdControl(reservation.getId(), Role.MODERATOR, "valid@moderator.com");
     var result = control.execute(new EitherResultBuilder<>());
 
     assertTrue(result.isSuccess());
