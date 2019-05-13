@@ -3,7 +3,10 @@ package io.github.janmalch.kino.control.reservation;
 import io.github.janmalch.kino.api.model.ReservationDto;
 import io.github.janmalch.kino.api.model.SeatForPresentationDto;
 import io.github.janmalch.kino.control.validation.Validator;
+import io.github.janmalch.kino.entity.Reservation;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.problem.Problem;
+import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.util.HashSet;
 import java.util.Optional;
@@ -11,6 +14,15 @@ import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 
 public class ReservationValidator implements Validator<ReservationDto> {
+
+  public Optional<Problem> checkOwner(Reservation reservation, String accountName, Role role) {
+    var isOwner = accountName.equals(reservation.getAccount().getEmail());
+    if (role == Role.CUSTOMER && !isOwner) {
+      var problem = Problems.Factory.noSuchEntity(reservation.getId(), "No such reservation");
+      return Optional.of(problem);
+    }
+    return Optional.empty();
+  }
 
   @Override
   public Optional<Problem> validate(ReservationDto reservationDto) {
