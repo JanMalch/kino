@@ -326,8 +326,7 @@
         <hibernate.jpa.version>1.0.2.Final</hibernate.jpa.version>
         <maven-git-code-format.version>1.20</maven-git-code-format.version>
         <swagger.version>1.5.22</swagger.version>
-        <webapp.target.dir>${project.build.directory}/generated-webapp</webapp.target.dir>
-        <angular.project.location>Demo</angular.project.location>
+        <angular.project.location>src/main/demo</angular.project.location>
         <angular.project.nodeinstallation>node_installation</angular.project.nodeinstallation>
     </properties>
 </project>
