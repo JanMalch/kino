@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.entity.Reservation;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import org.junit.jupiter.api.AfterEach;
@@ -32,13 +33,14 @@ public class UpdateReservationByIdControlTest {
   }
 
   @Test
-  public void testExecute_Valid() {
+  public void executeValid() {
     var existingReservation = util.provideNewReservation(accountName, presentation.getId());
     var updateReservationDto =
         util.getReservationDto(existingReservation, presentation.getCinemaHall().getSeats());
 
     var updateControl =
-        new UpdateReservationByIdControl(existingReservation.getId(), updateReservationDto);
+        new UpdateReservationByIdControl(
+            existingReservation.getId(), accountName, Role.MODERATOR, updateReservationDto);
     var updateResult = updateControl.execute(new EitherResultBuilder<>());
 
     assertTrue(updateResult.isSuccess());
@@ -48,5 +50,19 @@ public class UpdateReservationByIdControlTest {
     var updatedReservation = reservationRepository.find(existingReservation.getId());
     assertEquals(existingReservation.getId(), updatedReservation.getId());
     assertNotEquals(existingReservation.getSeats(), updatedReservation.getSeats());
+  }
+
+  @Test
+  public void executeInvalidCustomer() {
+    var existingReservation = util.provideNewReservation(accountName, presentation.getId());
+    var updateReservationDto =
+        util.getReservationDto(existingReservation, presentation.getCinemaHall().getSeats());
+
+    var updateControl =
+        new UpdateReservationByIdControl(
+            existingReservation.getId(), "invalidCustomer", Role.CUSTOMER, updateReservationDto);
+    var updateResult = updateControl.execute(new EitherResultBuilder<>());
+
+    assertTrue(updateResult.isFailure());
   }
 }

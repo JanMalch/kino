@@ -50,23 +50,6 @@ public class ReservationResource {
   }
 
   @Path("my-reservation/{id}")
-  @PUT
-  @Secured
-  @RolesAllowed("CUSTOMER")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Updates users reservation for given ID", response = SuccessMessage.class)
-  public Response updateMyReservation(
-      @Context SecurityContext securityContext,
-      @PathParam("id") long id,
-      ReservationDto reservationDto) {
-    var control =
-        new UpdateMyReservationControl(
-            securityContext.getUserPrincipal().getName(), id, reservationDto);
-    return control.execute(new ResponseResultBuilder<>());
-  }
-
-  @Path("my-reservation/{id}")
   @DELETE
   @Secured
   @RolesAllowed("CUSTOMER")
@@ -113,12 +96,17 @@ public class ReservationResource {
   @Path("{id}")
   @PUT
   @Secured
-  @RolesAllowed("MODERATOR")
+  @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Updates reservation for given ID", response = SuccessMessage.class)
-  public Response updateReservationById(@PathParam("id") long id, ReservationDto reservationDto) {
-    var control = new UpdateReservationByIdControl(id, reservationDto);
+  public Response updateReservationById(
+      @PathParam("id") long id,
+      @Context SecurityContext securityContext,
+      ReservationDto reservationDto) {
+    var role = securityContext.isUserInRole("MODERATOR") ? Role.MODERATOR : Role.CUSTOMER;
+    var accountName = securityContext.getUserPrincipal().getName();
+    var control = new UpdateReservationByIdControl(id, accountName, role, reservationDto);
     return control.execute(new ResponseResultBuilder<>());
   }
 
