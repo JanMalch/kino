@@ -49,20 +49,6 @@ public class ReservationResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("my-reservation/{id}")
-  @DELETE
-  @Secured
-  @RolesAllowed("CUSTOMER")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Deletes users reservation for given ID", response = SuccessMessage.class)
-  public Response deleteMyReservationById(
-      @PathParam("id") long id, @Context SecurityContext securityContext) {
-    var control =
-        new DeleteMyReservationByIdControl(id, securityContext.getUserPrincipal().getName());
-    return control.execute(new ResponseResultBuilder<>());
-  }
-
   @Path("{id}")
   @GET
   @Secured
@@ -117,8 +103,11 @@ public class ReservationResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Deletes reservation for given ID", response = SuccessMessage.class)
-  public Response deleteReservationById(@PathParam("id") long id) {
-    var control = new DeleteReservationByIdControl(id);
+  public Response deleteReservationById(
+      @PathParam("id") long id, @Context SecurityContext securityContext) {
+    var role = securityContext.isUserInRole("MODERATOR") ? Role.MODERATOR : Role.CUSTOMER;
+    var accountName = securityContext.getUserPrincipal().getName();
+    var control = new DeleteReservationByIdControl(id, accountName, role);
     return control.execute(new ResponseResultBuilder<>());
   }
 }

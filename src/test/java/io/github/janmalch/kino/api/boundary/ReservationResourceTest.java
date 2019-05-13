@@ -80,16 +80,6 @@ public class ReservationResourceTest {
   }
 
   @Test
-  public void testDeleteMyReservationById() {
-    var presentation = util.provideReservationSetup("first", 5, "my@account.com");
-    var reservation = util.provideNewReservation("my@account.com", presentation.getId());
-
-    var resource = new ReservationResource();
-    var response = resource.deleteMyReservationById(reservation.getId(), securityContext);
-    assertEquals(200, response.getStatus());
-  }
-
-  @Test
   public void testGetReservationById() {
     var reservation = util.provideNewReservation(myAccount, presentation.getId());
 
@@ -139,7 +129,7 @@ public class ReservationResourceTest {
     var existingReservation = util.provideNewReservation(myAccount, presentation.getId());
 
     var resource = new ReservationResource();
-    var response = resource.deleteReservationById(existingReservation.getId());
+    var response = resource.deleteReservationById(existingReservation.getId(), securityContext);
     assertEquals(200, response.getStatus());
   }
 }
