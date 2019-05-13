@@ -7,6 +7,7 @@ import io.github.janmalch.kino.control.reservation.ReservationTestUtil;
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.entity.Reservation;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
@@ -80,11 +81,21 @@ public class ReservationResourceTest {
   }
 
   @Test
-  public void testGetReservationById() {
+  public void getReservationById() {
     var reservation = util.provideNewReservation(myAccount, presentation.getId());
 
     var resource = new ReservationResource();
     var response = resource.getReservationById(reservation.getId(), securityContext);
+    assertEquals(200, response.getStatus());
+  }
+
+  @Test
+  public void getModeratorReservationById() {
+    var secContext = util.provideTokenSecurityContext("mod@server.com", Role.MODERATOR);
+    var reservation = util.provideNewReservation(myAccount, presentation.getId());
+
+    var resource = new ReservationResource();
+    var response = resource.getReservationById(reservation.getId(), secContext);
     assertEquals(200, response.getStatus());
   }
 
@@ -112,7 +123,7 @@ public class ReservationResourceTest {
   }
 
   @Test
-  public void testUpdateReservationById() {
+  public void updateReservationById() {
     var existingReservation = util.provideNewReservation(myAccount, presentation.getId());
     var updateReservationDto =
         util.getReservationDto(existingReservation, presentation.getCinemaHall().getSeats());
@@ -125,11 +136,36 @@ public class ReservationResourceTest {
   }
 
   @Test
-  public void testDeleteReservationById() {
+  public void updateModeratorReservationById() {
+    var secContext = util.provideTokenSecurityContext("mod@server.com", Role.MODERATOR);
+
+    var existingReservation = util.provideNewReservation(myAccount, presentation.getId());
+    var updateReservationDto =
+        util.getReservationDto(existingReservation, presentation.getCinemaHall().getSeats());
+
+    var resource = new ReservationResource();
+    var response =
+        resource.updateReservationById(
+            existingReservation.getId(), secContext, updateReservationDto);
+    assertEquals(200, response.getStatus());
+  }
+
+  @Test
+  public void deleteReservationById() {
     var existingReservation = util.provideNewReservation(myAccount, presentation.getId());
 
     var resource = new ReservationResource();
     var response = resource.deleteReservationById(existingReservation.getId(), securityContext);
+    assertEquals(200, response.getStatus());
+  }
+
+  @Test
+  public void deleteModeratorReservationById() {
+    var secContext = util.provideTokenSecurityContext("mod@server.com", Role.MODERATOR);
+    var existingReservation = util.provideNewReservation(myAccount, presentation.getId());
+
+    var resource = new ReservationResource();
+    var response = resource.deleteReservationById(existingReservation.getId(), secContext);
     assertEquals(200, response.getStatus());
   }
 }
