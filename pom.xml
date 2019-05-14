@@ -326,7 +326,7 @@
         <hibernate.jpa.version>1.0.2.Final</hibernate.jpa.version>
         <maven-git-code-format.version>1.20</maven-git-code-format.version>
         <swagger.version>1.5.22</swagger.version>
-        <angular.project.location>src/main/demo</angular.project.location>
+        <angular.project.location>src/main/angular/kino-frontend</angular.project.location>
         <angular.project.nodeinstallation>node_installation</angular.project.nodeinstallation>
     </properties>
 </project>
