@@ -1,0 +1,219 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+$mat-white: (
+  50: #fafafa,
+  100: #fafafa,
+  200: #fafafa,
+  300: #fafafa,
+  400: #fafafa,
+  500: #fafafa,
+  600: #fafafa,
+  700: #fafafa,
+  800: #fafafa,
+  900: #fafafa,
+  A100: #fafafa,
+  A200: #fafafa,
+  A400: #fafafa,
+  A700: #fafafa,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ermine-primary: mat-palette($mat-blue, 600);
+$ermine-accent: mat-palette($mat-blue, 600);
+
+// The warn palette is optional (defaults to red).
+$ermine-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$ermine-theme: mat-light-theme($ermine-primary, $ermine-accent, $ermine-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($ermine-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* mdi fix */
+button.mat-menu-item {
+  line-height: 24px !important;
+}
+
+a.mat-menu-item > mat-icon {
+  margin-bottom: 14px;
+}
+
+.mat-icon svg {
+  height: 24px;
+  width: 24px;
+}
+
+.mat-icon.mat-icon-no-color {
+  color: rgba(#000, 0.54);
+}
+
+.mat-icon.mat-card-avatar svg {
+  transform: scale(calc(40 / 24));
+  transform-origin: left top;
+}
+
+.mat-icon[matprefix] {
+  margin-right: 12px;
+}
+
+.mat-menu-item .mat-icon {
+  margin: 0 8px 0 0;
+}
+
+.mdi-spin {
+  animation: mdi-spin 2s infinite linear;
+}
+
+@keyframes mdi-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+/* flex */
+
+.flex {
+  display: flex;
+
+  &.al-center {
+    align-items: center;
+  }
+}
+
+.flex-grow {
+  flex: 1;
+}
+
+/* util */
+
+.block-100 {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* margins */
+
+.mt-8 {
+  margin-top: 8px !important;
+}
+
+.mr-8 {
+  margin-right: 8px !important;
+}
+
+.mh-8 {
+  margin-left: 8px !important;
+  margin-right: 8px !important;
+}
+
+.m-8 {
+  margin: 8px !important;
+}
+
+.mb-16 {
+  margin-bottom: 16px !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+/* typography */
+
+
+.mat-typography {
+  h1, h2, h3, h4 {
+    font-family: Raleway, Roboto, sans-serif !important;
+    color: #5f6368;
+  }
+
+  h1, h2 {
+    color: #202124;
+  }
+}
+
+b, strong {
+  font-weight: 500;
+}
+
+a,
+*[routerlink],
+*[role="link"] {
+  cursor: pointer;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.text-link {
+  color: #1e88e5;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* material fixes */
+.mat-drawer-content {
+  overflow: hidden scroll !important;
+}
+
+.mat-ink-bar {
+  height: 3px !important;
+  border-radius: 3px 3px 0 0;
+}
+
+.mat-calendar-body-selected {
+  background-color: #1e88e5;
+}

@@ -1,0 +1,30 @@
+:host {
+  & /deep/ .mat-chip-list-wrapper {
+    justify-content: center;
+  }
+}
+
+.seats-wrapper {
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.mat-chip {
+  &.mat-warn {
+    background-color: #f44336;
+  }
+
+  &.mat-primary {
+    background-color: #1e88e5;
+    color: white;
+  }
+
+  &.mat-chip-disabled {
+    opacity: 1;
+  }
+}
+
+.mat-chip-list {
+  outline: none;
+}

@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  padding: 32px 0;
+}
+
+h1 {
+  margin-bottom: 32px !important;
+}
+
+#card-wrapper {
+  height: 400px;
+  width: 250px;
+}
+
+#presentations {
+  flex: 1;
+  margin: 0 64px;
+}
+
+#calendar {
+  input {
+    width: 100%;
+  }
+}
