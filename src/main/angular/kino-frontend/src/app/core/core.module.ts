@@ -17,6 +17,7 @@ registerLocaleData(localeDe);
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     // set configuration parameters here.
+    basePath: 'http://localhost:8080/kino/api'
   };
   return new Configuration(params);
 }

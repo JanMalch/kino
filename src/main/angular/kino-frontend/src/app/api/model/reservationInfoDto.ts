@@ -9,12 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { SeatForReservationDto } from './seatForReservationDto';
+import {MovieInfoDto} from './movieInfoDto';
+import {SeatDto} from './seatDto';
 
 
 export interface ReservationInfoDto { 
-    seats?: Array<SeatForReservationDto>;
+    seats?: Array<SeatDto>;
     id?: number;
     reservationDate?: Date;
     presentationId?: number;
+    movie?: MovieInfoDto;
 }

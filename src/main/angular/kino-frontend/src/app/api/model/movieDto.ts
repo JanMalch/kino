@@ -9,8 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { PresentationDto } from './presentationDto';
-import { PriceCategoryDto } from './priceCategoryDto';
+import {PresentationDto} from './presentationDto';
+import {PriceCategoryDto} from './priceCategoryDto';
 
 
 export interface MovieDto { 

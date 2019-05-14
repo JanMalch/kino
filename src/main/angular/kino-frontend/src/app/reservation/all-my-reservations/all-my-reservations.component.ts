@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ReservationInfoDto} from '@api/model/reservationInfoDto';
 import {DefaultService} from '@api/api/default.service';
-import {tap} from "rxjs/operators";
+import {shareReplay, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-all-my-reservations',
@@ -19,7 +19,8 @@ export class AllMyReservationsComponent implements OnInit {
 
   ngOnInit() {
     this.reservations$ = this.api.getMyReservations().pipe(
-      tap(() => this.loading = false)
+      tap(() => this.loading = false),
+      shareReplay(1)
     );
   }
 

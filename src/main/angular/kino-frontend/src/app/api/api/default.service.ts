@@ -11,37 +11,35 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { AccountDto } from '../model/accountDto';
-import { AccountInfoDto } from '../model/accountInfoDto';
-import { CinemaHallDto } from '../model/cinemaHallDto';
-import { LoginDto } from '../model/loginDto';
-import { MovieDto } from '../model/movieDto';
-import { MovieOverviewDto } from '../model/movieOverviewDto';
-import { PingDto } from '../model/pingDto';
-import { PresentationWithSeatsDto } from '../model/presentationWithSeatsDto';
-import { PriceCategoryBaseDto } from '../model/priceCategoryBaseDto';
-import { PriceCategoryDto } from '../model/priceCategoryDto';
-import { ReservationDto } from '../model/reservationDto';
-import { ReservationInfoDto } from '../model/reservationInfoDto';
-import { SignUpDto } from '../model/signUpDto';
-import { SuccessMessage } from '../model/successMessage';
-import { TokenDto } from '../model/tokenDto';
+import {AccountDto} from '../model/accountDto';
+import {AccountInfoDto} from '../model/accountInfoDto';
+import {CinemaHallDto} from '../model/cinemaHallDto';
+import {LoginDto} from '../model/loginDto';
+import {MovieDto} from '../model/movieDto';
+import {MovieOverviewDto} from '../model/movieOverviewDto';
+import {PingDto} from '../model/pingDto';
+import {PresentationWithSeatsDto} from '../model/presentationWithSeatsDto';
+import {PriceCategoryBaseDto} from '../model/priceCategoryBaseDto';
+import {PriceCategoryDto} from '../model/priceCategoryDto';
+import {ReservationDto} from '../model/reservationDto';
+import {ReservationInfoDto} from '../model/reservationInfoDto';
+import {SignUpDto} from '../model/signUpDto';
+import {SuccessMessage} from '../model/successMessage';
+import {TokenDto} from '../model/tokenDto';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable()
 export class DefaultService {
 
-    protected basePath = 'http://localhost:8080/kino/api';
+    protected basePath = 'http://localhost:8080/api';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -225,48 +223,6 @@ export class DefaultService {
         ];
 
         return this.httpClient.delete<TokenDto>(`${this.basePath}/account/my-account`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Deletes users reservation for given ID
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteMyReservationById(id: number, observe?: 'body', reportProgress?: boolean): Observable<SuccessMessage>;
-    public deleteMyReservationById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SuccessMessage>>;
-    public deleteMyReservationById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SuccessMessage>>;
-    public deleteMyReservationById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteMyReservationById.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.delete<SuccessMessage>(`${this.basePath}/reservation/my-reservation/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -1198,55 +1154,6 @@ export class DefaultService {
         }
 
         return this.httpClient.put<SuccessMessage>(`${this.basePath}/movie/${encodeURIComponent(String(id))}`,
-            body,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Updates users reservation for given ID
-     * 
-     * @param id 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateMyReservation(id: number, body?: ReservationDto, observe?: 'body', reportProgress?: boolean): Observable<SuccessMessage>;
-    public updateMyReservation(id: number, body?: ReservationDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SuccessMessage>>;
-    public updateMyReservation(id: number, body?: ReservationDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SuccessMessage>>;
-    public updateMyReservation(id: number, body?: ReservationDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling updateMyReservation.');
-        }
-
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.put<SuccessMessage>(`${this.basePath}/reservation/my-reservation/${encodeURIComponent(String(id))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
