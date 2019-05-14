@@ -9,7 +9,7 @@ import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 
-@ApplicationPath("/")
+@ApplicationPath("api")
 public class WebApplication extends ResourceConfig {
 
   public WebApplication() {
@@ -18,7 +18,7 @@ public class WebApplication extends ResourceConfig {
     beanConfig.setVersion("1.0.0");
     beanConfig.setSchemes(new String[] {"http"});
     beanConfig.setHost("localhost:8080");
-    beanConfig.setBasePath("/kino/api");
+    beanConfig.setBasePath("api");
     beanConfig.setResourcePackage("io.github.janmalch.kino.api.boundary");
     beanConfig.setScan(true);
 
