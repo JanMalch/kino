@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title><h2>Meine Reservierungen</h2></mat-card-title>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   </mat-card-header>
   <mat-card-content>
     <mat-divider></mat-divider>
