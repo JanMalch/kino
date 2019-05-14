@@ -1,0 +1,6 @@
+<ng-container *ngIf="(reservations.getMyReservation(reservationId) | async) as reservation">
+  <h1>Reservierung #{{ reservation.id }}</h1>
+  <h3>Reserviert um {{ reservation.reservationDate | parseDate | date: 'medium' }} Uhr</h3>
+  <app-hall-overview [presentationId]="reservation.presentationId"
+  [selectable]="false" [selectedSeats]="reservation.seats.map(idMapper)"></app-hall-overview>
+</ng-container>

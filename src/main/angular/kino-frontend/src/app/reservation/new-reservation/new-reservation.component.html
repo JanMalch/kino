@@ -1,0 +1,50 @@
+<section id="head">
+  <div>
+    <app-movie-all-infos-card [movie]="movies.getMovie(movieId) | async"></app-movie-all-infos-card>
+  </div>
+  <app-hall-overview [presentationId]="presentationId" [selectable]="true"
+                     (select)="onSelect($event)"></app-hall-overview>
+</section>
+<section>
+  <mat-card *ngIf="(auth.account$ | async) as account">
+    <mat-card-header>
+      <mat-card-title><h1>Reservierung</h1></mat-card-title>
+      <mat-card-subtitle>{{ account.firstName }} {{ account.lastName}} ({{ account.email}})</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="selectedSeats" class="mat-elevation-z1 mb-16">
+        <ng-container matColumnDef="seat">
+          <th mat-header-cell *matHeaderCellDef> Sitz</th>
+          <td mat-cell *matCellDef="let seat"> {{ seat.row }} {{ seat.seatNumber }} </td>
+          <td mat-footer-cell *matFooterCellDef> Total</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Preis</th>
+          <td mat-cell *matCellDef="let seat"> {{ priceForSeats[seat.id] | currency: 'EUR' }} </td>
+          <td mat-footer-cell *matFooterCellDef> {{ getTotalPrice() | currency: 'EUR'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="discounted">
+          <th mat-header-cell *matHeaderCellDef> Ermäßigt</th>
+          <td mat-cell *matCellDef="let seat">
+            <mat-slide-toggle (change)="setAsDiscounted(seat.id, $event.checked)">
+              Schüler oder Student
+            </mat-slide-toggle>
+          </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="columns"></tr>
+      </table>
+      <small class="mat-error">Online-Käufe sind derzeit deaktiviert.</small>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="makeReservation()">Reservieren</button>
+      <button mat-button disabled>Kaufen</button>
+    </mat-card-actions>
+  </mat-card>
+</section>

@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+
+  /*& /deep/ .mat-ink-bar {
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+  }*/
+}
+
+a.mat-tab-link {
+  border-radius: 0;
+  height: 100%;
+  line-height: 64px;
+  color: #5f6368;
+  font-family: Raleway, Roboto, sans-serif;
+  opacity: 1;
+
+  &.mat-tab-label-active {
+    color: #1e88e5;
+
+    .mat-icon /deep/ > svg {
+      color: #1e88e5;
+    }
+  }
+
+  .mat-icon {
+    line-height: 24px;
+    margin-right: 8px;
+  }
+}
+
+
+main {
+  margin: 32px auto 20vh;
+  width: 70vw;
+}
+
+@media only screen and (max-width: 599px) {
+  main {
+    width: 100vw;
+  }
+}
