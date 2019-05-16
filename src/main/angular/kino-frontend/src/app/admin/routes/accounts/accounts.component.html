@@ -1,7 +1,6 @@
 <app-generic-form [schema]="schema" [data]="selected"
   (create)="onCreate($event)" (delete)="onDelete()" (update)="onUpdate($event)">
 </app-generic-form>
-{{ id }}
 <mat-list role="list">
   <mat-list-item role="listitem" *ngFor="let item of entities$ | async" (click)="setSelect(item)">
     <mat-icon mat-list-icon [svgIcon]="resolveIcon(item.role)"></mat-icon>
