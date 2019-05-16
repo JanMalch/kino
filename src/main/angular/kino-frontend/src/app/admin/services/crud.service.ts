@@ -26,7 +26,7 @@ export interface GenericForm {
 export interface FormField {
   name: string;
   label: string;
-  type: "text" | "number" | "password" | "email" | "select";
+  type: "text" | "number" | "password" | "email" | "select" | "array";
   options?: { value: any, label: string}[];
   validation?: {
     required?: boolean;

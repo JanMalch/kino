@@ -1,6 +1,7 @@
 <mat-list role="list">
   <h3 mat-subheader>Zukünftige Filme</h3>
-  <mat-list-item *ngFor="let r of reservations; last as isLast" role="link" [routerLink]="['/reservation', r.id]"
+  <mat-list-item *ngFor="let r of reservations; last as isLast" class="hoverable" role="link"
+                 [routerLink]="['/reservation', r.id]"
                  [class.mb-16]="isLast">
     <mat-icon mat-list-icon svgIcon="theater"></mat-icon>
     <h4 mat-line>{{ r.movie.name }}</h4>
@@ -8,7 +9,7 @@
   </mat-list-item>
   <mat-divider></mat-divider>
   <h3 mat-subheader>Gesehene Filme</h3>
-  <mat-list-item *ngFor="let r of reservations" role="link" [routerLink]="['/reservation', r.id]">
+  <mat-list-item *ngFor="let r of reservations" role="link" class="hoverable" [routerLink]="['/reservation', r.id]">
     <mat-icon mat-list-icon svgIcon="history"></mat-icon>
     <h4 mat-line>{{ r.movie.name }}</h4>
     <p mat-line> Reserviert um {{ r.reservationDate | parseDate | date: 'medium' }} Uhr</p>

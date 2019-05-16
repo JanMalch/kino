@@ -1,11 +1,10 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable} from '@angular/core';
 import {CrudService, GenericForm} from "@admin/services";
 import {AccountDto} from "@api/model/accountDto";
 import {Observable} from "rxjs";
 import {DefaultService} from "@api/api/default.service";
 import {SuccessMessage} from "@api/model/successMessage";
 import {AccountInfoDto} from "@api/model/accountInfoDto";
-import {shareReplay} from "rxjs/operators";
 
 @Injectable()
 export class AccountCrudService implements CrudService<AccountDto, AccountInfoDto> {
@@ -23,11 +22,11 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
 
   getForm(): GenericForm {
     return {
-      firstName: {label: "Vorname", name: "firstName", type: "text", validation: {required: true}},
-      lastName: {label: "Nachname", name: "lastName", type: "text", validation: {required: true}},
-      password: {label: "Passwort", name: "password", type: "password", validation: {required: true}},
+      firstName: {label: "Vorname", name: "firstName", type: "text", validation: {required: true, min: 1}},
+      lastName: {label: "Nachname", name: "lastName", type: "text", validation: {required: true, min: 1}},
+      password: {label: "Passwort", name: "password", type: "password"},
       email: {label: "Email", name: "email", type: "email", validation: {required: true}},
-      birthday: {label: "Geburtstag", name: "birthday", type: "text", validation: {required: true}},
+      birthday: {label: "Geburtstag", name: "birthday", type: "text", validation: {required: true, min: 10}},
       role: {
         label: "Rolle", name: "role", type: "select", options: [
           {
@@ -37,7 +36,7 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
           {
             value: "MODERATOR",
             label: "Moderator"
-          },{
+          }, {
             value: "CUSTOMER",
             label: "Customer"
           }
@@ -61,43 +60,18 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
 }
 
 @Component({
-  selector: 'app-reservations',
+  selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss'],
-  providers: [AccountCrudService]
+  providers: [{provide: CrudService, useClass: AccountCrudService}]
 })
-export class AccountsComponent implements OnInit {
+export class AccountsComponent {
 
-  selected: AccountInfoDto = null;
-  schema: GenericForm = this.accountCrudService.getForm();
-  entities$: Observable<AccountInfoDto[]>;
-
-  constructor(private accountCrudService: AccountCrudService) {
-  }
-
-  ngOnInit() {
-    this.entities$ = this.accountCrudService.readAll().pipe(
-      shareReplay(1)
-    );
-  }
-
-  onCreate(value: any) {
-    this.accountCrudService.create(value).subscribe(console.log);
-  }
-
-  onUpdate(value: any) {
-    this.accountCrudService.update(this.selected.id, value).subscribe(console.log);
-  }
-
-  onDelete() {
-    this.accountCrudService.delete(this.selected.id).subscribe(console.log);
+  constructor(private crud: CrudService<AccountDto, AccountInfoDto>) {
   }
 
   resolveIcon(role: string): string {
     return role === "ADMIN" || role === "MODERATOR" ? "account-badge" : "account-circle";
   }
 
-  setSelect(dto: AccountInfoDto) {
-    this.selected = dto;
-  }
 }

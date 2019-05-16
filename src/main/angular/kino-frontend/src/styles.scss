@@ -138,6 +138,19 @@ a.mat-menu-item > mat-icon {
   width: 100%;
 }
 
+.hoverable {
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &.mat-list-item {
+    border-radius: 4px;
+  }
+
+  &:hover {
+    background-color: rgba(#000, 0.07);
+  }
+}
+
 /* margins */
 
 .mt-8 {
