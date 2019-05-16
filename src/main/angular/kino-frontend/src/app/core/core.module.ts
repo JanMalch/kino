@@ -11,6 +11,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '@core/auth';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {ErrorInterceptor} from '@core/interceptors';
+import {RouterModule} from "@angular/router";
 
 registerLocaleData(localeDe);
 
@@ -30,7 +31,7 @@ export function apiConfigFactory(): Configuration {
     SharedModule,
     ApiModule.forRoot(apiConfigFactory)
   ],
-  exports: [SkeletonComponent],
+  exports: [SkeletonComponent, RouterModule],
   providers: [
     {
       provide: LOCALE_ID, useFactory: () => navigator.language || 'de-DE'

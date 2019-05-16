@@ -16,6 +16,7 @@ import {
   MatNativeDateModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
+  MatSelectModule,
   MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
@@ -49,7 +50,8 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatTableModule,
     MatSlideToggleModule,
     MatFormFieldModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {
