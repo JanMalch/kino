@@ -3,3 +3,17 @@
   width: 50%;
   margin: 32px auto;
 }
+
+.mat-card-header {
+  position: relative;
+
+  .mat-progress-bar {
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    bottom: 0;
+    width: calc(100% + 32px);
+  }
+
+}
+

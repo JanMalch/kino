@@ -1,12 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CinemaHallService} from '@core/services';
 import {DefaultService} from '@api/api/default.service';
-import {Observable} from 'rxjs';
 import {PresentationWithSeatsDto} from '@api/model/presentationWithSeatsDto';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {SeatForPresentationDto} from '@api/model/seatForPresentationDto';
-import {SeatDto} from '@api/model/seatDto';
-import {SeatForReservationDto} from '@api/model/seatForReservationDto';
 
 @Component({
   selector: 'app-hall-overview[presentationId]',

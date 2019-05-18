@@ -15,7 +15,6 @@ export * from './reservationDto';
 export * from './reservationInfoDto';
 export * from './seatDto';
 export * from './seatForPresentationDto';
-export * from './seatForReservationDto';
 export * from './signUpDto';
 export * from './successMessage';
 export * from './tokenDto';

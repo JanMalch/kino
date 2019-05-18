@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {DefaultService} from '@api/api/default.service';
 import {Observable} from 'rxjs';
 import {SignUpDto} from '@api/model/signUpDto';
-import {ReservationInfoDto} from '@api/model/reservationInfoDto';
 import {AuthService} from '@core/auth';
+import {startWith} from "rxjs/operators";
 
 @Component({
   selector: 'app-account',
@@ -19,7 +19,9 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.account$ = this.api.getMyAccount();
+    this.account$ = this.api.getMyAccount().pipe(
+      startWith(undefined)
+    );
   }
 
   deleteAccount() {

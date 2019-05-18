@@ -4,7 +4,12 @@
       <mat-card-title><h2>Mein Profil</h2></mat-card-title>
     </mat-card-header>
 
-    <mat-card-content>
+    <mat-card-content>  <ng-template #spinner>
+      <div id="spinner">
+      <mat-progress-spinner class="mt-8" mode="indeterminate" [strokeWidth]="4"></mat-progress-spinner>
+      </div>
+    </ng-template>
+      <ng-container *ngIf="!!email; else spinner">
       <mat-form-field appearance="fill">
         <input matInput name="email" type="email" [ngModel]="email"/>
         <mat-label>Email</mat-label>
@@ -26,7 +31,7 @@
       <mat-form-field appearance="fill">
         <input matInput name="password" type="password" [ngModel]="password"/>
         <mat-label>Passwort</mat-label>
-      </mat-form-field>
+      </mat-form-field></ng-container>
     </mat-card-content>
 
     <mat-card-actions>

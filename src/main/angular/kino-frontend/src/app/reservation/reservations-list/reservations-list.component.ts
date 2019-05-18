@@ -10,7 +10,8 @@ export class ReservationsListComponent implements OnInit {
 
   @Input() reservations: ReservationInfoDto[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

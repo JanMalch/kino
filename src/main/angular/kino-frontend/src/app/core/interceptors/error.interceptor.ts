@@ -1,4 +1,4 @@
-import {Injectable, isDevMode} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -19,10 +19,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (err.error.status === 404) {
             return throwError(err);
           }
-          let {title, detail} = err.error;
-          title = !!title ? title : 'Unbekannter Serverfehler aufgetreten';
-          detail = !!detail ? detail + '.' : '';
-          this.snackBar.open(`${title}. ${detail}`.trim(), 'OK', {duration: 5000});
+          const message = generateMessage(err.error);
+          this.snackBar.open(message, 'OK', {duration: 5000});
         }
         return throwError(err);
       })
@@ -30,9 +28,27 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 }
 
-function isProblem(err: Error): boolean {
+export function isProblem(err: Error): boolean {
   if (!(err instanceof HttpErrorResponse) || !('error' in err)) {
     return false;
   }
   return 'type' in err.error;
+}
+
+export function generateMessage({title, detail}: { title?: string; detail?: string}): string {
+  if (!title) {
+    return 'Unbekannter Serverfehler aufgetreten';
+  }
+  let output = title;
+  if (!output.endsWith(".")) {
+    output += ". ";
+  }
+  if (!!detail) {
+    output += detail;
+    if (!output.endsWith(".")) {
+      output += ".";
+    }
+  }
+
+  return output.trim();
 }

@@ -1,15 +1,26 @@
 import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
-  MatCardModule, MatChipsModule, MatDatepickerModule, MatDividerModule, MatExpansionModule, MatFormFieldModule,
+  MatCardModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatIconRegistry,
   MatInputModule,
   MatListModule,
-  MatMenuModule, MatNativeDateModule, MatProgressSpinnerModule,
-  MatSidenavModule, MatSlideToggleModule,
-  MatSnackBarModule, MatTableModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatTableModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -38,7 +49,9 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatProgressSpinnerModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatProgressBarModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {

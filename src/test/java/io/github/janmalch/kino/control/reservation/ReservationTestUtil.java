@@ -49,6 +49,10 @@ public class ReservationTestUtil {
 
   public Reservation provideNewReservation(String accountName, long presentationId) {
     var presentation = RepositoryFactory.createRepository(Presentation.class).find(presentationId);
+    var movie = new Movie();
+    RepositoryFactory.createRepository(Movie.class).add(movie);
+    presentation.setMovie(movie);
+    RepositoryFactory.createRepository(Presentation.class).update(presentation);
 
     var newReservationDto = new ReservationDto();
     newReservationDto.setSeatIds(getNumberOfSeatIds(3, presentation.getCinemaHall().getSeats()));

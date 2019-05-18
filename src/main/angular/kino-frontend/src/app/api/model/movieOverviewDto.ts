@@ -9,8 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { DateGroup } from './dateGroup';
-import { MovieInfoDto } from './movieInfoDto';
+import {DateGroup} from './dateGroup';
+import {MovieInfoDto} from './movieInfoDto';
 
 
 export interface MovieOverviewDto { 

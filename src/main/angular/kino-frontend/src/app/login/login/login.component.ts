@@ -12,6 +12,17 @@ export class LoginComponent implements OnInit {
 
   forward: string;
 
+  readonly accounts = ["admin", "moderator", "customer", "customer1"];
+
+  getCredentials(account: string) {
+    return {
+      value: {
+        email: `${account}@account.de`,
+        password: account
+      }
+    } as NgForm
+  }
+
   constructor(private auth: AuthService,
               route: ActivatedRoute,
               private router: Router) {
