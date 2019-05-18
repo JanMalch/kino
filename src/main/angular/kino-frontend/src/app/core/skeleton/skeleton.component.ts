@@ -20,9 +20,4 @@ export class SkeletonComponent {
               public auth: AuthService) {
   }
 
-  autoSignIn() {
-    this.auth.logIn('janmalch@gmail.com', 'test123').subscribe();
-    // this.auth.logIn('admin@account.de', 'admin').subscribe();
-  }
-
 }
