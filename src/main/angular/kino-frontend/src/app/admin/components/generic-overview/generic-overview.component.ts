@@ -1,4 +1,4 @@
-import {Component, ContentChild, Input, OnInit, TemplateRef, ViewEncapsulation} from '@angular/core';
+import {Component, ContentChild, Input, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Observable} from "rxjs";
 import {CrudService} from "@admin/services";
 import {Router} from "@angular/router";
@@ -6,6 +6,7 @@ import {MatSnackBar} from "@angular/material";
 import {shareReplay, startWith} from "rxjs/operators";
 import {SuccessMessage} from "@api/model/successMessage";
 import {EntityDirective} from "@admin/directives";
+import {GenericFormComponent} from "../generic-form/generic-form.component";
 
 @Component({
   selector: 'app-generic-overview',
@@ -20,6 +21,7 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   @Input() entityNamePlural: string;
 
   @ContentChild(EntityDirective, { read: TemplateRef}) entityTemplate : TemplateRef<HTMLElement>;
+  @ViewChild(GenericFormComponent) genericForm: GenericFormComponent;
 
   selected: T = null;
   entities$: Observable<T[]>;
@@ -30,6 +32,10 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshEntities();
+  }
+
+  private refreshEntities() {
     this.entities$ = this.crud.readAll().pipe(
       startWith(null),
       shareReplay(1)
@@ -37,7 +43,9 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   }
 
   onCreate(result: number) {
+    this.refreshEntities();
     this.selected = null;
+    this.genericForm.clearForm();
 
     const redirectAfterwards = this.onCreateRedirect !== undefined;
 
@@ -56,14 +64,18 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   }
 
   onUpdate(result: SuccessMessage) {
+    this.refreshEntities();
     this.selected = null;
+    this.genericForm.clearForm();
     this.snackBar.open(result.message, "OK", {
       duration: 2500
     });
   }
 
   onDelete(result: SuccessMessage) {
+    this.refreshEntities();
     this.selected = null;
+    this.genericForm.clearForm();
     this.snackBar.open(result.message, "OK", {
       duration: 2500
     });
@@ -71,10 +83,6 @@ export class GenericOverviewComponent<T, O> implements OnInit {
 
   setSelect(dto: T) {
     this.selected = dto;
-  }
-
-  resolveIcon(role: string): string {
-    return role === "ADMIN" || role === "MODERATOR" ? "account-badge" : "account-circle";
   }
 
 }

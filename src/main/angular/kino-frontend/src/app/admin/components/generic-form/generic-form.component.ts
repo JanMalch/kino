@@ -17,7 +17,7 @@ export class GenericFormComponent implements OnInit {
     this._data = value;
     if (!!this.form) {
       if (value === null) {
-        this.form.reset();
+        this.form.reset(null);
       } else {
         this.form.patchValue(value);
       }
@@ -36,6 +36,12 @@ export class GenericFormComponent implements OnInit {
   constructor(private crud: CrudService<any, any>) {
   }
 
+  clearForm() {
+    this.form.reset();
+    this.form.setErrors(null);
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+  }
 
   ngOnInit() {
     const data = this._data || {};
