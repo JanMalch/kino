@@ -10,9 +10,12 @@ import {GenericOverviewComponent} from './components/generic-overview/generic-ov
 import {EntityDirective} from './directives/entity.directive';
 import {MoviesComponent} from './routes/movies/movies.component';
 import {ReservationsComponent} from './routes/reservations/reservations.component';
+import {CinemahallComponent} from './routes/cinemahall/cinemahall.component';
+import {PresentationComponent} from './routes/presentation/presentation.component';
+import {PricecategoryComponent} from './routes/pricecategory/pricecategory.component';
 
 @NgModule({
-  declarations: [GenericFormComponent, AccountsComponent, DashboardComponent, GenericOverviewComponent, EntityDirective, MoviesComponent, ReservationsComponent],
+  declarations: [GenericFormComponent, AccountsComponent, DashboardComponent, GenericOverviewComponent, EntityDirective, MoviesComponent, ReservationsComponent, CinemahallComponent, PresentationComponent, PricecategoryComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

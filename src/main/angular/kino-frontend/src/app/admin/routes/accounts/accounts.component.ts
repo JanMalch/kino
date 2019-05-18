@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {DefaultService} from "@api/api/default.service";
 import {SuccessMessage} from "@api/model/successMessage";
 import {AccountInfoDto} from "@api/model/accountInfoDto";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class AccountCrudService implements CrudService<AccountDto, AccountInfoDto> {
@@ -13,7 +14,8 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
   }
 
   create(dto: AccountDto): Observable<number> {
-    return undefined;
+    const {role, id, ...signUpDto} = dto;
+    return this.api.signUp(signUpDto);
   }
 
   delete(id: number): Observable<SuccessMessage> {
@@ -40,7 +42,7 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
             value: "CUSTOMER",
             label: "Customer"
           }
-        ], validation: {required: true}
+        ]
       }
     };
   }
@@ -54,7 +56,11 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
   }
 
   update(id: number, dto: AccountDto): Observable<SuccessMessage> {
-    return undefined;
+    return this.api.editAccountById(id, dto).pipe(
+      map(() => ({
+        message: "Account erfolgreich aktualisiert."
+      }))
+    );
   }
 
 }

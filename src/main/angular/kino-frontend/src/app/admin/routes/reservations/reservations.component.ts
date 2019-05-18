@@ -53,8 +53,4 @@ export class ReservationsComponent  {
   constructor(private crud: CrudService<ReservationDto, ReservationInfoDto>) {
   }
 
-  resolveIcon(role: string): string {
-    return role === "ADMIN" || role === "MODERATOR" ? "account-badge" : "account-circle";
-  }
-
 }
