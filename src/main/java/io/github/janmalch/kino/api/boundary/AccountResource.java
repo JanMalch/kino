@@ -45,7 +45,7 @@ public class AccountResource {
   @RolesAllowed("CUSTOMER")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Returns own profile", response = SignUpDto.class)
+  @ApiOperation(value = "Returns own profile", response = AccountDto.class)
   public Response getMyAccount(@Context SecurityContext securityContext) {
     log.info("------------------ BEGIN GET MY-ACCOUNT REQUEST ------------------");
 
