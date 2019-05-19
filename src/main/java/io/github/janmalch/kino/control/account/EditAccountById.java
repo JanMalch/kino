@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.account;
 
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
@@ -16,9 +16,9 @@ public class EditAccountById implements Control<SuccessMessage> {
   private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
-  private final AccountDto dto;
+  private final AccountInfoDto dto;
 
-  public EditAccountById(AccountDto dto) {
+  public EditAccountById(AccountInfoDto dto) {
     this.dto = dto;
   }
 
@@ -34,12 +34,12 @@ public class EditAccountById implements Control<SuccessMessage> {
     return result.success("Account was successfully updated");
   }
 
-  static class UpdateAccountMapper implements Mapper<AccountDto, Account> {
+  static class UpdateAccountMapper implements Mapper<AccountInfoDto, Account> {
     private final EditMyAccountControl.UpdateAccountMapper ua =
         new EditMyAccountControl.UpdateAccountMapper();
 
     @Override
-    public Account update(AccountDto update, Account existing) {
+    public Account update(AccountInfoDto update, Account existing) {
       ua.update(update, existing);
 
       if (update.getRole() != null) {

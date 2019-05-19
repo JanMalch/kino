@@ -2,7 +2,6 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
@@ -191,7 +190,7 @@ class AccountResourceTest {
     existing.setSalt(salt);
     repository.add(existing);
 
-    AccountDto dto = new AccountDto();
+    AccountInfoDto dto = new AccountInfoDto();
     dto.setId(existing.getId());
     dto.setEmail("TestUser1@email.de");
     dto.setRole(Role.MODERATOR);
