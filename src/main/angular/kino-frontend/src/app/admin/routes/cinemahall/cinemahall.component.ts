@@ -1,6 +1,5 @@
 import {Component, Injectable} from '@angular/core';
 import {CrudService, GenericForm} from "@admin/services";
-import {AccountDto} from "@api/model/accountDto";
 import {AccountInfoDto} from "@api/model/accountInfoDto";
 import {DefaultService} from "@api/api/default.service";
 import {Observable} from "rxjs";
@@ -9,12 +8,12 @@ import {map} from "rxjs/operators";
 import {CinemaHallDto} from "@api/model/cinemaHallDto";
 
 @Injectable()
-export class CinemaHallCrudService implements CrudService<AccountDto, AccountInfoDto> {
+export class CinemaHallCrudService implements CrudService<AccountInfoDto, AccountInfoDto> {
 
   constructor(private api: DefaultService) {
   }
 
-  create(dto: AccountDto): Observable<number> {
+  create(dto: AccountInfoDto): Observable<number> {
     return undefined;
   }
 
@@ -38,7 +37,7 @@ export class CinemaHallCrudService implements CrudService<AccountDto, AccountInf
     return this.api.getAllCinemaHalls();
   }
 
-  update(id: number, dto: AccountDto): Observable<SuccessMessage> {
+  update(id: number, dto: AccountInfoDto): Observable<SuccessMessage> {
     return this.api.editAccountById(id, dto).pipe(
       map(() => ({
         message: "Account erfolgreich aktualisiert."
@@ -56,7 +55,7 @@ export class CinemaHallCrudService implements CrudService<AccountDto, AccountInf
 })
 export class CinemahallComponent  {
 
-  constructor(private crud: CrudService<AccountDto, AccountInfoDto>) {
+  constructor(private crud: CrudService<AccountInfoDto, AccountInfoDto>) {
   }
 
   resolveIcon(role: string): string {

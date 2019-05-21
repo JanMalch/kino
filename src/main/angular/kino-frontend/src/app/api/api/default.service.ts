@@ -16,7 +16,6 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/
 
 import {Observable} from 'rxjs';
 
-import {AccountDto} from '../model/accountDto';
 import {AccountInfoDto} from '../model/accountInfoDto';
 import {CinemaHallDto} from '../model/cinemaHallDto';
 import {LoginDto} from '../model/loginDto';
@@ -323,10 +322,10 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public editAccountById(id: number, body?: AccountDto, observe?: 'body', reportProgress?: boolean): Observable<AccountDto>;
-    public editAccountById(id: number, body?: AccountDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountDto>>;
-    public editAccountById(id: number, body?: AccountDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountDto>>;
-    public editAccountById(id: number, body?: AccountDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public editAccountById(id: number, body?: AccountInfoDto, observe?: 'body', reportProgress?: boolean): Observable<AccountInfoDto>;
+    public editAccountById(id: number, body?: AccountInfoDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountInfoDto>>;
+    public editAccountById(id: number, body?: AccountInfoDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountInfoDto>>;
+    public editAccountById(id: number, body?: AccountInfoDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling editAccountById.');
@@ -353,7 +352,7 @@ export class DefaultService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<AccountDto>(`${this.basePath}/account/${encodeURIComponent(String(id))}`,
+        return this.httpClient.put<AccountInfoDto>(`${this.basePath}/account/${encodeURIComponent(String(id))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -676,9 +675,9 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMyAccount(observe?: 'body', reportProgress?: boolean): Observable<SignUpDto>;
-    public getMyAccount(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SignUpDto>>;
-    public getMyAccount(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SignUpDto>>;
+    public getMyAccount(observe?: 'body', reportProgress?: boolean): Observable<AccountInfoDto>;
+    public getMyAccount(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountInfoDto>>;
+    public getMyAccount(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountInfoDto>>;
     public getMyAccount(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -696,7 +695,7 @@ export class DefaultService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<SignUpDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.get<AccountInfoDto>(`${this.basePath}/account/my-account`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

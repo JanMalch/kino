@@ -1,4 +1,3 @@
-export * from './accountDto';
 export * from './accountInfoDto';
 export * from './cinemaHallDto';
 export * from './dateGroup';

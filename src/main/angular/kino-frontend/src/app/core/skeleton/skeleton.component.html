@@ -32,7 +32,7 @@
             Mein Account
           </a>
           <a mat-tab-link
-             *ngIf="!!(auth.account$ | async)"
+             *ngIf="!!(auth.account$ | async) && (auth.account$ | async).role === 'ADMIN'"
              routerLink="/admin"
              routerLinkActive #rla="routerLinkActive"
              [active]="rla.isActive">
