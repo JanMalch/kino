@@ -58,6 +58,6 @@ public class RepositoryImpl implements Repository {
 
   @Override
   public String toString() {
-    return "RepositoryImpl{" + "entityType=" + entityType + ", em=" + em + '}';
+    return "RepositoryImpl{" + hashCode() + ", em=" + em + ", entityType=" + entityType + '}';
   }
 }

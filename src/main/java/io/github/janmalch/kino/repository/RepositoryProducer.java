@@ -4,14 +4,14 @@ import java.lang.reflect.ParameterizedType;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
 @RequestScoped
 public class RepositoryProducer {
 
-  // @Inject
-  // RepositoryImpl repository;
+  @Inject RepositoryImpl repository;
 
   @SuppressWarnings("unchecked")
   @Produces
@@ -19,8 +19,13 @@ public class RepositoryProducer {
     var type = injectionPoint.getType();
     var parameterizedType = (ParameterizedType) type;
     Class<T> clazz = (Class<T>) parameterizedType.getActualTypeArguments()[0];
-    return RepositoryFactory.createRepository(clazz);
-    // repository.setEntityType(clazz);
-    // return repository;
+    // return RepositoryFactory.createRepository(clazz);
+    repository.setEntityType(clazz);
+    return repository;
+  }
+
+  @Override
+  public String toString() {
+    return "RepositoryProducer{" + "repository=" + repository + '}';
   }
 }
