@@ -21,6 +21,7 @@ import {CinemaHallDto} from '../model/cinemaHallDto';
 import {LoginDto} from '../model/loginDto';
 import {MovieDto} from '../model/movieDto';
 import {MovieOverviewDto} from '../model/movieOverviewDto';
+import {NewCinemaHallDto} from '../model/newCinemaHallDto';
 import {PingDto} from '../model/pingDto';
 import {PresentationWithSeatsDto} from '../model/presentationWithSeatsDto';
 import {PriceCategoryBaseDto} from '../model/priceCategoryBaseDto';
@@ -66,6 +67,50 @@ export class DefaultService {
         return false;
     }
 
+
+    /**
+     * Adds a new price category
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createCinemaHall(body?: NewCinemaHallDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public createCinemaHall(body?: NewCinemaHallDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public createCinemaHall(body?: NewCinemaHallDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public createCinemaHall(body?: NewCinemaHallDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<number>(`${this.basePath}/cinema-hall`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Adds a new price category
@@ -144,6 +189,47 @@ export class DefaultService {
         ];
 
         return this.httpClient.delete<SuccessMessage>(`${this.basePath}/account/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes a single cinema hall
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteCinemaHall(id: number, observe?: 'body', reportProgress?: boolean): Observable<SuccessMessage>;
+    public deleteCinemaHall(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SuccessMessage>>;
+    public deleteCinemaHall(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SuccessMessage>>;
+    public deleteCinemaHall(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteCinemaHall.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<SuccessMessage>(`${this.basePath}/cinema-hall/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

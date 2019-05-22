@@ -33,6 +33,7 @@ public class NewCinemaHallControl implements Control<Long> {
     // contents have been validated by boundary
     var entity = new CinemaHall();
     entity.setName(dto.getName());
+    cinemaHallRepository.add(entity);
 
     var seats =
         IntStream.range(0, dto.getRowCount())
@@ -50,8 +51,6 @@ public class NewCinemaHallControl implements Control<Long> {
                   return seatEntity;
                 })
             .collect(Collectors.toList());
-
-    cinemaHallRepository.add(entity);
 
     try {
       seatRepository.add(seats);

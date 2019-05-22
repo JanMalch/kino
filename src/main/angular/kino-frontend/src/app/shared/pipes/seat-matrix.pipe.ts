@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {SeatForPresentationDto} from '@api/model/seatForPresentationDto';
 
 @Pipe({
