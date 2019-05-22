@@ -45,7 +45,7 @@ public class CinemaHallResource {
   }
 
   @Path("{id}")
-  @GET
+  @DELETE
   @Secured
   @RolesAllowed("MODERATOR")
   @Produces(MediaType.APPLICATION_JSON)
