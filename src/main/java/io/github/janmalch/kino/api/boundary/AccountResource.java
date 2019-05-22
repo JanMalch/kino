@@ -11,20 +11,21 @@ import io.github.janmalch.kino.security.Token;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Path("account")
 @Api
 public class AccountResource {
 
-  // TODO: refactor to @Inject
-  private Logger log = LoggerFactory.getLogger(AccountResource.class);
+  @Inject Logger log;
+
+  @Inject EditMyAccountControl editMyAccountControl;
 
   @POST
   @Path("sign-up")
@@ -66,9 +67,9 @@ public class AccountResource {
     log.info(data.toString());
     var myAccountToken = securityContext.getUserPrincipal();
 
-    EditMyAccountControl control = new EditMyAccountControl((Token) myAccountToken, data);
+    editMyAccountControl.init((Token) myAccountToken, data);
 
-    return control.execute(new ResponseResultBuilder<>());
+    return editMyAccountControl.execute(new ResponseResultBuilder<>());
   }
 
   @Path("my-account")

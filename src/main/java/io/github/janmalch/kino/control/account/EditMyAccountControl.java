@@ -6,7 +6,6 @@ import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
-import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.repository.specification.Specification;
 import io.github.janmalch.kino.security.JwtTokenBlacklist;
@@ -14,21 +13,25 @@ import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
 import io.github.janmalch.kino.util.Mapper;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@RequestScoped
 public class EditMyAccountControl implements Control<Token> {
 
-  private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);
-  private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
+  @Inject Logger log;
+
+  @Inject Repository<Account> repository;
+
   private JwtTokenBlacklist blacklist = JwtTokenBlacklist.getInstance();
   private JwtTokenFactory factory = new JwtTokenFactory();
 
-  private final Token token;
-  private final SignUpDto data;
+  private Token token;
+  private SignUpDto data;
 
-  public EditMyAccountControl(Token token, SignUpDto data) {
+  public void init(Token token, SignUpDto data) {
     this.token = token;
     this.data = data;
   }
@@ -49,8 +52,8 @@ public class EditMyAccountControl implements Control<Token> {
 
     var mapper = new UpdateAccountMapper();
     var entity = mapper.update(data, myAccount.get());
+    repository.update(entity);
     if (!data.getEmail().equals(token.getName())) {
-      repository.update(entity);
       blacklist.addToBlackList(token);
       return result.success(factory.generateToken(data.getEmail()));
     }
