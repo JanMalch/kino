@@ -4,50 +4,36 @@ import io.github.janmalch.kino.repository.specification.Specification;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.Query;
+import javax.persistence.EntityManager;
 
 /**
  * Generic Repository interface to define common CRUD methods
  *
  * @param <D> the Domain model
  */
-public interface Repository<D> extends TransactionProvider {
+public interface Repository<D> {
 
   default void add(D item) {
     add(Collections.singletonList(item));
   }
 
-  default void add(Iterable<D> items) {
-    var em = getEntityManager();
-    inTransaction(() -> items.forEach(em::persist));
-  }
+  void add(Iterable<D> items);
 
-  default void update(D item) {
-    var em = getEntityManager();
-    inTransaction(() -> em.merge(item));
-  }
+  void update(D item);
 
   /**
    * @param item the entity to delete
    * @return the number of deleted entities, always 1
    */
-  default int remove(D item) {
-    var em = getEntityManager();
-    inTransaction(() -> em.remove(em.contains(item) ? item : em.merge(item)));
-    return 1;
-  }
+  int remove(D item);
 
   /**
    * @param specification the specification to delete by
    * @return the number of deleted entities
    */
-  default int remove(Specification specification) {
-    return inTransaction(
-        () -> {
-          Query query = specification.toQuery();
-          return query.executeUpdate();
-        });
-  }
+  int remove(Specification specification);
+
+  EntityManager getEntityManager();
 
   default D find(long id) {
     var entityType = getEntityType();
@@ -84,9 +70,5 @@ public interface Repository<D> extends TransactionProvider {
 
   default Class<D> getEntityType() {
     throw new UnsupportedOperationException("Entity type not provided by this repository");
-  }
-
-  default void close() {
-    getEntityManager().close();
   }
 }

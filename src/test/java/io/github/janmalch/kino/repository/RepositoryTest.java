@@ -53,6 +53,19 @@ class RepositoryTest {
     }
 
     @Override
+    public void update(Object item) {}
+
+    @Override
+    public int remove(Object item) {
+      return 0;
+    }
+
+    @Override
+    public int remove(Specification specification) {
+      return 0;
+    }
+
+    @Override
     public List<Object> query(Specification<Object> specification) {
       // dumb way to have both branches
       return specification == null ? List.of() : List.of(new Object());

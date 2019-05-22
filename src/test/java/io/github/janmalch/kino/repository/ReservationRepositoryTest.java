@@ -7,6 +7,7 @@ import io.github.janmalch.kino.entity.Seat;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
+// TODO: was wird hier effektiv getestet?
 class ReservationRepositoryTest {
 
   @Test
@@ -15,7 +16,7 @@ class ReservationRepositoryTest {
     var exampleSeat = new Seat();
     var allSeats = Set.of(exampleSeat, new Seat(), new Seat());
     // persist seats
-    var seatRepository = new SeatRepository();
+    var seatRepository = RepositoryFactory.createRepository(Seat.class);
     seatRepository.add(allSeats);
     // check if seat has been added
     var seatId = exampleSeat.getId();
@@ -26,11 +27,11 @@ class ReservationRepositoryTest {
     var reservation = new Reservation();
     reservation.setSeats(allSeats);
     // persist reservation
-    var reservationRepository = new ReservationRepository();
+    var reservationRepository = RepositoryFactory.createRepository(Reservation.class);
     reservationRepository.add(reservation);
 
     // refresh seat repository
-    seatRepository = new SeatRepository();
+    seatRepository = RepositoryFactory.createRepository(Seat.class);
     var freshSeat = seatRepository.find(seatId);
     assertEquals(1, freshSeat.getReservations().size(), "ManyToMany relationship failed");
   }
