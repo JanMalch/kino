@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr.mat-footer-row {
+  font-weight: 500;
+}
+
+#head {
+  display: flex;
+  margin-bottom: 64px;
+
+  & > app-hall-overview {
+    margin: 0 64px;
+    flex: 1;
+  }
+}
+
+section:last-child {
+  width: 70%;
+  margin: 0 auto;
+}

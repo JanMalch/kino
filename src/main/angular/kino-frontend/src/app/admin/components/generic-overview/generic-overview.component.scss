@@ -1,0 +1,39 @@
+app-generic-overview {
+  display: flex;
+
+  & > div {
+    flex: 1;
+    margin: 32px 16px;
+  }
+
+  #spinner {
+    display: flex;
+    justify-content: center;
+  }
+  .mat-list-base .mat-list-item  {
+    height: 72px;
+
+    &:hover .arrow-right {
+      transform: translateY(-50%) translateX(4px);
+    }
+
+    .mat-list-text {
+      padding-right: 0;
+      padding-left: 16px;
+    }
+  }
+
+  .arrow-right {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    transition: all 0.3s;
+
+
+  }
+
+
+}
+

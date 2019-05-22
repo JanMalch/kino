@@ -1,0 +1,32 @@
+<mat-card *ngIf="!!movie">
+  <mat-card-header>
+    <img mat-card-avatar
+         src="http://de.web.img3.acsta.net/r_1280_720/pictures/210/038/21003863_20130507111001999.jpg">
+    <mat-card-title>{{ movie.name }}</mat-card-title>
+    <mat-card-subtitle>Details</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="flex al-center mb-16">
+      <mat-icon svgIcon="human-female-boy"></mat-icon>
+      <span>FSK {{ movie.ageRating }}</span>
+    </div>
+    <div class="flex al-center mb-16">
+      <mat-icon svgIcon="clock-start"></mat-icon>
+      <span>{{ movie.duration }}h</span>
+    </div>
+    <div class="flex">
+      <mat-icon svgIcon="cash"></mat-icon>
+      <div>
+        {{ movie.priceCategory.name }}
+        <div class="mt-8">
+          <mat-chip-list>
+            <mat-chip title="Normalpreis"
+                      [disableRipple]="true">{{ movie.priceCategory.regularPrice | currency: 'EUR' }}</mat-chip>
+            <mat-chip title="Ermäßigter Preis"
+                      [disableRipple]="true">{{ movie.priceCategory.reducedPrice | currency: 'EUR' }}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

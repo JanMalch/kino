@@ -2,7 +2,6 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.AccountDto;
 import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.api.model.SignUpDto;
 import io.github.janmalch.kino.api.model.TokenDto;
@@ -45,7 +44,7 @@ public class AccountResource {
   @RolesAllowed("CUSTOMER")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Returns own profile", response = SignUpDto.class)
+  @ApiOperation(value = "Returns own profile", response = AccountInfoDto.class)
   public Response getMyAccount(@Context SecurityContext securityContext) {
     log.info("------------------ BEGIN GET MY-ACCOUNT REQUEST ------------------");
 
@@ -136,8 +135,8 @@ public class AccountResource {
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Edit an account", response = AccountDto.class)
-  public Response editAccountById(@PathParam("id") long id, AccountDto data) {
+  @ApiOperation(value = "Edit an account", response = AccountInfoDto.class)
+  public Response editAccountById(@PathParam("id") long id, AccountInfoDto data) {
     log.info("------------------ BEGIN EDIT ACCOUNT BY ID REQUEST ------------------");
     EditAccountById control = new EditAccountById(data);
     return control.execute(new ResponseResultBuilder<>());

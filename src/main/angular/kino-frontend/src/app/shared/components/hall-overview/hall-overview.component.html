@@ -1,0 +1,26 @@
+<mat-tab-group mat-stretch-tabs>
+  <mat-tab [disabled]="true">
+    <ng-template mat-tab-label>
+      <h4>Leinwand</h4>
+    </ng-template>
+
+    <div class="seats-wrapper">
+      <div *ngIf="!!presentation; else spinner">
+        <mat-chip-list *ngFor="let row of presentation.seats | seatMatrix"
+                       [selectable]="true" [multiple]="true">
+          <mat-chip *ngFor="let seat of row"
+                    (click)="onSelect(seat)" [color]="seat | seatColor"
+                    [disableRipple]="!selectable || seat.taken"
+                    [disabled]="!selectable">{{ seat.row}}{{ seat.seatNumber }}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<small class="mat-hint" *ngIf="!selectable">
+  Lesemodus: In der aktuellen Ansicht können Sie keine Sitze auswählen.
+</small>
+
+<ng-template #spinner>
+  <mat-progress-spinner mode="indeterminate" diameter="50" strokeWidth="5"></mat-progress-spinner>
+</ng-template>

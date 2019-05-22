@@ -9,6 +9,7 @@ public class ReservationInfoDto {
   private long id;
   private Date reservationDate;
   private long presentationId;
+  private MovieInfoDto movie;
 
   public List<SeatDto> getSeats() {
     return seats;
@@ -36,6 +37,14 @@ public class ReservationInfoDto {
 
   public long getPresentationId() {
     return presentationId;
+  }
+
+  public MovieInfoDto getMovie() {
+    return movie;
+  }
+
+  public void setMovie(MovieInfoDto movie) {
+    this.movie = movie;
   }
 
   public void setPresentationId(long presentationId) {
