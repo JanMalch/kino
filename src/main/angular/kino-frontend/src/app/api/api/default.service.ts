@@ -307,7 +307,7 @@ export class DefaultService {
             'application/json'
         ];
 
-        return this.httpClient.delete<TokenDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.delete<TokenDto>(`${this.basePath}/my-account/my-account`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -481,7 +481,7 @@ export class DefaultService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<TokenDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.put<TokenDto>(`${this.basePath}/my-account/my-account`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -781,7 +781,7 @@ export class DefaultService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<AccountInfoDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.get<AccountInfoDto>(`${this.basePath}/my-account`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
