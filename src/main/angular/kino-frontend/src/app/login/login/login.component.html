@@ -29,6 +29,6 @@
   </mat-card>
 </form>
 
-<h3 class="mt-8">Login as ...</h3>
+<h3 style="margin-top: 32px;">Login as ...</h3>
 <button *ngFor="let acc of accounts" class="mh-8" mat-raised-button
         (click)="login(getCredentials(acc))">{{ acc }}</button>
