@@ -28,7 +28,8 @@
     <mat-card-content>
       <app-generic-form [data]="selected"
                         (create)="onCreate($event)" (delete)="onDelete($event)" (update)="onUpdate($event)">
-      </app-generic-form>
+
+      </app-generic-form><ng-content select="small"></ng-content>
     </mat-card-content>
   </mat-card>
 </div>

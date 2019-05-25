@@ -1,32 +1,30 @@
 import {Component, Injectable} from '@angular/core';
 import {CrudService, GenericForm} from "@admin/services";
-import {AccountDto} from "@api/model/accountDto";
-import {AccountInfoDto} from "@api/model/accountInfoDto";
 import {DefaultService} from "@api/api/default.service";
 import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
-import {map} from "rxjs/operators";
 import {CinemaHallDto} from "@api/model/cinemaHallDto";
+import {NewCinemaHallDto} from "@api/model/newCinemaHallDto";
 
 @Injectable()
-export class CinemaHallCrudService implements CrudService<AccountDto, AccountInfoDto> {
+export class CinemaHallCrudService implements CrudService<NewCinemaHallDto, CinemaHallDto> {
 
   constructor(private api: DefaultService) {
   }
 
-  create(dto: AccountDto): Observable<number> {
-    return undefined;
+  create(dto: NewCinemaHallDto): Observable<number> {
+    return this.api.createCinemaHall(dto);
   }
 
   delete(id: number): Observable<SuccessMessage> {
-    return undefined;
+    return this.api.deleteCinemaHall(id);
   }
 
   getForm(): GenericForm {
     return {
       name: {label: "Name", name: "name", type: "text", validation: {required: true, min: 1}},
-      seatCount: {label: "Anzahl Sitze", name: "seatCount", type: "number", validation: {required: true}},
-      rowCount: {label: "Anzahl Reihen", name: "rowCount", type: "number", validation: {required: true}}
+      rowCount: {label: "Anzahl Reihen", name: "rowCount", type: "number", validation: {required: true}},
+      seatsPerRow: {label: "Anzahl Sitze pro Reihe", name: "seatsPerRow", type: "number", validation: {required: true}}
     };
   }
 
@@ -38,12 +36,8 @@ export class CinemaHallCrudService implements CrudService<AccountDto, AccountInf
     return this.api.getAllCinemaHalls();
   }
 
-  update(id: number, dto: AccountDto): Observable<SuccessMessage> {
-    return this.api.editAccountById(id, dto).pipe(
-      map(() => ({
-        message: "Account erfolgreich aktualisiert."
-      }))
-    );
+  update(id: number, dto: NewCinemaHallDto): Observable<SuccessMessage> {
+    return undefined;
   }
 
 }
@@ -56,11 +50,7 @@ export class CinemaHallCrudService implements CrudService<AccountDto, AccountInf
 })
 export class CinemahallComponent  {
 
-  constructor(private crud: CrudService<AccountDto, AccountInfoDto>) {
-  }
-
-  resolveIcon(role: string): string {
-    return role === "ADMIN" || role === "MODERATOR" ? "account-badge" : "account-circle";
+  constructor(private crud: CrudService<NewCinemaHallDto, CinemaHallDto>) {
   }
 
 }

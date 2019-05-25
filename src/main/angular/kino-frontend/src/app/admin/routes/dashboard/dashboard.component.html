@@ -4,7 +4,7 @@
       <app-movies></app-movies>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Accounts">
+  <mat-tab label="Accounts" *ngIf="auth.account$ | async | hasMinRole: 'ADMIN'">
     <ng-template matTabContent>
       <app-accounts></app-accounts>
     </ng-template>

@@ -12,7 +12,7 @@ public class CinemaHall implements Identifiable {
   @OneToMany(mappedBy = "cinemaHall")
   private List<Presentation> presentations;
 
-  @OneToMany(mappedBy = "cinemaHall")
+  @OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Seat> seats;
 
   private String name;

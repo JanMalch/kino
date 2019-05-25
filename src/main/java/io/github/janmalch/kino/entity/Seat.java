@@ -60,4 +60,9 @@ public class Seat implements Identifiable {
   public void setReservations(Set<Reservation> reservations) {
     this.reservations = reservations;
   }
+
+  @Override
+  public String toString() {
+    return "Seat{" + "id=" + id + ", row='" + row + '\'' + ", seatNumber=" + seatNumber + '}';
+  }
 }

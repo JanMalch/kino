@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from "@core/auth";
+import {AuthGuard, EmployeeGuard} from "@core/auth";
 import {DashboardComponent} from "@admin/routes";
 
 const routes: Routes = [
@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, EmployeeGuard]
   },
   {
     path: '**',
