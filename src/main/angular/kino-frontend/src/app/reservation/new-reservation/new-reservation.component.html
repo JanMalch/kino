@@ -43,7 +43,7 @@
       <small class="mat-error">Online-Käufe sind derzeit deaktiviert.</small>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="makeReservation()">Reservieren</button>
+      <button mat-button (click)="makeReservation()" [disabled]="selectedSeats.length === 0">Reservieren</button>
       <button mat-button disabled>Kaufen</button>
     </mat-card-actions>
   </mat-card>
