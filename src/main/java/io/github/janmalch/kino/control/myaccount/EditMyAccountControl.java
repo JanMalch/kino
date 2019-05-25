@@ -49,8 +49,9 @@ public class EditMyAccountControl implements Control<Token> {
 
     var mapper = new UpdateAccountMapper();
     var entity = mapper.update(data, myAccount.get());
+    repository.update(entity);
+
     if (!data.getEmail().equals(token.getName())) {
-      repository.update(entity);
       blacklist.addToBlackList(token);
       return result.success(factory.generateToken(data.getEmail()));
     }
