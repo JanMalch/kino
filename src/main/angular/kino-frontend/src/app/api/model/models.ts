@@ -1,4 +1,3 @@
-export * from './accountDto';
 export * from './accountInfoDto';
 export * from './cinemaHallDto';
 export * from './dateGroup';
@@ -6,6 +5,7 @@ export * from './loginDto';
 export * from './movieDto';
 export * from './movieInfoDto';
 export * from './movieOverviewDto';
+export * from './newCinemaHallDto';
 export * from './pingDto';
 export * from './presentationDto';
 export * from './presentationWithSeatsDto';

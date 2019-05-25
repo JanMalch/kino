@@ -4,6 +4,7 @@ import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
+import io.github.janmalch.kino.control.myaccount.EditMyAccountControl;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;

@@ -16,12 +16,12 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/
 
 import {Observable} from 'rxjs';
 
-import {AccountDto} from '../model/accountDto';
 import {AccountInfoDto} from '../model/accountInfoDto';
 import {CinemaHallDto} from '../model/cinemaHallDto';
 import {LoginDto} from '../model/loginDto';
 import {MovieDto} from '../model/movieDto';
 import {MovieOverviewDto} from '../model/movieOverviewDto';
+import {NewCinemaHallDto} from '../model/newCinemaHallDto';
 import {PingDto} from '../model/pingDto';
 import {PresentationWithSeatsDto} from '../model/presentationWithSeatsDto';
 import {PriceCategoryBaseDto} from '../model/priceCategoryBaseDto';
@@ -67,6 +67,50 @@ export class DefaultService {
         return false;
     }
 
+
+    /**
+     * Adds a new price category
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createCinemaHall(body?: NewCinemaHallDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public createCinemaHall(body?: NewCinemaHallDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public createCinemaHall(body?: NewCinemaHallDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public createCinemaHall(body?: NewCinemaHallDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<number>(`${this.basePath}/cinema-hall`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Adds a new price category
@@ -155,6 +199,47 @@ export class DefaultService {
     }
 
     /**
+     * Deletes a single cinema hall
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteCinemaHall(id: number, observe?: 'body', reportProgress?: boolean): Observable<SuccessMessage>;
+    public deleteCinemaHall(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SuccessMessage>>;
+    public deleteCinemaHall(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SuccessMessage>>;
+    public deleteCinemaHall(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteCinemaHall.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<SuccessMessage>(`${this.basePath}/cinema-hall/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Deletes the movie for the given ID
      * 
      * @param id 
@@ -222,7 +307,7 @@ export class DefaultService {
             'application/json'
         ];
 
-        return this.httpClient.delete<TokenDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.delete<TokenDto>(`${this.basePath}/my-account/my-account`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -323,10 +408,10 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public editAccountById(id: number, body?: AccountDto, observe?: 'body', reportProgress?: boolean): Observable<AccountDto>;
-    public editAccountById(id: number, body?: AccountDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountDto>>;
-    public editAccountById(id: number, body?: AccountDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountDto>>;
-    public editAccountById(id: number, body?: AccountDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public editAccountById(id: number, body?: AccountInfoDto, observe?: 'body', reportProgress?: boolean): Observable<AccountInfoDto>;
+    public editAccountById(id: number, body?: AccountInfoDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountInfoDto>>;
+    public editAccountById(id: number, body?: AccountInfoDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountInfoDto>>;
+    public editAccountById(id: number, body?: AccountInfoDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling editAccountById.');
@@ -353,7 +438,7 @@ export class DefaultService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<AccountDto>(`${this.basePath}/account/${encodeURIComponent(String(id))}`,
+        return this.httpClient.put<AccountInfoDto>(`${this.basePath}/account/${encodeURIComponent(String(id))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -396,7 +481,7 @@ export class DefaultService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<TokenDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.put<TokenDto>(`${this.basePath}/my-account/my-account`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -676,9 +761,9 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMyAccount(observe?: 'body', reportProgress?: boolean): Observable<SignUpDto>;
-    public getMyAccount(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SignUpDto>>;
-    public getMyAccount(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SignUpDto>>;
+    public getMyAccount(observe?: 'body', reportProgress?: boolean): Observable<AccountInfoDto>;
+    public getMyAccount(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountInfoDto>>;
+    public getMyAccount(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountInfoDto>>;
     public getMyAccount(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -696,7 +781,7 @@ export class DefaultService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<SignUpDto>(`${this.basePath}/account/my-account`,
+        return this.httpClient.get<AccountInfoDto>(`${this.basePath}/my-account`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

@@ -1,62 +1,62 @@
 <!--<mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>-->
-    <mat-toolbar color="primary">
-      <div>
-        <h3>KEEno</h3>
-      </div>
+<mat-toolbar color="primary">
+  <div>
+    <h3>KEEno</h3>
+  </div>
 
-      <div class="flex-grow"></div>
+  <div class="flex-grow"></div>
 
-      <nav mat-tab-nav-bar color="accent">
-          <a mat-tab-link
-             routerLink="/movie"
-             routerLinkActive #rla="routerLinkActive"
-             [active]="rla.isActive">
-            <mat-icon svgIcon="theater"></mat-icon>
-            Programm
-          </a>
-          <a mat-tab-link
-             *ngIf="!!(auth.account$ | async)"
-             routerLink="/reservation"
-             routerLinkActive #rla="routerLinkActive"
-             [active]="rla.isActive">
-            <mat-icon svgIcon="book"></mat-icon>
-            Reservierungen
-          </a>
-          <a mat-tab-link
-             *ngIf="!!(auth.account$ | async)"
-             routerLink="/account"
-             routerLinkActive #rla="routerLinkActive"
-             [active]="rla.isActive">
-            <mat-icon svgIcon="account-circle"></mat-icon>
-            Mein Account
-          </a>
-          <a mat-tab-link
-             *ngIf="!!(auth.account$ | async)"
-             routerLink="/admin"
-             routerLinkActive #rla="routerLinkActive"
-             [active]="rla.isActive">
-            <mat-icon svgIcon="settings"></mat-icon>
-            Administration
-          </a>
-      </nav>
+  <nav mat-tab-nav-bar color="accent">
+    <a mat-tab-link
+       routerLink="/movie"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      <mat-icon svgIcon="theater"></mat-icon>
+      Programm
+    </a>
+    <a mat-tab-link
+       *ngIf="!!(auth.account$ | async)"
+       routerLink="/reservation"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      <mat-icon svgIcon="book"></mat-icon>
+      Reservierungen
+    </a>
+    <a mat-tab-link
+       *ngIf="!!(auth.account$ | async)"
+       routerLink="/account"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      <mat-icon svgIcon="account-circle"></mat-icon>
+      Mein Account
+    </a>
+    <a mat-tab-link
+       *ngIf="auth.account$ | async | isEmployee"
+       routerLink="/admin"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      <mat-icon svgIcon="settings"></mat-icon>
+      Administration
+    </a>
+  </nav>
 
-      <div class="flex-grow"></div>
-      <div>
-        <a *ngIf="(auth.account$ | async) as account; else signIn" class="text-link"
-           [title]="account.email" (click)="auth.logOut()">
-          <small>Sign out</small>
-        </a>
-        <ng-template #signIn>
-          <a routerLink="/login" class="text-link">
-            <small>Sign in</small>
-          </a>
-        </ng-template>
-      </div>
-    </mat-toolbar>
-    <main>
-      <ng-content></ng-content>
-    </main>
+  <div class="flex-grow"></div>
+  <div>
+    <a *ngIf="(auth.account$ | async) as account; else signIn" class="text-link"
+       [title]="account.email" (click)="auth.logOut()">
+      <small>Sign out</small>
+    </a>
+    <ng-template #signIn>
+      <a routerLink="/login" class="text-link">
+        <small>Sign in</small>
+      </a>
+    </ng-template>
+  </div>
+</mat-toolbar>
+<main>
+  <ng-content></ng-content>
+</main>
 <!--
   </mat-sidenav-content>
 </mat-sidenav-container>

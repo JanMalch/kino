@@ -1,6 +1,5 @@
 import {Component, Injectable} from '@angular/core';
 import {CrudService, GenericForm} from "@admin/services";
-import {AccountDto} from "@api/model/accountDto";
 import {Observable} from "rxjs";
 import {DefaultService} from "@api/api/default.service";
 import {SuccessMessage} from "@api/model/successMessage";
@@ -8,12 +7,12 @@ import {AccountInfoDto} from "@api/model/accountInfoDto";
 import {map} from "rxjs/operators";
 
 @Injectable()
-export class AccountCrudService implements CrudService<AccountDto, AccountInfoDto> {
+export class AccountCrudService implements CrudService<AccountInfoDto, AccountInfoDto> {
 
   constructor(private api: DefaultService) {
   }
 
-  create(dto: AccountDto): Observable<number> {
+  create(dto: AccountInfoDto): Observable<number> {
     const {role, id, ...signUpDto} = dto;
     return this.api.signUp(signUpDto);
   }
@@ -55,7 +54,7 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
     return this.api.getAllAccounts();
   }
 
-  update(id: number, dto: AccountDto): Observable<SuccessMessage> {
+  update(id: number, dto: AccountInfoDto): Observable<SuccessMessage> {
     return this.api.editAccountById(id, dto).pipe(
       map(() => ({
         message: "Account erfolgreich aktualisiert."
@@ -73,7 +72,7 @@ export class AccountCrudService implements CrudService<AccountDto, AccountInfoDt
 })
 export class AccountsComponent {
 
-  constructor(private crud: CrudService<AccountDto, AccountInfoDto>) {
+  constructor(private crud: CrudService<AccountInfoDto, AccountInfoDto>) {
   }
 
   resolveIcon(role: string): string {

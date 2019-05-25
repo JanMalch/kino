@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.control.account;
+package io.github.janmalch.kino.control.myaccount;
 
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;

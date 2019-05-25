@@ -1,4 +1,4 @@
-import { SeatMatrixPipe } from './seat-matrix.pipe';
+import {SeatMatrixPipe} from './seat-matrix.pipe';
 
 describe('SeatMatrixPipe', () => {
   it('create an instance', () => {

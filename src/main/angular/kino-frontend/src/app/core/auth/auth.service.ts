@@ -2,23 +2,21 @@ import {Injectable} from '@angular/core';
 import {DefaultService} from '@api/api/default.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SignUpDto} from '@api/model/signUpDto';
-import {filter, first, mapTo, mergeMap, pairwise, tap} from 'rxjs/operators';
+import {mapTo, mergeMap, pairwise, tap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
+import {AccountInfoDto} from "@api/model/accountInfoDto";
 
-function nullify(input: string | null): string | null {
-  return !input || input === 'null' ? null : input;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private account = new BehaviorSubject<SignUpDto | null>(null);
-  private token = new BehaviorSubject<string | null>(null/*nullify(localStorage.getItem('token'))*/);
+  private account = new BehaviorSubject<AccountInfoDto | null>(null);
+  private token = new BehaviorSubject<string | null>(null);
 
-  get account$(): Observable<SignUpDto | null> {
+  get account$(): Observable<AccountInfoDto | null> {
     return this.account.asObservable();
   }
 
@@ -52,10 +50,11 @@ export class AuthService {
   }
 
   logOut() {
-    this.account.next(null);
-    this.token.next(null);
-    this.router.navigateByUrl('/');
-    this.api.logOut().subscribe();
+    this.api.logOut().subscribe(() => {
+      this.account.next(null);
+      this.token.next(null);
+      this.router.navigateByUrl('/');
+    });
   }
 
   setToken(token: string | null) {

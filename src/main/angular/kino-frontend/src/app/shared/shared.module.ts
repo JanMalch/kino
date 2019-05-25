@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from '@material/material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {HallOverviewComponent, MovieAllInfosCardComponent, MovieCardComponent} from '@shared/components';
-import {ParseDatePipe, SeatColorPipe, SeatMatrixPipe} from '@shared/pipe';
+import {HasMinRolePipe, IsEmployeePipe, ParseDatePipe, SeatColorPipe, SeatMatrixPipe} from '@shared/pipes';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -13,7 +13,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     SeatMatrixPipe,
     SeatColorPipe,
     MovieAllInfosCardComponent,
-    ParseDatePipe
+    ParseDatePipe,
+    HasMinRolePipe,
+    IsEmployeePipe
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MovieCardComponent,
     HallOverviewComponent,
     MovieAllInfosCardComponent,
-    ParseDatePipe
+    ParseDatePipe,
+    HasMinRolePipe,
+    IsEmployeePipe
   ]
 })
 export class SharedModule {

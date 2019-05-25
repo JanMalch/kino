@@ -1,4 +1,4 @@
-import { SeatColorPipe } from './seat-color.pipe';
+import {SeatColorPipe} from './seat-color.pipe';
 
 describe('SeatColorPipe', () => {
   it('create an instance', () => {
