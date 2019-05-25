@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.repository;
 
 import io.github.janmalch.kino.repository.specification.Specification;
-import java.io.Closeable;
+import io.github.janmalch.kino.util.Manageable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import javax.persistence.Query;
  *
  * @param <D> the Domain model
  */
-public interface Repository<D> extends TransactionProvider, Closeable {
+public interface Repository<D> extends TransactionProvider, Manageable {
 
   default void add(D item) {
     add(Collections.singletonList(item));
