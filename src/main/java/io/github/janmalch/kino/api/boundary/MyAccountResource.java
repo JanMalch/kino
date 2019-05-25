@@ -40,7 +40,6 @@ public class MyAccountResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("my-account")
   @Secured
   @RolesAllowed("CUSTOMER")
   @PUT
@@ -56,7 +55,6 @@ public class MyAccountResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("my-account")
   @Secured
   @RolesAllowed("CUSTOMER")
   @DELETE

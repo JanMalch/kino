@@ -11,29 +11,31 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {AccountInfoDto} from '../model/accountInfoDto';
-import {CinemaHallDto} from '../model/cinemaHallDto';
-import {LoginDto} from '../model/loginDto';
-import {MovieDto} from '../model/movieDto';
-import {MovieOverviewDto} from '../model/movieOverviewDto';
-import {NewCinemaHallDto} from '../model/newCinemaHallDto';
-import {PingDto} from '../model/pingDto';
-import {PresentationWithSeatsDto} from '../model/presentationWithSeatsDto';
-import {PriceCategoryBaseDto} from '../model/priceCategoryBaseDto';
-import {PriceCategoryDto} from '../model/priceCategoryDto';
-import {ReservationDto} from '../model/reservationDto';
-import {ReservationInfoDto} from '../model/reservationInfoDto';
-import {SignUpDto} from '../model/signUpDto';
-import {SuccessMessage} from '../model/successMessage';
-import {TokenDto} from '../model/tokenDto';
+import { AccountInfoDto } from '../model/accountInfoDto';
+import { CinemaHallDto } from '../model/cinemaHallDto';
+import { LoginDto } from '../model/loginDto';
+import { MovieDto } from '../model/movieDto';
+import { MovieOverviewDto } from '../model/movieOverviewDto';
+import { NewCinemaHallDto } from '../model/newCinemaHallDto';
+import { PingDto } from '../model/pingDto';
+import { PresentationWithSeatsDto } from '../model/presentationWithSeatsDto';
+import { PriceCategoryBaseDto } from '../model/priceCategoryBaseDto';
+import { PriceCategoryDto } from '../model/priceCategoryDto';
+import { ReservationDto } from '../model/reservationDto';
+import { ReservationInfoDto } from '../model/reservationInfoDto';
+import { SignUpDto } from '../model/signUpDto';
+import { SuccessMessage } from '../model/successMessage';
+import { TokenDto } from '../model/tokenDto';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
@@ -307,7 +309,7 @@ export class DefaultService {
             'application/json'
         ];
 
-        return this.httpClient.delete<TokenDto>(`${this.basePath}/my-account/my-account`,
+        return this.httpClient.delete<TokenDto>(`${this.basePath}/my-account`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -481,7 +483,7 @@ export class DefaultService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<TokenDto>(`${this.basePath}/my-account/my-account`,
+        return this.httpClient.put<TokenDto>(`${this.basePath}/my-account`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,

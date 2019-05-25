@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {SeatDto} from './seatDto';
+import { SeatDto } from './seatDto';
 
 
 export interface CinemaHallDto { 
