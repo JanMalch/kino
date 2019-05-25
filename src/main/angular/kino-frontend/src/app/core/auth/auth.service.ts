@@ -50,10 +50,11 @@ export class AuthService {
   }
 
   logOut() {
-    this.account.next(null);
-    this.token.next(null);
-    this.router.navigateByUrl('/');
-    this.api.logOut().subscribe();
+    this.api.logOut().subscribe(() => {
+      this.account.next(null);
+      this.token.next(null);
+      this.router.navigateByUrl('/');
+    });
   }
 
   setToken(token: string | null) {
