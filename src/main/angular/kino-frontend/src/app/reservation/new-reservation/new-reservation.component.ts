@@ -4,8 +4,9 @@ import {SeatDto} from '@api/model/seatDto';
 import {AuthService} from '@core/auth';
 import {Selectable} from '@shared/components';
 import {MovieService} from '@core/services';
-import {first} from 'rxjs/operators';
+import {catchError, first, mergeMap} from 'rxjs/operators';
 import {DefaultService} from '@api/api/default.service';
+import {throwError} from "rxjs";
 
 @Component({
   selector: 'app-new-reservation',
@@ -22,6 +23,8 @@ export class NewReservationComponent implements OnInit {
   priceForSeats: { [id: number]: number } = {};
   reducedPrice: number;
   regularPrice: number;
+
+  loading = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -64,11 +67,16 @@ export class NewReservationComponent implements OnInit {
   }
 
   makeReservation() {
+    this.loading = true;
     this.api.newReservation({
       presentationId: this.presentationId,
       seatIds: this.selectedSeats.map(s => s.id)
-    }).subscribe(id => {
-      this.router.navigateByUrl(`/reservation/${id}`, {preserveQueryParams: false});
-    });
+    }).pipe(
+      catchError(err => {
+        this.loading = false;
+        return throwError(err);
+      }),
+      mergeMap(id => this.router.navigateByUrl(`/reservation/${id}`, {preserveQueryParams: false}))
+    ).subscribe(() => this.loading = false);
   }
 }
