@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {DefaultService} from '@api/api/default.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SignUpDto} from '@api/model/signUpDto';
-import {filter, first, mapTo, mergeMap, pairwise, tap} from 'rxjs/operators';
+import {mapTo, mergeMap, pairwise, tap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 
@@ -52,10 +52,11 @@ export class AuthService {
   }
 
   logOut() {
-    this.account.next(null);
-    this.token.next(null);
-    this.router.navigateByUrl('/');
-    this.api.logOut().subscribe();
+    this.api.logOut().subscribe(() => {
+      this.account.next(null);
+      this.token.next(null);
+      this.router.navigateByUrl('/');
+    });
   }
 
   setToken(token: string | null) {
