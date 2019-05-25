@@ -1,5 +1,12 @@
-<form #myForm="ngForm" (ngSubmit)="login(myForm)">
-  <mat-card>
+<form #myForm="ngForm" (ngSubmit)="login(myForm)" class="mat-elevation-z11">
+  <section>
+    <h1 class="mat-display-1 mb-16">KEEno</h1>
+    <p>Willkommen auf ihrer Kino-Webseite!</p>
+    <p>Bitte loggen Sie sich ein um fortzufahren.
+      Sie werden anschließend an <u>{{ forward }}</u> weitergeleitet.</p>
+  </section>
+  <mat-card class="mat-elevation-z0">
+
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
@@ -14,7 +21,10 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button type="submit" [disabled]="myForm.invalid">Login</button>
+      <button mat-stroked-button color="primary" type="submit" [disabled]="myForm.invalid || loading">
+        Login
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+      </button>
     </mat-card-actions>
   </mat-card>
 </form>
