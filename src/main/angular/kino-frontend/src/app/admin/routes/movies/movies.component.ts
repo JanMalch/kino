@@ -37,7 +37,11 @@ export class MovieCrudService implements CrudService<MovieDto, MovieDto> {
 
   readAll(): Observable<MovieDto[]> {
     // TODO!
-    return this.api.getMovie(1).pipe(map(r => ([r])));
+    return this.api.getCurrentMovies().pipe(
+      map(current => {
+        return Object.values(current.movies) as any;
+      })
+    );
   }
 
   update(id: number, dto: MovieDto): Observable<SuccessMessage> {
