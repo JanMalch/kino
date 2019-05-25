@@ -75,17 +75,25 @@ public class Problems {
    */
   public static <T> T requireEntity(T data, long id, String detail) {
     if (data == null) {
-      var problem =
-          Problem.builder()
-              .type("no-such-entity")
-              .title("Failed to find entity for given ID")
-              .detail(detail)
-              .status(Response.Status.NOT_FOUND)
-              .instance()
-              .parameter("id", id)
-              .build();
+      var problem = Factory.noSuchEntity(id, detail);
       throw new ThrowableProblem(problem, detail);
     }
     return data;
+  }
+
+  public static class Factory {
+
+    private Factory() {}
+
+    public static Problem noSuchEntity(long id, String detail) {
+      return Problem.builder()
+          .type("no-such-entity")
+          .title("Failed to find entity for given ID")
+          .detail(detail)
+          .status(Response.Status.NOT_FOUND)
+          .instance()
+          .parameter("id", id)
+          .build();
+    }
   }
 }

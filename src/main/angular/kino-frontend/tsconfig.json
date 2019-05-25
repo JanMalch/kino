@@ -1,0 +1,78 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@core": [
+        "./src/app/core"
+      ],
+      "@core/*": [
+        "./src/app/core/*"
+      ],
+      "@shared": [
+        "./src/app/shared"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ],
+      "@material": [
+        "./src/app/material"
+      ],
+      "@material/*": [
+        "./src/app/material/*"
+      ],
+      "@account": [
+        "./src/app/account"
+      ],
+      "@account/*": [
+        "./src/app/account/*"
+      ],
+      "@api": [
+        "./src/app/api"
+      ],
+      "@api/*": [
+        "./src/app/api/*"
+      ],
+      "@admin": [
+        "./src/app/admin"
+      ],
+      "@admin/*": [
+        "./src/app/admin/*"
+      ],
+      "@login": [
+        "./src/app/login"
+      ],
+      "@login/*": [
+        "./src/app/login/*"
+      ],
+      "@movie": [
+        "./src/app/movie"
+      ],
+      "@movie/*": [
+        "./src/app/movie/*"
+      ],
+      "@reservation": [
+        "./src/app/reservation"
+      ],
+      "@reservation/*": [
+        "./src/app/reservation/*"
+      ]
+    }
+  }
+}

@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.presentation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.entity.CinemaHall;
+import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import java.util.Date;
@@ -16,9 +17,13 @@ class PresentationWithSeatsDtoMapperTest {
     cinemaHall.setName("Saal 1");
     RepositoryFactory.createRepository(CinemaHall.class).add(cinemaHall);
 
+    var movie = new Movie();
+    RepositoryFactory.createRepository(Movie.class).add(movie);
+
     var entity = new Presentation();
     entity.setDate(new Date());
     entity.setCinemaHall(cinemaHall);
+    entity.setMovie(movie);
 
     RepositoryFactory.createRepository(Presentation.class).add(entity);
 

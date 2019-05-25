@@ -1,0 +1,10 @@
+<app-generic-overview entityName="Kinosaal" entityNamePlural="Kinosäle">
+  <ng-container *appEntity="let item">
+    <mat-icon mat-list-icon svgIcon="theater"></mat-icon>
+
+    <div class="mat-list-text">
+      <h4 mat-line>{{ item.name }}</h4>
+      <p mat-line> #{{item.id }}, {{ item.seats.length }} Sitze </p>
+    </div>
+  </ng-container>
+</app-generic-overview>

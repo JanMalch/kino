@@ -1,0 +1,19 @@
+
+  <div>
+    <app-profile [account]="account$ | async"></app-profile>
+  </div>
+  <div>
+    <mat-card id="danger-zone">
+      <mat-card-header>
+        <mat-icon svgIcon="alert" color="warn" mat-card-avatar></mat-icon>
+        <mat-card-title><h2>Account löschen</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Hier können Sie ihren Account und alle verbundenen Daten löschen.
+          Diese Aktion kann nicht rückgängig gemacht werden!</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn" (click)="deleteAccount()">Endgültig löschen</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

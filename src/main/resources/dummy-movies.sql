@@ -1,9 +1,4 @@
-DROP TABLE if exists movie;
-DROP TABLE if exists pricecategory;
-DROP TABLE if exists presentation;
-DROP TABLE if exists cinemahall;
-DROP TABLE if exists seat;
-
+USE kino;
 -- PRICECATEGORY
 INSERT INTO `pricecategory` (`id`, `name`, `reducedPrice`, `regularPrice`)
 VALUES ('1', '2D', '7.5', '8.5'),

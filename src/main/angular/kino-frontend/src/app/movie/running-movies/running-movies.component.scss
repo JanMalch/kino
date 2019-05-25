@@ -1,0 +1,23 @@
+app-movie-overview {
+  .grid-container {
+    margin: 20px;
+  }
+
+  .mat-grid-list {
+    padding: 32px 0;
+  }
+
+  .mat-grid-tile {
+    overflow: visible;
+    margin: 24px;
+  }
+
+  .mat-tab-label-active {
+    opacity: 1;
+
+    .mat-tab-label-content {
+      color: #1e88e5;
+    }
+  }
+}
+
