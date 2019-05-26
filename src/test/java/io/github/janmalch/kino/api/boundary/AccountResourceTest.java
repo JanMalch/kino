@@ -32,7 +32,7 @@ class AccountResourceTest {
 
     // check if user exists
     Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
-    var spec = new AccountByEmailSpec("signUp@example.com");
+    var spec = new AccountByEmailSpec("signUp@example.com", repository);
     var account = repository.queryFirst(spec);
     assertTrue(account.isPresent());
     assertNotEquals("Start123", account.get().getHashedPassword());

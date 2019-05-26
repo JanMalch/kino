@@ -37,7 +37,7 @@ public class ReservationsByEmailSpecTest {
     reservation.setAccount(account);
     reservationRepository.add(reservation);
 
-    var query = new ReservationsByEmailSpec(mail);
+    var query = new ReservationsByEmailSpec(mail, reservationRepository);
     var result = reservationRepository.query(query);
 
     assertEquals(1, result.size());
@@ -58,7 +58,7 @@ public class ReservationsByEmailSpecTest {
 
     reservationRepository.getEntityManager().clear();
 
-    var query = new ReservationsByEmailSpec(mail);
+    var query = new ReservationsByEmailSpec(mail, reservationRepository);
     var result = reservationRepository.query(query);
 
     assertEquals(number, result.size());
