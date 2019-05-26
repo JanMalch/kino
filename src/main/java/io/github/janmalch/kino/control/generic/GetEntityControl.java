@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.generic;
 
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
@@ -8,7 +8,7 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
-public class GetEntityControl<P, E> implements Control<P> {
+public class GetEntityControl<P, E> extends ManagingControl<P> {
 
   private final Mapper<E, P> mapper;
   private final long id;
@@ -27,7 +27,8 @@ public class GetEntityControl<P, E> implements Control<P> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, P> result) {
+  public <T> T compute(ResultBuilder<T, P> result) {
+    manage(repository);
     var entity =
         Problems.requireEntity(repository.find(id), id, "No such " + entityClass.getSimpleName());
     var dto = mapper.map(entity);

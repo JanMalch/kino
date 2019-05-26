@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.movie;
 
 import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.BeanValidations;
 import io.github.janmalch.kino.entity.Movie;
@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
 
-public class NewMovieControl implements Control<Long> {
+public class NewMovieControl extends ManagingControl<Long> {
 
   private final MovieDto movieDto;
   private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
@@ -25,7 +25,8 @@ public class NewMovieControl implements Control<Long> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Long> result) {
+  public <T> T compute(ResultBuilder<T, Long> result) {
+    manage(repository);
     var validationProblem = validate();
     if (validationProblem.isPresent()) {
       return result.failure(validationProblem.get());

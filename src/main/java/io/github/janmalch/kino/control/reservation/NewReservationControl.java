@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
 import io.github.janmalch.kino.api.model.ReservationDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.generic.NewEntityControl;
 import io.github.janmalch.kino.entity.Account;
@@ -17,10 +17,15 @@ import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class NewReservationControl implements Control<Long> {
+public class NewReservationControl extends ManagingControl<Long> {
 
   private final ReservationDto reservationDto;
   private final String mail;
+  private final Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
+  private final Repository<Account> accountRepository =
+      RepositoryFactory.createRepository(Account.class);
+  private final Repository<Presentation> presentationRepository =
+      RepositoryFactory.createRepository(Presentation.class);
 
   public NewReservationControl(String mail, ReservationDto reservationDto) {
     this.reservationDto = reservationDto;
@@ -28,7 +33,8 @@ public class NewReservationControl implements Control<Long> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Long> result) {
+  public <T> T compute(ResultBuilder<T, Long> result) {
+    manage(seatRepository, accountRepository, presentationRepository);
     var reservationValidator = new ReservationValidator();
     var validationProblem = reservationValidator.validate(reservationDto);
     if (validationProblem.isPresent()) {
@@ -43,10 +49,6 @@ public class NewReservationControl implements Control<Long> {
 
     @Override
     public Reservation map(ReservationDto source) {
-      Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
-      Repository<Presentation> presentationRepository =
-          RepositoryFactory.createRepository(Presentation.class);
-
       Set<Seat> seats =
           source.getSeatIds().stream().map(seatRepository::find).collect(Collectors.toSet());
       Presentation presentation = presentationRepository.find(source.getPresentationId());
@@ -61,8 +63,7 @@ public class NewReservationControl implements Control<Long> {
     }
 
     private Account extractAccount() {
-      Repository<Account> accountRepository = RepositoryFactory.createRepository(Account.class);
-      Specification<Account> accountSpec = new AccountByEmailSpec(mail);
+      Specification<Account> accountSpec = new AccountByEmailSpec(mail, accountRepository);
       var optionalAccount = accountRepository.queryFirst(accountSpec);
       return optionalAccount.get();
     }

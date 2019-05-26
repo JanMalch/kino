@@ -52,6 +52,7 @@ class GenericEntityControlTest {
     assertTrue(deleteResult.isSuccess());
 
     // get all again
+    getAllEntitiesControl = new GetEntitiesControl<>(Account.class, AccountInfoDto.class);
     var getAllAgainResult = getAllEntitiesControl.execute(new EitherResultBuilder<>());
     assertTrue(getAllAgainResult.isSuccess());
     assertEquals(0, getAllAgainResult.getSuccess().size());

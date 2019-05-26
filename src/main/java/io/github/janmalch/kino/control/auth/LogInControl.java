@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.auth;
 
 import io.github.janmalch.kino.api.model.LoginDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LogInControl implements Control<Token> {
+public class LogInControl extends ManagingControl<Token> {
 
   private Logger log = LoggerFactory.getLogger(LogInControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -36,10 +36,11 @@ public class LogInControl implements Control<Token> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Token> result) {
+  public <T> T compute(ResultBuilder<T, Token> result) {
+    manage(repository);
     log.info("New login from " + data.getEmail());
 
-    var query = new AccountByEmailSpec(data.getEmail());
+    var query = new AccountByEmailSpec(data.getEmail(), repository);
     var referredUser = repository.queryFirst(query);
     if (referredUser.isEmpty()) {
       return result.failure(invalidLogin);
