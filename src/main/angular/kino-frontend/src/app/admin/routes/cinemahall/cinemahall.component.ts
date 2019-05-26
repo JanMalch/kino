@@ -1,5 +1,5 @@
 import {Component, Injectable} from '@angular/core';
-import {CrudService, GenericForm} from "@admin/services";
+import {CrudAction, CrudService, GenericForm} from "@admin/services";
 import {DefaultService} from "@api/api/default.service";
 import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
@@ -37,7 +37,11 @@ export class CinemaHallCrudService implements CrudService<NewCinemaHallDto, Cine
   }
 
   update(id: number, dto: NewCinemaHallDto): Observable<SuccessMessage> {
-    return undefined;
+    throw new Error("Updating is not supported for cinema halls")
+  }
+
+  isDisabled(checkFor: CrudAction): boolean {
+    return checkFor === 'UPDATE';
   }
 
 }

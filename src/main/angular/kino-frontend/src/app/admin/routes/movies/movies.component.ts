@@ -48,6 +48,10 @@ export class MovieCrudService implements CrudService<MovieDto, MovieDto> {
     return this.api.updateMovie(id, dto);
   }
 
+  isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
+    return false;
+  }
+
 }
 
 @Component({

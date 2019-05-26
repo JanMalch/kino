@@ -41,6 +41,10 @@ export class PriceCategoryCrudService implements CrudService<PriceCategoryBaseDt
     return this.api.updatePriceCategory(id, dto);
   }
 
+  isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
+    return false;
+  }
+
 }
 
 

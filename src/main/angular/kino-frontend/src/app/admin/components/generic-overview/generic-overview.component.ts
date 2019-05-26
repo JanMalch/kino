@@ -82,7 +82,9 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   }
 
   setSelect(dto: T) {
-    this.selected = dto;
+    if (!this.crud.isDisabled('UPDATE') || !this.crud.isDisabled('DELETE')) {
+      this.selected = dto;
+    }
   }
 
 }

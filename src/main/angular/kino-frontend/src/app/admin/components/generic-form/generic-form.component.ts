@@ -9,6 +9,7 @@ import {SuccessMessage} from "@api/model/successMessage";
   styleUrls: ['./generic-form.component.scss']
 })
 export class GenericFormComponent implements OnInit {
+
   get data(): any {
     return this._data;
   }
@@ -20,11 +21,13 @@ export class GenericFormComponent implements OnInit {
         this.form.reset(null);
       } else {
         this.form.patchValue(value);
+        this.updateDisabled = this.crud.isDisabled('UPDATE');
       }
     }
   }
 
   private _data: any;
+  updateDisabled: boolean = false;
 
   @Output() create = new EventEmitter<number>();
   @Output() update = new EventEmitter<SuccessMessage>();

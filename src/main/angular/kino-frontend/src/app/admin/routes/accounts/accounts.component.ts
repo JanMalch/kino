@@ -1,5 +1,5 @@
 import {Component, Injectable} from '@angular/core';
-import {CrudService, GenericForm} from "@admin/services";
+import {CrudAction, CrudService, GenericForm} from "@admin/services";
 import {Observable} from "rxjs";
 import {DefaultService} from "@api/api/default.service";
 import {SuccessMessage} from "@api/model/successMessage";
@@ -61,6 +61,11 @@ export class AccountCrudService implements CrudService<AccountInfoDto, AccountIn
       }))
     );
   }
+
+  isDisabled(checkFor: CrudAction): boolean {
+    return false;
+  }
+
 
 }
 
