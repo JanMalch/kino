@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
 import io.github.janmalch.kino.api.model.SeatForPresentationDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.entity.Seat;
@@ -12,7 +12,7 @@ import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GetSeatsWithStatusControl implements Control<List<SeatForPresentationDto>> {
+public class GetSeatsWithStatusControl extends ManagingControl<List<SeatForPresentationDto>> {
 
   private final long presentationId;
   private final ReflectionMapper<Seat, SeatForPresentationDto> mapper =
@@ -25,7 +25,8 @@ public class GetSeatsWithStatusControl implements Control<List<SeatForPresentati
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, List<SeatForPresentationDto>> result) {
+  public <T> T compute(ResultBuilder<T, List<SeatForPresentationDto>> result) {
+    manage(repository);
     var presentation =
         Problems.requireEntity(
             repository.find(presentationId), presentationId, "No such presentation");

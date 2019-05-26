@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.account;
 
 import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.SignUpDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.SignUpDtoValidator;
 import io.github.janmalch.kino.entity.Account;
@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignUpControl implements Control<SuccessMessage> {
+public class SignUpControl extends ManagingControl<SuccessMessage> {
 
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -32,7 +32,9 @@ public class SignUpControl implements Control<SuccessMessage> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
+  public <T> T compute(ResultBuilder<T, SuccessMessage> result) {
+    manage(repository);
+
     // -- validate prerequisites --
     var invalidDataProblem = validateSignUpDto();
     if (invalidDataProblem.isPresent()) {
@@ -60,7 +62,7 @@ public class SignUpControl implements Control<SuccessMessage> {
   }
 
   Optional<Problem> checkIfEmailExists() {
-    Specification<Account> presentCheck = new AccountByEmailSpec(data.getEmail());
+    Specification<Account> presentCheck = new AccountByEmailSpec(data.getEmail(), repository);
     Optional<Account> referredUser = repository.queryFirst(presentCheck);
 
     // if a value is present, it means that the user exists and a Problem will be created

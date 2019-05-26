@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.cinemahall;
 
 import io.github.janmalch.kino.api.model.cinemahall.NewCinemaHallDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.CinemaHall;
 import io.github.janmalch.kino.entity.Seat;
@@ -16,7 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NewCinemaHallControl implements Control<Long> {
+public class NewCinemaHallControl extends ManagingControl<Long> {
 
   private final Logger logger = LoggerFactory.getLogger(NewCinemaHallControl.class);
   private final NewCinemaHallDto dto;
@@ -29,7 +29,8 @@ public class NewCinemaHallControl implements Control<Long> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Long> result) {
+  public <T> T compute(ResultBuilder<T, Long> result) {
+    manage(cinemaHallRepository, seatRepository);
     // contents have been validated by boundary
     var entity = new CinemaHall();
     entity.setName(dto.getName());

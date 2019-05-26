@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.myaccount;
 
 import io.github.janmalch.kino.api.model.SignUpDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EditMyAccountControl implements Control<Token> {
+public class EditMyAccountControl extends ManagingControl<Token> {
 
   private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -34,9 +34,10 @@ public class EditMyAccountControl implements Control<Token> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Token> result) {
+  public <T> T compute(ResultBuilder<T, Token> result) {
+    manage(repository);
     log.info("Editing my Account " + token.getName());
-    Specification<Account> myName = new AccountByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName(), repository);
     var myAccount = repository.queryFirst(myName);
 
     if (myAccount.isEmpty()) {

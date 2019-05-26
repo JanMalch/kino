@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.entity.Role;
@@ -9,7 +9,7 @@ import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 
-public class GetReservationByIdControl implements Control<ReservationInfoDto> {
+public class GetReservationByIdControl extends ManagingControl<ReservationInfoDto> {
 
   private final Repository<Reservation> reservationRepository =
       RepositoryFactory.createRepository(Reservation.class);
@@ -24,8 +24,8 @@ public class GetReservationByIdControl implements Control<ReservationInfoDto> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, ReservationInfoDto> result) {
-
+  public <T> T compute(ResultBuilder<T, ReservationInfoDto> result) {
+    manage(reservationRepository);
     var reservation =
         Problems.requireEntity(reservationRepository.find(id), id, "No such Reservation");
 
