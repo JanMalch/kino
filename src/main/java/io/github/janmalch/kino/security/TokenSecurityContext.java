@@ -25,7 +25,7 @@ public class TokenSecurityContext implements SecurityContext {
 
     var query = new AccountByEmailSpec(_token.getName(), repository);
     var referredUser = repository.queryFirst(query);
-    repository.getEntityManager().close();
+    repository.close();
     if (referredUser.isEmpty()) {
       return null;
     }

@@ -66,7 +66,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
     var query = new AccountByEmailSpec(token.getName(), repository);
     var referredUser = repository.queryFirst(query);
-    repository.getEntityManager().close();
+    repository.close();
     return referredUser.isPresent();
   }
 
