@@ -17,7 +17,7 @@
         <mat-divider class="mb-16"></mat-divider>
         <app-hall-overview [presentationId]="p.id" [selectable]="false"></app-hall-overview>
         <mat-divider class="mb-16"></mat-divider>
-        <a mat-button routerLink="/reservation/new" [queryParams]="{ presentation: p.id, movie: movie.id }">
+        <a mat-button routerLink="/reservation/new" [queryParams]="{ presentation: p.id }">
           Zur Sitzplatzauswahl
         </a>
       </ng-template>

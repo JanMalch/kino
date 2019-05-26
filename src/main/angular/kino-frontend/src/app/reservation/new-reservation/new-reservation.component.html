@@ -1,6 +1,6 @@
 <section id="head">
   <div>
-    <app-movie-all-infos-card [movie]="movies.getMovie(movieId) | async"></app-movie-all-infos-card>
+    <app-movie-all-infos-card [movie]="movie$ | async"></app-movie-all-infos-card>
   </div>
   <app-hall-overview [presentationId]="presentationId" [selectable]="true"
                      (select)="onSelect($event)"></app-hall-overview>
