@@ -2,7 +2,7 @@
   <mat-sidenav-content>-->
 <mat-toolbar color="primary">
   <div>
-    <h3>KEEno</h3>
+    <a routerLink="/" title="Homepage"><h3>KEEno</h3></a>
   </div>
 
   <div class="flex-grow"></div>
@@ -48,7 +48,7 @@
       <small>Sign out</small>
     </a>
     <ng-template #signIn>
-      <a routerLink="/login" class="text-link">
+      <a routerLink="/login" [queryParams]="{ forward: router.url } " class="text-link">
         <small>Sign in</small>
       </a>
     </ng-template>

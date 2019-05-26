@@ -39,6 +39,10 @@ export class ReservationCrudService implements CrudService<ReservationDto, Reser
     return this.api.updateReservationById(id, dto);
   }
 
+  isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
+    return false;
+  }
+
 }
 
 

@@ -2,9 +2,10 @@ import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
 import {Injectable} from "@angular/core";
 
+export type CrudAction = 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'READ_ALL';
+
 @Injectable()
 export abstract class CrudService<I, O> {
-
   abstract getForm(): GenericForm
 
   abstract create(dto: I): Observable<number>;
@@ -16,6 +17,11 @@ export abstract class CrudService<I, O> {
   abstract update(id: number, dto: I): Observable<SuccessMessage>;
 
   abstract delete(id: number): Observable<SuccessMessage>;
+
+
+  isDisabled(checkFor: CrudAction): boolean {
+    return false;
+  }
 
 }
 

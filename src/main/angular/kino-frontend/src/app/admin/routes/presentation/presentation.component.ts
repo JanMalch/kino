@@ -41,6 +41,10 @@ export class PresentationCrudService implements CrudService<PresentationDto, Pre
     return undefined;
   }
 
+  isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
+    return false;
+  }
+
 }
 
 

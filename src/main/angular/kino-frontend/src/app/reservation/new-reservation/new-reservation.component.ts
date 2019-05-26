@@ -4,8 +4,10 @@ import {SeatDto} from '@api/model/seatDto';
 import {AuthService} from '@core/auth';
 import {Selectable} from '@shared/components';
 import {MovieService} from '@core/services';
-import {first} from 'rxjs/operators';
+import {catchError, first, mergeMap, shareReplay} from 'rxjs/operators';
 import {DefaultService} from '@api/api/default.service';
+import {Observable, throwError} from "rxjs";
+import {MovieDto} from "@api/model/movieDto";
 
 @Component({
   selector: 'app-new-reservation',
@@ -15,7 +17,6 @@ import {DefaultService} from '@api/api/default.service';
 export class NewReservationComponent implements OnInit {
 
   readonly presentationId: number;
-  readonly movieId: number;
   readonly columns = ['seat', 'price', 'discounted'];
 
   selectedSeats: SeatDto[] = [];
@@ -23,17 +24,30 @@ export class NewReservationComponent implements OnInit {
   reducedPrice: number;
   regularPrice: number;
 
+  loading = false;
+
+  movie$: Observable<MovieDto>;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private api: DefaultService,
               public movies: MovieService,
               public auth: AuthService) {
     this.presentationId = parseInt(this.route.snapshot.queryParamMap.get('presentation'), 10) || null;
-    this.movieId = parseInt(this.route.snapshot.queryParamMap.get('movie'), 10) || null;
   }
 
   ngOnInit() {
-    this.movies.getMovie(this.movieId).pipe(first()).subscribe(m => {
+    if (this.presentationId === null) {
+      this.router.navigateByUrl("/404");
+      return;
+    }
+
+    this.movie$ = this.api.getPresentation(this.presentationId).pipe(
+      mergeMap(presentation => this.movies.getMovie(presentation.movie.id)),
+      shareReplay(1)
+    );
+
+    this.movie$.pipe(first()).subscribe(m => {
       this.reducedPrice = m.priceCategory.reducedPrice;
       this.regularPrice = m.priceCategory.regularPrice;
     });
@@ -64,11 +78,16 @@ export class NewReservationComponent implements OnInit {
   }
 
   makeReservation() {
+    this.loading = true;
     this.api.newReservation({
       presentationId: this.presentationId,
       seatIds: this.selectedSeats.map(s => s.id)
-    }).subscribe(id => {
-      this.router.navigateByUrl(`/reservation/${id}`, {preserveQueryParams: false});
-    });
+    }).pipe(
+      catchError(err => {
+        this.loading = false;
+        return throwError(err);
+      }),
+      mergeMap(id => this.router.navigateByUrl(`/reservation/${id}`, {preserveQueryParams: false}))
+    ).subscribe(() => this.loading = false);
   }
 }

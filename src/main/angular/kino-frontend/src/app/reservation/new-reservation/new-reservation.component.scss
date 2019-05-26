@@ -21,3 +21,11 @@ section:last-child {
   width: 70%;
   margin: 0 auto;
 }
+
+.mat-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 4px 4px;
+}

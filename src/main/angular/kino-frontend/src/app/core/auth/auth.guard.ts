@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanLoad, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '@core/auth/auth.service';
 import {map} from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     return this.auth.token$.pipe(
       map(token => {
         if (!token) {
-          return this.router.parseUrl(`/login?forward=${state.url}`);
+          return this.router.parseUrl(`/login?forward=${encodeURIComponent(state.url)}`);
         }
         return true;
       })
