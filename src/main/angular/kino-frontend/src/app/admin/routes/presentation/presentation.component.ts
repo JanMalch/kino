@@ -1,30 +1,29 @@
 import {Component, Injectable} from '@angular/core';
 import {CrudService, GenericForm} from "@admin/services";
-import {ReservationDto} from "@api/model/reservationDto";
-import {ReservationInfoDto} from "@api/model/reservationInfoDto";
 import {DefaultService} from "@api/api/default.service";
 import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
 import {PresentationWithSeatsDto} from "@api/model/presentationWithSeatsDto";
-import {PresentationDto} from "@api/model/presentationDto";
+import {NewPresentationDto} from "@api/model/newPresentationDto";
 
 @Injectable()
-export class PresentationCrudService implements CrudService<PresentationDto, PresentationWithSeatsDto> {
+export class PresentationCrudService implements CrudService<NewPresentationDto, PresentationWithSeatsDto> {
 
   constructor(private api: DefaultService) {
   }
 
-  create(dto: PresentationDto): Observable<number> {
-    return undefined;
+  create(dto: NewPresentationDto): Observable<number> {
+    return this.api.newPresentation(dto);
   }
 
   delete(id: number): Observable<SuccessMessage> {
-    return undefined;
+    return this.api.deletePresentation(id);
   }
 
   getForm(): GenericForm {
     return {
       date: {label: "Datum & Uhrzeit", name: "date", type: "text", validation: {required: true}},
+      movieId: {label: "Film-ID", name: "movieId", type: "number", validation: {required: true}},
       cinemaHallId: {label: "Saal-ID", name: "cinemaHallId", type: "number", validation: {required: true}}
     };
   }
@@ -34,11 +33,11 @@ export class PresentationCrudService implements CrudService<PresentationDto, Pre
   }
 
   readAll(): Observable<PresentationWithSeatsDto[]> {
-    return this.api.getAllReservations();
+    return this.api.getAllPresentations();
   }
 
-  update(id: number, dto: PresentationDto): Observable<SuccessMessage> {
-    return undefined;
+  update(id: number, dto: NewPresentationDto): Observable<SuccessMessage> {
+    return this.api.updatePresentation(id, dto);
   }
 
   isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
@@ -57,11 +56,12 @@ export class PresentationCrudService implements CrudService<PresentationDto, Pre
 export class PresentationComponent {
 
 
-  constructor(private crud: CrudService<ReservationDto, ReservationInfoDto>) {
+  constructor(private crud: CrudService<NewPresentationDto, PresentationWithSeatsDto>) {
   }
 
-  resolveIcon(role: string): string {
-    return role === "ADMIN" || role === "MODERATOR" ? "account-badge" : "account-circle";
+  reservations(item: PresentationWithSeatsDto): string {
+    const taken = item.seats.reduce((acc, curr) => acc + (curr.taken ? 1 : 0), 0);
+    return `${taken} / ${item.seats.length}`;
   }
 
 }

@@ -1,5 +1,7 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.presentation;
 
+import io.github.janmalch.kino.api.model.MovieInfoDto;
+import io.github.janmalch.kino.api.model.SeatForPresentationDto;
 import java.util.List;
 
 public class PresentationWithSeatsDto extends PresentationDto {

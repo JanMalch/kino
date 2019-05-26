@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.presentation;
 
 import java.util.Date;
 import java.util.Objects;

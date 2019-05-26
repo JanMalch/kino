@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.presentation;
 
-import io.github.janmalch.kino.api.model.PresentationDto;
+import io.github.janmalch.kino.api.model.presentation.PresentationDto;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.util.Mapper;
 

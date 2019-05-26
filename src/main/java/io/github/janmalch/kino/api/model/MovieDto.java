@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.api.model;
 
+import io.github.janmalch.kino.api.model.presentation.PresentationDto;
 import java.util.List;
 
 public class MovieDto {
