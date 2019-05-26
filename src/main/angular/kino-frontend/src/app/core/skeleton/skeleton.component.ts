@@ -3,6 +3,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AuthService} from '@core/auth';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-skeleton',
@@ -17,7 +18,9 @@ export class SkeletonComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver,
+              public router: Router,
               public auth: AuthService) {
   }
+
 
 }

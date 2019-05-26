@@ -48,7 +48,7 @@
       <small>Sign out</small>
     </a>
     <ng-template #signIn>
-      <a routerLink="/login" class="text-link">
+      <a routerLink="/login" [queryParams]="{ forward: router.url } " class="text-link">
         <small>Sign in</small>
       </a>
     </ng-template>
