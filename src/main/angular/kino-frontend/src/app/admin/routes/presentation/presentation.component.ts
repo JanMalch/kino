@@ -5,19 +5,26 @@ import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
 import {PresentationWithSeatsDto} from "@api/model/presentationWithSeatsDto";
 import {NewPresentationDto} from "@api/model/newPresentationDto";
+import {PresentationService} from "@core/services";
+import {tap} from "rxjs/operators";
 
 @Injectable()
 export class PresentationCrudService implements CrudService<NewPresentationDto, PresentationWithSeatsDto> {
 
-  constructor(private api: DefaultService) {
+  constructor(private api: DefaultService,
+              private presentationService: PresentationService) {
   }
 
   create(dto: NewPresentationDto): Observable<number> {
-    return this.api.newPresentation(dto);
+    return this.api.newPresentation(dto).pipe(
+      tap(() => this.presentationService.refresh())
+    );
   }
 
   delete(id: number): Observable<SuccessMessage> {
-    return this.api.deletePresentation(id);
+    return this.api.deletePresentation(id).pipe(
+      tap(() => this.presentationService.refresh())
+    );
   }
 
   getForm(): GenericForm {
@@ -29,15 +36,17 @@ export class PresentationCrudService implements CrudService<NewPresentationDto, 
   }
 
   read(id: number): Observable<PresentationWithSeatsDto> {
-    return this.api.getPresentation(id);
+    return this.presentationService.getPresentation(id);
   }
 
   readAll(): Observable<PresentationWithSeatsDto[]> {
-    return this.api.getAllPresentations();
+    return this.presentationService.getAllPresentations();
   }
 
   update(id: number, dto: NewPresentationDto): Observable<SuccessMessage> {
-    return this.api.updatePresentation(id, dto);
+    return this.api.updatePresentation(id, dto).pipe(
+      tap(() => this.presentationService.refresh())
+    );
   }
 
   isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
