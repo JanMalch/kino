@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
 import {ReservationInfoDto} from "@api/model/reservationInfoDto";
 import {ReservationDto} from "@api/model/reservationDto";
+import {PresentationService} from "@core/services";
+import {map, startWith} from "rxjs/operators";
 
 @Injectable()
 export class ReservationCrudService implements CrudService<ReservationDto, ReservationInfoDto> {
@@ -43,6 +45,11 @@ export class ReservationCrudService implements CrudService<ReservationDto, Reser
     return false;
   }
 
+  transformReadForForm(read: ReservationInfoDto): ReservationDto {
+    return read;
+  }
+
+
 }
 
 
@@ -54,7 +61,15 @@ export class ReservationCrudService implements CrudService<ReservationDto, Reser
 })
 export class ReservationsComponent  {
 
-  constructor(private crud: CrudService<ReservationDto, ReservationInfoDto>) {
+
+  constructor(private crud: CrudService<ReservationDto, ReservationInfoDto>,
+              private presentationService: PresentationService) {
   }
 
+  getPresentationDate(item: ReservationInfoDto): Observable<Date> {
+    return this.presentationService.getPresentation(item.presentationId).pipe(
+      map(p => p.date),
+      startWith(undefined)
+    );
+  }
 }

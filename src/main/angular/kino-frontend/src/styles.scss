@@ -103,6 +103,7 @@ a.mat-menu-item > mat-icon {
   margin: 0 8px 0 0;
 }
 
+.mat-icon[svgIcon="loading"],
 .mdi-spin {
   animation: mdi-spin 2s infinite linear;
 }
@@ -119,7 +120,7 @@ a.mat-menu-item > mat-icon {
 /* flex */
 
 .flex {
-  display: flex;
+  display: flex !important;
 
   &.al-center {
     align-items: center;

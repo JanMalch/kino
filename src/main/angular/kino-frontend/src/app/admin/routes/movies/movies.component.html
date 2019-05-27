@@ -4,7 +4,7 @@
 
     <div class="mat-list-text">
       <h4 mat-line>{{ item.name }} ({{ item.duration }} h) </h4>
-      <p mat-line> #{{item.id }}, {{ item.startDate | parseDate | date: 'dd. MMM' }} - {{ item.endDate | parseDate | date: 'dd. MMM' }}</p>
+      <p mat-line> #{{item.id }}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ item.startDate | parseDate | date: 'dd. MMM' }} - {{ item.endDate | parseDate | date: 'dd. MMM' }}</p>
     </div>
   </ng-container>
 </app-generic-overview>

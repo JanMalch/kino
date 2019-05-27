@@ -44,6 +44,23 @@ export class CinemaHallCrudService implements CrudService<NewCinemaHallDto, Cine
     return checkFor === 'UPDATE';
   }
 
+  transformReadForForm(read: CinemaHallDto): NewCinemaHallDto {
+    const firstRow = read.seats[0].row;
+    const seatsPerRow = read.seats.filter(seat => seat.row === firstRow).length;
+    const rowCount = Object.keys(read.seats.reduce((acc, curr) => {
+      if (!(curr.row in acc)) {
+        acc[curr.row] = true;
+      }
+      return acc;
+    }, {})).length;
+
+    return {
+      name: read.name,
+      seatsPerRow,
+      rowCount
+    }
+  }
+
 }
 
 @Component({
@@ -52,7 +69,7 @@ export class CinemaHallCrudService implements CrudService<NewCinemaHallDto, Cine
   styleUrls: ['./cinemahall.component.scss'],
   providers: [{provide: CrudService, useClass: CinemaHallCrudService}]
 })
-export class CinemahallComponent  {
+export class CinemahallComponent {
 
   constructor(private crud: CrudService<NewCinemaHallDto, CinemaHallDto>) {
   }

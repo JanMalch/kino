@@ -11,31 +11,31 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { AccountInfoDto } from '../model/accountInfoDto';
-import { CinemaHallDto } from '../model/cinemaHallDto';
-import { LoginDto } from '../model/loginDto';
-import { MovieDto } from '../model/movieDto';
-import { MovieOverviewDto } from '../model/movieOverviewDto';
-import { NewCinemaHallDto } from '../model/newCinemaHallDto';
-import { PingDto } from '../model/pingDto';
-import { PresentationWithSeatsDto } from '../model/presentationWithSeatsDto';
-import { PriceCategoryBaseDto } from '../model/priceCategoryBaseDto';
-import { PriceCategoryDto } from '../model/priceCategoryDto';
-import { ReservationDto } from '../model/reservationDto';
-import { ReservationInfoDto } from '../model/reservationInfoDto';
-import { SignUpDto } from '../model/signUpDto';
-import { SuccessMessage } from '../model/successMessage';
-import { TokenDto } from '../model/tokenDto';
+import {AccountInfoDto} from '../model/accountInfoDto';
+import {CinemaHallDto} from '../model/cinemaHallDto';
+import {LoginDto} from '../model/loginDto';
+import {MovieDto} from '../model/movieDto';
+import {MovieOverviewDto} from '../model/movieOverviewDto';
+import {NewCinemaHallDto} from '../model/newCinemaHallDto';
+import {NewMovieDto} from '../model/newMovieDto';
+import {NewPresentationDto} from '../model/newPresentationDto';
+import {PingDto} from '../model/pingDto';
+import {PresentationWithSeatsDto} from '../model/presentationWithSeatsDto';
+import {PriceCategoryBaseDto} from '../model/priceCategoryBaseDto';
+import {PriceCategoryDto} from '../model/priceCategoryDto';
+import {ReservationDto} from '../model/reservationDto';
+import {ReservationInfoDto} from '../model/reservationInfoDto';
+import {SignUpDto} from '../model/signUpDto';
+import {SuccessMessage} from '../model/successMessage';
+import {TokenDto} from '../model/tokenDto';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable()
@@ -310,6 +310,47 @@ export class DefaultService {
         ];
 
         return this.httpClient.delete<TokenDto>(`${this.basePath}/my-account`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes the presentation for the given ID
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deletePresentation(id: number, observe?: 'body', reportProgress?: boolean): Observable<SuccessMessage>;
+    public deletePresentation(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SuccessMessage>>;
+    public deletePresentation(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SuccessMessage>>;
+    public deletePresentation(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deletePresentation.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<SuccessMessage>(`${this.basePath}/presentation/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -598,6 +639,78 @@ export class DefaultService {
         ];
 
         return this.httpClient.get<Array<CinemaHallDto>>(`${this.basePath}/cinema-hall`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Returns the list of all movies
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllMovies(observe?: 'body', reportProgress?: boolean): Observable<Array<MovieDto>>;
+    public getAllMovies(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MovieDto>>>;
+    public getAllMovies(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MovieDto>>>;
+    public getAllMovies(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<MovieDto>>(`${this.basePath}/movie`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Returns all presentations
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllPresentations(observe?: 'body', reportProgress?: boolean): Observable<Array<PresentationWithSeatsDto>>;
+    public getAllPresentations(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<PresentationWithSeatsDto>>>;
+    public getAllPresentations(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<PresentationWithSeatsDto>>>;
+    public getAllPresentations(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<PresentationWithSeatsDto>>(`${this.basePath}/presentation`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -1041,10 +1154,10 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newMovie(body?: MovieDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public newMovie(body?: MovieDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public newMovie(body?: MovieDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public newMovie(body?: MovieDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newMovie(body?: NewMovieDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public newMovie(body?: NewMovieDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public newMovie(body?: NewMovieDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public newMovie(body?: NewMovieDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let headers = this.defaultHeaders;
@@ -1068,6 +1181,50 @@ export class DefaultService {
         }
 
         return this.httpClient.post<number>(`${this.basePath}/movie`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Creates a new presentation
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public newPresentation(body?: NewPresentationDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public newPresentation(body?: NewPresentationDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public newPresentation(body?: NewPresentationDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public newPresentation(body?: NewPresentationDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<number>(`${this.basePath}/presentation`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -1241,6 +1398,55 @@ export class DefaultService {
         }
 
         return this.httpClient.put<SuccessMessage>(`${this.basePath}/movie/${encodeURIComponent(String(id))}`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Updates the presentation for the given ID
+     * 
+     * @param id 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updatePresentation(id: number, body?: NewPresentationDto, observe?: 'body', reportProgress?: boolean): Observable<SuccessMessage>;
+    public updatePresentation(id: number, body?: NewPresentationDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SuccessMessage>>;
+    public updatePresentation(id: number, body?: NewPresentationDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SuccessMessage>>;
+    public updatePresentation(id: number, body?: NewPresentationDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updatePresentation.');
+        }
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<SuccessMessage>(`${this.basePath}/presentation/${encodeURIComponent(String(id))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,

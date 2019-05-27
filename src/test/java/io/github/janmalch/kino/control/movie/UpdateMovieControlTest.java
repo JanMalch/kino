@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
 import org.junit.jupiter.api.Test;
 
 class UpdateMovieControlTest {

@@ -10,9 +10,13 @@ import {map, shareReplay} from 'rxjs/operators';
 })
 export class CinemaHallService implements OnDestroy {
 
-  private readonly halls$: Observable<CinemaHallDto[]>;
+  private halls$: Observable<CinemaHallDto[]>;
 
   constructor(private api: DefaultService) {
+    this.refresh();
+  }
+
+  refresh() {
     this.halls$ = this.api.getAllCinemaHalls().pipe(
       untilDestroyed(this),
       shareReplay(1)

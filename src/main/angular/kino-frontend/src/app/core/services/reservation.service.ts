@@ -10,9 +10,13 @@ import {map, shareReplay} from 'rxjs/operators';
 })
 export class ReservationService implements OnDestroy {
 
-  private readonly myReservations$: Observable<ReservationInfoDto[]>;
+  private myReservations$: Observable<ReservationInfoDto[]>;
 
   constructor(private api: DefaultService) {
+    this.refresh();
+  }
+
+  refresh() {
     this.myReservations$ = this.api.getMyReservations().pipe(
       untilDestroyed(this),
       shareReplay(1)

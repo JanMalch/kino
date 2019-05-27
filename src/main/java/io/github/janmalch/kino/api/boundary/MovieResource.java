@@ -2,9 +2,11 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.api.model.MovieOverviewDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
+import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
+import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.generic.GetEntitiesControl;
 import io.github.janmalch.kino.control.generic.GetEntityControl;
 import io.github.janmalch.kino.control.movie.*;
 import io.github.janmalch.kino.entity.Movie;
@@ -25,14 +27,26 @@ public class MovieResource {
   // TODO: refactor to @Inject
   private Logger log = LoggerFactory.getLogger(MovieResource.class);
 
-  @Path("")
+  @GET
+  @Secured
+  @RolesAllowed("MODERATOR")
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(
+      value = "Returns the list of all movies",
+      response = MovieDto.class,
+      responseContainer = "List")
+  public Response getAllMovies() {
+    var control = new GetEntitiesControl<>(Movie.class, new MovieDtoMapper());
+    return control.execute(new ResponseResultBuilder<>());
+  }
+
   @POST
   @Secured
   @RolesAllowed("MODERATOR")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns the ID for the newly created movie", response = Long.class)
-  public Response newMovie(MovieDto movieDto) {
+  public Response newMovie(NewMovieDto movieDto) {
     log.info(movieDto.toString());
     Control<Long> control = new NewMovieControl(movieDto);
     return control.execute(new ResponseResultBuilder<>());

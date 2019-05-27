@@ -20,7 +20,7 @@ export class GenericFormComponent implements OnInit {
       if (value === null) {
         this.form.reset(null);
       } else {
-        this.form.patchValue(value);
+        this.form.patchValue(this.crud.transformReadForForm(value));
         this.updateDisabled = this.crud.isDisabled('UPDATE');
       }
     }
@@ -72,11 +72,9 @@ export class GenericFormComponent implements OnInit {
 
   onSubmit(formValue: any) {
     if (!!this._data) {
-      console.log("Updating ...", formValue);
       this.crud.update(this.data.id, formValue)
         .subscribe(result => this.update.emit(result));
     } else {
-      console.log("Creating ...", formValue);
       this.crud.create(formValue)
         .subscribe(result => this.create.emit(result));
     }

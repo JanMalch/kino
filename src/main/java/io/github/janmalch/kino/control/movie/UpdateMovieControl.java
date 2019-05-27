@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.movie;
 
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;

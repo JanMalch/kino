@@ -45,6 +45,10 @@ export class PriceCategoryCrudService implements CrudService<PriceCategoryBaseDt
     return false;
   }
 
+  transformReadForForm(read: PriceCategoryDto): PriceCategoryBaseDto {
+    return read;
+  }
+
 }
 
 

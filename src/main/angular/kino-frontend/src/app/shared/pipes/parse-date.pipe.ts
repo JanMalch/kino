@@ -6,6 +6,9 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class ParseDatePipe implements PipeTransform {
 
   transform(value: string | number | Date, args?: any): Date {
+    if (!value) {
+      return new Date(0);
+    }
     if (value instanceof Date) {
       return value;
     }

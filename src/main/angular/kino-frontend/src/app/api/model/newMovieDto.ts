@@ -9,17 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {PresentationDto} from './presentationDto';
-import {PriceCategoryDto} from './priceCategoryDto';
 
 
-export interface MovieDto { 
-    id?: number;
+export interface NewMovieDto { 
     name?: string;
-    priceCategory?: PriceCategoryDto;
+    priceCategoryId?: number;
     startDate?: string;
     endDate?: string;
     duration?: number;
     ageRating?: number;
-    presentations?: Array<PresentationDto>;
 }
