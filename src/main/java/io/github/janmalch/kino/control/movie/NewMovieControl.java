@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.movie;
 
-import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.BeanValidations;
@@ -17,10 +17,10 @@ import javax.ws.rs.core.Response;
 
 public class NewMovieControl implements Control<Long> {
 
-  private final MovieDto movieDto;
+  private final NewMovieDto movieDto;
   private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
-  public NewMovieControl(MovieDto movieDto) {
+  public NewMovieControl(NewMovieDto movieDto) {
     this.movieDto = movieDto;
   }
 
@@ -78,12 +78,12 @@ public class NewMovieControl implements Control<Long> {
             });
   }
 
-  static class NewMovieMapper implements Mapper<MovieDto, Movie> {
+  static class NewMovieMapper implements Mapper<NewMovieDto, Movie> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
-    public Movie map(MovieDto source) {
+    public Movie map(NewMovieDto source) {
       var movie = new Movie();
       movie.setName(source.getName());
       movie.setAgeRating(source.getAgeRating());

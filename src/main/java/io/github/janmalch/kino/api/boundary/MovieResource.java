@@ -5,6 +5,7 @@ import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.MovieInfoDto;
 import io.github.janmalch.kino.api.model.MovieOverviewDto;
+import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.generic.GetEntitiesControl;
 import io.github.janmalch.kino.control.generic.GetEntityControl;
@@ -43,7 +44,7 @@ public class MovieResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns the ID for the newly created movie", response = Long.class)
-  public Response newMovie(MovieDto movieDto) {
+  public Response newMovie(NewMovieDto movieDto) {
     log.info(movieDto.toString());
     Control<Long> control = new NewMovieControl(movieDto);
     return control.execute(new ResponseResultBuilder<>());

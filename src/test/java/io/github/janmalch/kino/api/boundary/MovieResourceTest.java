@@ -6,6 +6,7 @@ import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.PriceCategoryDto;
+import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import org.junit.jupiter.api.Test;
 
 class MovieResourceTest {
@@ -67,13 +68,13 @@ class MovieResourceTest {
 
   private Long persistNewMovie() {
     var resource = new MovieResource();
-    var dto = new MovieDto();
+    var dto = new NewMovieDto();
     dto.setName("Captain Marvel");
     dto.setStartDate("2019-01-01");
     dto.setEndDate("2019-12-02");
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
-    dto.setPriceCategory(createPriceCategory());
+    dto.setPriceCategoryId(createPriceCategory().getId());
     var response = resource.newMovie(dto);
     return (Long) response.getEntity();
   }
