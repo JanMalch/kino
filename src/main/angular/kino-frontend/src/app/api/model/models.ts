@@ -6,6 +6,7 @@ export * from './movieDto';
 export * from './movieInfoDto';
 export * from './movieOverviewDto';
 export * from './newCinemaHallDto';
+export * from './newMovieDto';
 export * from './newPresentationDto';
 export * from './pingDto';
 export * from './presentationDto';

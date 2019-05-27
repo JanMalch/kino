@@ -22,6 +22,7 @@ import {LoginDto} from '../model/loginDto';
 import {MovieDto} from '../model/movieDto';
 import {MovieOverviewDto} from '../model/movieOverviewDto';
 import {NewCinemaHallDto} from '../model/newCinemaHallDto';
+import {NewMovieDto} from '../model/newMovieDto';
 import {NewPresentationDto} from '../model/newPresentationDto';
 import {PingDto} from '../model/pingDto';
 import {PresentationWithSeatsDto} from '../model/presentationWithSeatsDto';
@@ -648,6 +649,42 @@ export class DefaultService {
     }
 
     /**
+     * Returns the list of all movies
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllMovies(observe?: 'body', reportProgress?: boolean): Observable<Array<MovieDto>>;
+    public getAllMovies(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MovieDto>>>;
+    public getAllMovies(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MovieDto>>>;
+    public getAllMovies(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<MovieDto>>(`${this.basePath}/movie`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Returns all presentations
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1117,10 +1154,10 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public newMovie(body?: MovieDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public newMovie(body?: MovieDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public newMovie(body?: MovieDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public newMovie(body?: MovieDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public newMovie(body?: NewMovieDto, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public newMovie(body?: NewMovieDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public newMovie(body?: NewMovieDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public newMovie(body?: NewMovieDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let headers = this.defaultHeaders;

@@ -66,6 +66,10 @@ export class AccountCrudService implements CrudService<AccountInfoDto, AccountIn
     return false;
   }
 
+  transformReadForForm(read: AccountInfoDto): AccountInfoDto {
+    return read;
+  }
+
 
 }
 

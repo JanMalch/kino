@@ -18,6 +18,9 @@ export abstract class CrudService<I, O> {
 
   abstract delete(id: number): Observable<SuccessMessage>;
 
+  transformReadForForm(read: O): I {
+    return read as any;
+  }
 
   isDisabled(checkFor: CrudAction): boolean {
     return false;

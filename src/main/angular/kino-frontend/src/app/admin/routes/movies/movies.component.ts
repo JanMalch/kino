@@ -4,16 +4,16 @@ import {DefaultService} from "@api/api/default.service";
 import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
 import {MovieDto} from "@api/model/movieDto";
-import {map} from "rxjs/operators";
+import {NewMovieDto} from "@api/model/newMovieDto";
 
 
 @Injectable()
-export class MovieCrudService implements CrudService<MovieDto, MovieDto> {
+export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
 
   constructor(private api: DefaultService) {
   }
 
-  create(dto: MovieDto): Observable<number> {
+  create(dto: NewMovieDto): Observable<number> {
     return this.api.newMovie(dto);
   }
 
@@ -27,7 +27,8 @@ export class MovieCrudService implements CrudService<MovieDto, MovieDto> {
       startDate: {label: "Startdatum", name: "startDate", type: "text", validation: {required: true}},
       endDate: {label: "Enddatum", name: "endDate", type: "text", validation: {required: true}},
       duration: {label: "Länge", name: "duration", type: "number", validation: {required: true}},
-      ageRating: {label: "FSK", name: "ageRating", type: "number", validation: {required: true}}
+      ageRating: {label: "FSK", name: "ageRating", type: "number", validation: {required: true}},
+      priceCategoryId: {label: "Preiskategorie", name: "priceCategoryId", type: "number", validation: {required: true}}
     };
   }
 
@@ -36,21 +37,24 @@ export class MovieCrudService implements CrudService<MovieDto, MovieDto> {
   }
 
   readAll(): Observable<MovieDto[]> {
-    // TODO!
-    return this.api.getCurrentMovies().pipe(
-      map(current => {
-        return Object.values(current.movies) as any;
-      })
-    );
+    return this.api.getAllMovies();
   }
 
-  update(id: number, dto: MovieDto): Observable<SuccessMessage> {
+  update(id: number, dto: NewMovieDto): Observable<SuccessMessage> {
     return this.api.updateMovie(id, dto);
+  }
+
+  transformReadForForm(read: MovieDto): NewMovieDto {
+    return {
+      ...read,
+      priceCategoryId: read.priceCategory.id
+    };
   }
 
   isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
     return false;
   }
+
 
 }
 

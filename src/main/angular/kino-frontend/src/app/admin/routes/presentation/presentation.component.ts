@@ -44,6 +44,14 @@ export class PresentationCrudService implements CrudService<NewPresentationDto, 
     return false;
   }
 
+  transformReadForForm(read: PresentationWithSeatsDto): NewPresentationDto {
+    return {
+      date: read.date,
+      cinemaHallId: read.cinemaHallId,
+      movieId: read.movie.id
+    }
+  }
+
 }
 
 

@@ -43,6 +43,11 @@ export class ReservationCrudService implements CrudService<ReservationDto, Reser
     return false;
   }
 
+  transformReadForForm(read: ReservationInfoDto): ReservationDto {
+    return read;
+  }
+
+
 }
 
 
