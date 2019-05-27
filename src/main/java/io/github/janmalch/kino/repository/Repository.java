@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.repository;
 
 import io.github.janmalch.kino.repository.specification.Specification;
+import io.github.janmalch.kino.util.Manageable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ import javax.persistence.Query;
  *
  * @param <D> the Domain model
  */
-public interface Repository<D> extends TransactionProvider {
+public interface Repository<D> extends TransactionProvider, Manageable {
 
   default void add(D item) {
     add(Collections.singletonList(item));
@@ -86,6 +87,7 @@ public interface Repository<D> extends TransactionProvider {
     throw new UnsupportedOperationException("Entity type not provided by this repository");
   }
 
+  @Override
   default void close() {
     getEntityManager().close();
   }

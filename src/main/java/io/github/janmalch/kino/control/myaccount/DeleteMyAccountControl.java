@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.myaccount;
 
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DeleteMyAccountControl implements Control<Token> {
+public class DeleteMyAccountControl extends ManagingControl<Token> {
 
   private Logger log = LoggerFactory.getLogger(DeleteMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
@@ -29,10 +29,11 @@ public class DeleteMyAccountControl implements Control<Token> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Token> result) {
+  public <T> T compute(ResultBuilder<T, Token> result) {
+    manage(repository);
     log.info("Deleting my Account " + token.getName());
 
-    Specification<Account> myName = new AccountByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName(), repository);
     var account = repository.queryFirst(myName);
 
     if (account.isEmpty()) {

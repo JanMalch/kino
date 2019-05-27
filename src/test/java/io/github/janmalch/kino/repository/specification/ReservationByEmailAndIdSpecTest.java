@@ -40,7 +40,7 @@ public class ReservationByEmailAndIdSpecTest {
 
   @Test
   public void testQuery() {
-    var query = new ReservationByEmailAndIdSpec(mail, reservation.getId());
+    var query = new ReservationByEmailAndIdSpec(mail, reservation.getId(), reservationRepository);
     var result = reservationRepository.queryFirst(query);
 
     assertTrue(result.isPresent());

@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.generic;
 
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
@@ -9,7 +9,7 @@ import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GetEntitiesControl<P, E> implements Control<List<P>> {
+public class GetEntitiesControl<P, E> extends ManagingControl<List<P>> {
 
   private final Mapper<E, P> mapper;
   private final Repository<E> repository;
@@ -24,7 +24,8 @@ public class GetEntitiesControl<P, E> implements Control<List<P>> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, List<P>> result) {
+  public <T> T compute(ResultBuilder<T, List<P>> result) {
+    manage(repository);
     var entities = repository.findAll();
     var dtos = entities.stream().map(mapper::map).collect(Collectors.toList());
     return result.success(dtos);
