@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.movie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.janmalch.kino.api.model.MovieDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
 import io.github.janmalch.kino.entity.Movie;
 import java.text.SimpleDateFormat;
 import org.junit.jupiter.api.Test;

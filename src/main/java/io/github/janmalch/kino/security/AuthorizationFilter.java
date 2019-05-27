@@ -1,8 +1,9 @@
 package io.github.janmalch.kino.security;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.UserRepository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.jsonwebtoken.MalformedJwtException;
 import javax.annotation.Priority;
@@ -61,11 +62,11 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   }
 
   boolean userExists(Token token) {
-    var repository = new UserRepository();
+    var repository = RepositoryFactory.createRepository(Account.class);
 
-    var query = new AccountByEmailSpec(token.getName());
+    var query = new AccountByEmailSpec(token.getName(), repository);
     var referredUser = repository.queryFirst(query);
-
+    repository.close();
     return referredUser.isPresent();
   }
 

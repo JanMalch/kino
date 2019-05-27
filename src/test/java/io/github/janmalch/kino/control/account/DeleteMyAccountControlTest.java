@@ -3,6 +3,7 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
+import io.github.janmalch.kino.control.myaccount.DeleteMyAccountControl;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.Repository;
@@ -37,7 +38,7 @@ class DeleteMyAccountControlTest {
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("existing@example.com");
 
-    Specification<Account> myName = new AccountByEmailSpec(token.getName());
+    Specification<Account> myName = new AccountByEmailSpec(token.getName(), repository);
 
     var isInRepo = repository.queryFirst(myName);
     assertFalse(isInRepo.isEmpty());
@@ -73,8 +74,9 @@ class DeleteMyAccountControlTest {
     JwtTokenFactory factory = new JwtTokenFactory();
     Token token = factory.generateToken("nonExisting@example.com");
 
-    Specification<Account> myTokenName = new AccountByEmailSpec(token.getName());
-    Specification<Account> myExistingName = new AccountByEmailSpec(existing1.getEmail());
+    Specification<Account> myTokenName = new AccountByEmailSpec(token.getName(), repository);
+    Specification<Account> myExistingName =
+        new AccountByEmailSpec(existing1.getEmail(), repository);
     var tokenQuery = repository.queryFirst(myTokenName);
     assertTrue(tokenQuery.isEmpty());
 

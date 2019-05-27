@@ -1,23 +1,26 @@
 package io.github.janmalch.kino.control.movie;
 
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
+import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.MovieRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import javax.ws.rs.core.Response;
 
-public class RemoveMovieControl implements Control<SuccessMessage> {
+public class RemoveMovieControl extends ManagingControl<SuccessMessage> {
 
   private final long id;
-  private final MovieRepository repository = new MovieRepository();
+  private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   public RemoveMovieControl(long id) {
     this.id = id;
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
+  public <T> T compute(ResultBuilder<T, SuccessMessage> result) {
+    manage(repository);
     var movie = repository.find(id);
     if (movie == null) {
       return result.failure(

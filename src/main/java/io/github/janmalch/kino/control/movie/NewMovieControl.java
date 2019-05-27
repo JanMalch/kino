@@ -1,12 +1,13 @@
 package io.github.janmalch.kino.control.movie;
 
-import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.api.model.movie.NewMovieDto;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.BeanValidations;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.MovieRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,17 +15,18 @@ import java.util.Date;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
 
-public class NewMovieControl implements Control<Long> {
+public class NewMovieControl extends ManagingControl<Long> {
 
-  private final MovieDto movieDto;
-  private final MovieRepository repository = new MovieRepository();
+  private final NewMovieDto movieDto;
+  private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
-  public NewMovieControl(MovieDto movieDto) {
+  public NewMovieControl(NewMovieDto movieDto) {
     this.movieDto = movieDto;
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Long> result) {
+  public <T> T compute(ResultBuilder<T, Long> result) {
+    manage(repository);
     var validationProblem = validate();
     if (validationProblem.isPresent()) {
       return result.failure(validationProblem.get());
@@ -40,7 +42,14 @@ public class NewMovieControl implements Control<Long> {
     var validator = new BeanValidations<>(movieDto, "new-movie");
     var dayFormat = new SimpleDateFormat("yyyy-MM-dd");
     return validator
-        .requireNotEmpty(/* check all fields for null/empty */ )
+        .requireNotEmpty(
+            "id",
+            "name",
+            "priceCategory",
+            "startDate",
+            "endDate",
+            "duration",
+            "ageRating") // exclude presentations from validation. can be empty
         .or(
             () -> {
               Date endDate;
@@ -70,12 +79,12 @@ public class NewMovieControl implements Control<Long> {
             });
   }
 
-  static class NewMovieMapper implements Mapper<MovieDto, Movie> {
+  static class NewMovieMapper implements Mapper<NewMovieDto, Movie> {
 
     private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
-    public Movie map(MovieDto source) {
+    public Movie map(NewMovieDto source) {
       var movie = new Movie();
       movie.setName(source.getName());
       movie.setAgeRating(source.getAgeRating());

@@ -2,8 +2,8 @@ package io.github.janmalch.kino.control.movie;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.entity.PriceCategory;
+import io.github.janmalch.kino.api.model.PriceCategoryDto;
+import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +11,9 @@ class NewMovieMapperTest {
 
   @Test
   void map() {
-    var dto = new MovieDto();
+    var dto = new NewMovieDto();
     dto.setName("Captain Marvel");
-    dto.setPriceCategory(createPriceCategory());
+    dto.setPriceCategoryId(createPriceCategory().getId());
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
     dto.setStartDate("20g20-01-01");
@@ -31,8 +31,8 @@ class NewMovieMapperTest {
     }
   }
 
-  private PriceCategory createPriceCategory() {
-    PriceCategory priceCategory = new PriceCategory();
+  private PriceCategoryDto createPriceCategory() {
+    var priceCategory = new PriceCategoryDto();
     priceCategory.setName("normal");
     priceCategory.setRegularPrice(9.99f);
     priceCategory.setReducedPrice(7.99f);

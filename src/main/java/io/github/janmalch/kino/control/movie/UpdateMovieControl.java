@@ -1,22 +1,23 @@
 package io.github.janmalch.kino.control.movie;
 
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.problem.Problem;
-import io.github.janmalch.kino.repository.MovieRepository;
+import io.github.janmalch.kino.repository.Repository;
+import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.Response;
 
-public class UpdateMovieControl implements Control<SuccessMessage> {
+public class UpdateMovieControl extends ManagingControl<SuccessMessage> {
 
   private final MovieDto movieDto;
   private final long movieId;
-  private final MovieRepository repository = new MovieRepository();
+  private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   public UpdateMovieControl(MovieDto movieDto, long movieId) {
     this.movieDto = movieDto;
@@ -24,7 +25,8 @@ public class UpdateMovieControl implements Control<SuccessMessage> {
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, SuccessMessage> result) {
+  public <T> T compute(ResultBuilder<T, SuccessMessage> result) {
+    manage(repository);
     var refMovie = repository.find(movieId);
     if (refMovie == null) {
       return result.failure(Problem.builder(Response.Status.NOT_FOUND).instance().build());

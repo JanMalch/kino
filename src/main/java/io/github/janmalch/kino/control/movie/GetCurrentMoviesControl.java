@@ -1,8 +1,8 @@
 package io.github.janmalch.kino.control.movie;
 
-import io.github.janmalch.kino.api.model.MovieInfoDto;
-import io.github.janmalch.kino.api.model.MovieOverviewDto;
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
+import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.repository.Repository;
@@ -17,18 +17,18 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GetCurrentMoviesControl implements Control<MovieOverviewDto> {
+public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
 
   private final Mapper<Movie, MovieInfoDto> mapper = new ReflectionMapper<>(MovieInfoDto.class);
   private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
   @Override
-  public <T> T execute(ResultBuilder<T, MovieOverviewDto> result) {
+  public <T> T compute(ResultBuilder<T, MovieOverviewDto> result) {
     var overview = new MovieOverviewDto();
-
+    manage(repository);
     var movieInfoDtoMap =
         repository
-            .query(new CurrentMoviesSpec())
+            .query(new CurrentMoviesSpec(repository))
             .stream()
             .collect(
                 Collectors.toMap(

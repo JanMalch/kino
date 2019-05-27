@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.generic;
 
-import io.github.janmalch.kino.control.Control;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Identifiable;
 import io.github.janmalch.kino.problem.Problems;
@@ -9,7 +9,7 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
-public class UpdateEntityControl<P, E extends Identifiable> implements Control<Void> {
+public class UpdateEntityControl<P, E extends Identifiable> extends ManagingControl<Void> {
 
   private final Mapper<P, E> mapper;
   private final long id;
@@ -30,7 +30,8 @@ public class UpdateEntityControl<P, E extends Identifiable> implements Control<V
   }
 
   @Override
-  public <T> T execute(ResultBuilder<T, Void> result) {
+  public <T> T compute(ResultBuilder<T, Void> result) {
+    manage(repository);
     var entity =
         Problems.requireEntity(repository.find(id), id, "No such " + entityClass.getSimpleName());
     var update = mapper.update(dto, entity);

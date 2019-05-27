@@ -1,0 +1,10 @@
+<app-generic-overview entityName="Film" entityNamePlural="Filme">
+  <ng-container *appEntity="let item">
+    <mat-icon mat-list-icon [svgIcon]="resolveIcon(item)"></mat-icon>
+
+    <div class="mat-list-text">
+      <h4 mat-line>{{ item.name }} ({{ item.duration }} h) </h4>
+      <p mat-line> #{{item.id }}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ item.startDate | parseDate | date: 'dd. MMM' }} - {{ item.endDate | parseDate | date: 'dd. MMM' }}</p>
+    </div>
+  </ng-container>
+</app-generic-overview>

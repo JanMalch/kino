@@ -1,23 +1,22 @@
 package io.github.janmalch.kino.repository.specification;
 
 import io.github.janmalch.kino.entity.Account;
+import io.github.janmalch.kino.repository.Repository;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 public class AccountByEmailSpec implements Specification<Account> {
 
   private final String email;
+  private final EntityManager em;
 
-  public AccountByEmailSpec(String email) {
+  public AccountByEmailSpec(String email, Repository<Account> repository) {
     this.email = email;
+    this.em = repository.getEntityManager();
   }
 
   @Override
   public TypedQuery<Account> toQuery() {
-    EntityManagerFactory factory = Persistence.createEntityManagerFactory("kino");
-    EntityManager em = factory.createEntityManager();
     TypedQuery<Account> query =
         em.createQuery("SELECT u FROM Account u WHERE email = :email", Account.class);
     query.setParameter("email", email);

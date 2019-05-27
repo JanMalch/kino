@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Reservation;
+import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import org.junit.jupiter.api.AfterEach;
@@ -31,10 +32,23 @@ public class DeleteReservationByIdControlTest {
     var reservation = util.provideNewReservation("my@account.com", presentation.getId());
     var reservationRepository = RepositoryFactory.createRepository(Reservation.class);
 
-    var control = new DeleteReservationByIdControl(reservation.getId());
+    var control =
+        new DeleteReservationByIdControl(reservation.getId(), "my@account.com", Role.MODERATOR);
     var result = control.execute(new EitherResultBuilder<>());
 
     assertTrue(result.isSuccess());
     assertNull(reservationRepository.find(reservation.getId()));
+  }
+
+  @Test
+  public void testExecuteInvalidCustomer() {
+    var presentation = util.provideReservationSetup("first", 10, "my@account.com");
+    var reservation = util.provideNewReservation("my@account.com", presentation.getId());
+
+    var control =
+        new DeleteReservationByIdControl(reservation.getId(), "invalid@account.com", Role.CUSTOMER);
+    var result = control.execute(new EitherResultBuilder<>());
+
+    assertTrue(result.isFailure());
   }
 }

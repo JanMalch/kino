@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.AccountDto;
+import io.github.janmalch.kino.api.model.AccountInfoDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Role;
@@ -21,7 +21,7 @@ class EditAccountByIdTest {
 
   @Test
   void executeFail() {
-    AccountDto acc = new AccountDto();
+    AccountInfoDto acc = new AccountInfoDto();
     acc.setId(-1);
 
     var control = new EditAccountById(acc);
@@ -48,7 +48,7 @@ class EditAccountByIdTest {
 
     repository.add(existing);
 
-    AccountDto dto = new AccountDto();
+    AccountInfoDto dto = new AccountInfoDto();
     dto.setId(existing.getId());
     dto.setEmail("TestUser1@email.de");
     dto.setRole(Role.MODERATOR);

@@ -1,0 +1,35 @@
+<div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2>{{ entityNamePlural }}</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-template #spinner>
+        <div id="spinner" class="mb-16">
+          <mat-progress-spinner class="mt-8" mode="indeterminate" [strokeWidth]="4"></mat-progress-spinner>
+        </div>
+      </ng-template>
+      <mat-list role="list" *ngIf="(entities$ | async) as entities; else spinner">
+        <mat-list-item *ngFor="let item of entities"
+                       class="hoverable mat-list-item mat-list-item-avatar mat-list-item-with-avatar mat-2-line"
+                       (click)="setSelect(item)">
+          <ng-container *ngTemplateOutlet="entityTemplate; context: {$implicit: item}"></ng-container>
+          <mat-icon svgIcon="arrow-right" class="arrow-right"></mat-icon>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2>{{ entityName }} anlegen / bearbeiten / löschen</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-generic-form [data]="selected"
+                        (create)="onCreate($event)" (delete)="onDelete($event)" (update)="onUpdate($event)">
+
+      </app-generic-form><ng-content select="small"></ng-content>
+    </mat-card-content>
+  </mat-card>
+</div>

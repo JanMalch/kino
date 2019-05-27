@@ -1,0 +1,50 @@
+<form novalidate (ngSubmit)="onSubmit(form.value)" [formGroup]="form">
+  <mat-form-field *ngFor="let prop of objectProps" appearance="fill">
+    <ng-container [ngSwitch]="prop.type">
+      <input *ngSwitchCase="'text'"
+             matInput
+             [attr.name]="prop.key"
+             [formControlName]="prop.key"
+             [id]="prop.key" [type]="prop.type">
+      <input *ngSwitchCase="'password'"
+             matInput
+             type="password"
+             [attr.name]="prop.key"
+             [formControlName]="prop.key"
+             [id]="prop.key" [type]="prop.type">
+      <input *ngSwitchCase="'email'"
+             matInput
+             type="email"
+             [attr.name]="prop.key"
+             [formControlName]="prop.key"
+             [id]="prop.key" [type]="prop.type">
+      <input *ngSwitchCase="'number'"
+             matInput
+             type="number"
+             [attr.name]="prop.key"
+             [formControlName]="prop.key"
+             [id]="prop.key" [type]="prop.type">
+      <input *ngSwitchCase="'array'"
+             matInput
+             type="text"
+             [attr.name]="prop.key"
+             [formControlName]="prop.key"
+             [id]="prop.key" [type]="prop.type">
+      <mat-select placeholder="Select" *ngSwitchCase="'select'" [formControlName]="prop.key">
+        <mat-option *ngFor="let option of prop.options" [value]="option.value">
+          {{ option.label }}</mat-option>
+      </mat-select>
+
+
+    </ng-container>
+
+    <mat-label>{{ prop.label }}{{ prop.validation ? (prop.validation.required ? '*' : '') : ''}}</mat-label>
+  </mat-form-field>
+  <p>
+    <button type="submit" mat-flat-button color="primary"
+            [disabled]="!form.valid || updateDisabled"
+            [title]="updateDisabled ? 'Updating is disabled' : ''"
+    >Speichern</button>
+    <button type="button" mat-flat-button color="warn" [disabled]="!data" (click)="onDelete()">Löschen</button>
+  </p>
+</form>

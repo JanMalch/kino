@@ -1,0 +1,10 @@
+<app-generic-overview entityName="Preiskategorie" entityNamePlural="Preiskategorien">
+  <ng-container *appEntity="let item">
+    <mat-icon mat-list-icon svgIcon="cash"></mat-icon>
+
+    <div class="mat-list-text">
+      <h4 mat-line>{{ item.name }}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ item.regularPrice | currency: 'EUR' }} / {{ item.reducedPrice | currency: 'EUR' }}</h4>
+      <p mat-line>#{{ item.id }}</p>
+    </div>
+  </ng-container>
+</app-generic-overview>
