@@ -3,8 +3,20 @@
     <mat-icon mat-list-icon svgIcon="theater"></mat-icon>
 
     <div class="mat-list-text">
-      <h4 mat-line>{{ item.account.email }} hat {{ item.seats.length }} Sitze für {{ item.movie.name }} ({{ getPresentationDate(item) | async | parseDate | date: 'medium' }})</h4>
-      <p mat-line>#{{ item.id }}&nbsp;&nbsp;&bull;&nbsp;&nbsp;reserviert am {{item.reservationDate | parseDate | date: 'medium' }}</p>
+      <h4 mat-line class="flex al-center">
+        {{ item.account.email }}
+        &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+        {{ item.movie.name }}
+        &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+        <ng-container *ngIf="(getPresentationDate(item) | async) as pDate; else spinner">
+          {{ pDate | parseDate | date: 'medium' }}
+        </ng-container>
+        <ng-template #spinner>
+          <mat-icon svgIcon="loading"></mat-icon>
+        </ng-template>
+      </h4>
+      <p mat-line>#{{ item.id }}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ item.seats.length }} Sitze&nbsp;&nbsp;&bull;&nbsp;&nbsp;reserviert
+        am {{item.reservationDate | parseDate | date: 'medium' }}</p>
     </div>
   </ng-container>
 </app-generic-overview>
