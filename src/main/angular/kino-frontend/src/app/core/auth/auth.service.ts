@@ -14,7 +14,7 @@ import {AccountInfoDto} from "@api/model/accountInfoDto";
 export class AuthService {
 
   private account = new BehaviorSubject<AccountInfoDto | null>(null);
-  private token = new BehaviorSubject<string | null>(null);
+  private token = new BehaviorSubject<string | null>(sessionStorage.getItem("token") || null);
 
   get account$(): Observable<AccountInfoDto | null> {
     return this.account.asObservable();
@@ -37,7 +37,13 @@ export class AuthService {
       }
     });
 
-    // this.token$.subscribe(token => localStorage.setItem('token', token));
+    this.token$.subscribe(token => {
+      if (!!token) {
+        sessionStorage.setItem('token', token)
+      } else {
+        sessionStorage.removeItem('token')
+      }
+    });
   }
 
   logIn(email: string, password: string): Observable<void> {
