@@ -3,7 +3,6 @@ package io.github.janmalch.kino.api.boundary;
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
 import io.github.janmalch.kino.api.model.movie.MovieDto;
-import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
 import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import io.github.janmalch.kino.control.Control;
@@ -34,10 +33,10 @@ public class MovieResource {
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(
       value = "Returns the list of all movies",
-      response = MovieInfoDto.class,
+      response = MovieDto.class,
       responseContainer = "List")
   public Response getAllMovies() {
-    var control = new GetEntitiesControl<>(Movie.class, MovieInfoDto.class);
+    var control = new GetEntitiesControl<>(Movie.class, new MovieDtoMapper());
     return control.execute(new ResponseResultBuilder<>());
   }
 
