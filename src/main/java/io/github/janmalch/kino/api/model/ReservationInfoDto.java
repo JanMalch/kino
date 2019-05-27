@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.api.model;
 
+import io.github.janmalch.kino.api.model.account.SafeAccountInfoDto;
 import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ public class ReservationInfoDto {
   private Date reservationDate;
   private long presentationId;
   private MovieInfoDto movie;
+  private SafeAccountInfoDto account;
 
   public List<SeatDto> getSeats() {
     return seats;
@@ -50,5 +52,13 @@ public class ReservationInfoDto {
 
   public void setPresentationId(long presentationId) {
     this.presentationId = presentationId;
+  }
+
+  public SafeAccountInfoDto getAccount() {
+    return account;
+  }
+
+  public void setAccount(SafeAccountInfoDto account) {
+    this.account = account;
   }
 }
