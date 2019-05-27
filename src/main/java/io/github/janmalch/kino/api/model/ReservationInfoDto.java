@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.api.model;
 
+import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
 import java.util.Date;
 import java.util.List;
 

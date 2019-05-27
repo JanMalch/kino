@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.movie;
 
-import io.github.janmalch.kino.api.model.MovieInfoDto;
-import io.github.janmalch.kino.api.model.MovieOverviewDto;
+import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
+import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;

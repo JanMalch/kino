@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.presentation;
 
-import io.github.janmalch.kino.api.model.MovieInfoDto;
+import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
 import io.github.janmalch.kino.api.model.presentation.PresentationWithSeatsDto;
 import io.github.janmalch.kino.control.reservation.GetSeatsWithStatusControl;
 import io.github.janmalch.kino.entity.Movie;

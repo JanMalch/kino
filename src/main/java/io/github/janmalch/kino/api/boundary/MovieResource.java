@@ -2,9 +2,9 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.api.model.MovieInfoDto;
-import io.github.janmalch.kino.api.model.MovieOverviewDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
+import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
+import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.generic.GetEntitiesControl;

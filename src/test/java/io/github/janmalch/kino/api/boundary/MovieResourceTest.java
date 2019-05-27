@@ -3,9 +3,9 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.MovieDto;
-import io.github.janmalch.kino.api.model.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.PriceCategoryDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
+import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import org.junit.jupiter.api.Test;
 

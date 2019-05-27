@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.movie;
 
-import io.github.janmalch.kino.api.model.MovieDto;
 import io.github.janmalch.kino.api.model.PriceCategoryDto;
+import io.github.janmalch.kino.api.model.movie.MovieDto;
 import io.github.janmalch.kino.api.model.presentation.PresentationDto;
 import io.github.janmalch.kino.control.presentation.PresentationDtoMapper;
 import io.github.janmalch.kino.entity.Movie;
