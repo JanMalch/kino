@@ -63,6 +63,21 @@ export class AuthService {
     });
   }
 
+  deleteMyAccount() {
+    this.api.deleteMyAccount().subscribe(() => {
+      this.snackBar.open(`Account erfolgreich gelöscht`, null, {duration: 2500});
+      this.account.next(null);
+      this.token.next(null);
+      this.router.navigateByUrl('/');
+    });
+  }
+
+  signUp(dto: SignUpDto): Observable<void> {
+    return this.api.signUp(dto).pipe(
+      mergeMap(() => this.logIn(dto.email, dto.password))
+    )
+  }
+
   setToken(token: string | null) {
     this.token.next(token);
   }

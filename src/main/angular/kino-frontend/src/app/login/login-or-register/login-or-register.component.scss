@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  width: 800px;
+  max-width: 95vw;
+  margin: 64px auto;
+}
+
+.mat-card {
+  padding: 0;
+}
+
+app-login,
+app-register {
+    display: block;
+    width: 400px;
+    max-width: 95vw;
+    margin: 56px auto;
+
+  & /deep/ {
+    .mat-card {
+      min-width: 300px;
+
+      &-header /deep/ .mat-card-header-text {
+        margin: 0 0 8px;
+      }
+
+      .mat-form-field {
+        width: 100%;
+      }
+
+      .mat-progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 0 0 4px 4px;
+        height: 3px;
+      }
+
+      .mat-stroked-button {
+        margin: 0 8px;
+        width: calc(100% - 16px);
+        text-transform: uppercase;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+      }
+
+    }
+  }
+}
+
+#background-image {
+    background-image: url(https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/mobile_login_ikmv.svg);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    left: 0;
+    height: 50vh;
+    background-size: contain;
+    z-index: 0;
+    opacity: 0.5;
+}

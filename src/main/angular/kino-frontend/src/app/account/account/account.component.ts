@@ -1,32 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {DefaultService} from '@api/api/default.service';
-import {Observable} from 'rxjs';
-import {SignUpDto} from '@api/model/signUpDto';
+import {Component} from '@angular/core';
 import {AuthService} from '@core/auth';
-import {startWith} from "rxjs/operators";
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent {
 
-  account$: Observable<SignUpDto>;
-
-  constructor(private api: DefaultService,
-              private auth: AuthService) {
-  }
-
-  ngOnInit() {
-    this.account$ = this.api.getMyAccount().pipe(
-      startWith(undefined)
-    );
+  constructor(public auth: AuthService) {
   }
 
   deleteAccount() {
-    this.api.deleteMyAccount()
-      .subscribe(() => this.auth.logOut());
+    this.auth.deleteMyAccount();
   }
 
 }

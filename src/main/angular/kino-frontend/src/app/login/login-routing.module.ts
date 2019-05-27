@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {LoginComponent} from '@login/login/login.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LoginOrRegisterComponent} from "@login/login-or-register/login-or-register.component";
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: LoginComponent
+    component: LoginOrRegisterComponent
   },
   {
     path: '**',

@@ -26,7 +26,6 @@ public class LogInControl extends ManagingControl<Token> {
       Problem.builder()
           .type("invalid-login")
           .title("Username or password is wrong")
-          .detail("Username or password is wrong")
           .status(Response.Status.BAD_REQUEST)
           .instance()
           .build();
