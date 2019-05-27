@@ -63,6 +63,12 @@ export class AuthService {
     });
   }
 
+  signUp(dto: SignUpDto): Observable<void> {
+    return this.api.signUp(dto).pipe(
+      mergeMap(() => this.logIn(dto.email, dto.password))
+    )
+  }
+
   setToken(token: string | null) {
     this.token.next(token);
   }
