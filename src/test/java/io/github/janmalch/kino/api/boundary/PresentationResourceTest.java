@@ -9,6 +9,14 @@ import org.junit.jupiter.api.Test;
 class PresentationResourceTest {
 
   @Test
+  void getAllPresentations() {
+    // uses Generic Control internally and other tested classes
+    // test is for unexpected Exceptions when combining them
+    var resource = new PresentationResource();
+    resource.getAllPresentations();
+  }
+
+  @Test
   void getPresentation() {
     // uses Generic Control internally and other tested classes
     // test is for unexpected Exceptions when combining them

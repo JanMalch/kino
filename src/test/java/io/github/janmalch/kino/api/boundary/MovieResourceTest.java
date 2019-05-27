@@ -7,9 +7,19 @@ import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import io.github.janmalch.kino.api.model.movie.MovieDto;
 import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class MovieResourceTest {
+
+  @Test
+  void getAllMovies() {
+    persistNewMovie();
+    var resource = new MovieResource();
+    var response = resource.getAllMovies();
+    var result = (List<MovieDto>) response.getEntity();
+    assertFalse(result.isEmpty());
+  }
 
   @Test
   void newMovie() {
