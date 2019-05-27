@@ -32,7 +32,10 @@ public class MovieResource {
   @Secured
   @RolesAllowed("MODERATOR")
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Returns the list of all movies", response = MovieOverviewDto.class)
+  @ApiOperation(
+      value = "Returns the list of all movies",
+      response = MovieInfoDto.class,
+      responseContainer = "List")
   public Response getAllMovies() {
     var control = new GetEntitiesControl<>(Movie.class, MovieInfoDto.class);
     return control.execute(new ResponseResultBuilder<>());
