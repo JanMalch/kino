@@ -15,6 +15,7 @@ export * from './priceCategoryBaseDto';
 export * from './priceCategoryDto';
 export * from './reservationDto';
 export * from './reservationInfoDto';
+export * from './safeAccountInfoDto';
 export * from './seatDto';
 export * from './seatForPresentationDto';
 export * from './signUpDto';

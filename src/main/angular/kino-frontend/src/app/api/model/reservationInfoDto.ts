@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import {MovieInfoDto} from './movieInfoDto';
+import {SafeAccountInfoDto} from './safeAccountInfoDto';
 import {SeatDto} from './seatDto';
 
 
@@ -19,4 +20,5 @@ export interface ReservationInfoDto {
     reservationDate?: Date;
     presentationId?: number;
     movie?: MovieInfoDto;
+    account?: SafeAccountInfoDto;
 }
