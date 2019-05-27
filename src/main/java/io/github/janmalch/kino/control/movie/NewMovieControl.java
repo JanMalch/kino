@@ -1,6 +1,7 @@
 package io.github.janmalch.kino.control.movie;
 
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
+import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.validation.BeanValidations;
 import io.github.janmalch.kino.entity.Movie;
