@@ -12,13 +12,14 @@ import {AuthInterceptor} from '@core/auth';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {ErrorInterceptor} from '@core/interceptors';
 import {RouterModule} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 registerLocaleData(localeDe);
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     // set configuration parameters here.
-    basePath: 'http://localhost:8080/kino/api'
+    basePath: environment.api
   };
   return new Configuration(params);
 }
