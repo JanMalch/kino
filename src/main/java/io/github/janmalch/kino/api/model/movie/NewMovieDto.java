@@ -8,6 +8,15 @@ public class NewMovieDto {
   private String endDate;
   private float duration;
   private int ageRating;
+  private String imageURL;
+
+  public String getImageURL() {
+    return imageURL;
+  }
+
+  public void setImageURL(String imageURL) {
+    this.imageURL = imageURL;
+  }
 
   public String getName() {
     return name;
