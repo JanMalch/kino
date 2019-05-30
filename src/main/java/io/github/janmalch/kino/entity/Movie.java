@@ -27,6 +27,16 @@ public class Movie implements Identifiable {
 
   private int ageRating;
 
+  private String imageURL;
+
+  public String getImageURL() {
+    return imageURL;
+  }
+
+  public void setImageURL(String imageURL) {
+    this.imageURL = imageURL;
+  }
+
   public String getName() {
     return name;
   }
