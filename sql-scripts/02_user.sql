@@ -1,6 +1,6 @@
 use kino;
 
-INSERT INTO `account` (`id`, `birthday`, `email`, `firstName`, `hashedPassword`, `lastName`, `role`, `salt`)
+INSERT INTO `Account` (`id`, `birthday`, `email`, `firstName`, `hashedPassword`, `lastName`, `role`, `salt`)
 VALUES ('1', '2019-05-09', 'admin@account.de', 'Admin',
         '64f73e3451c5def78775e060f68e2c94b4d53b1d2c5375917042cf8b08ca0dc77b7459e557b6ed7ef83fd4cb4f30697968aaa3008e70505507707eecbb468b5e',
         'Account', '0', 0x4d533cd6317305b3ecb4cd06afe26376),
