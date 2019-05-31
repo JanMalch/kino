@@ -5,20 +5,27 @@ import {Observable} from "rxjs";
 import {SuccessMessage} from "@api/model/successMessage";
 import {MovieDto} from "@api/model/movieDto";
 import {NewMovieDto} from "@api/model/newMovieDto";
+import {MovieService} from "@core/services";
+import {tap} from "rxjs/operators";
 
 
 @Injectable()
 export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
 
-  constructor(private api: DefaultService) {
+  constructor(private api: DefaultService,
+              private movieService: MovieService) {
   }
 
   create(dto: NewMovieDto): Observable<number> {
-    return this.api.newMovie(dto);
+    return this.api.newMovie(dto).pipe(
+      tap(() => this.movieService.refresh())
+    );
   }
 
   delete(id: number): Observable<SuccessMessage> {
-    return this.api.deleteMovie(id);
+    return this.api.deleteMovie(id).pipe(
+      tap(() => this.movieService.refresh())
+    );
   }
 
   getForm(): GenericForm {
@@ -28,6 +35,7 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
       endDate: {label: "Enddatum", name: "endDate", type: "text", validation: {required: true}},
       duration: {label: "Länge", name: "duration", type: "number", validation: {required: true}},
       ageRating: {label: "FSK", name: "ageRating", type: "number", validation: {required: true}},
+      imageURL: {label: "Poster-URL", name: "imageURL", type: "text"},
       priceCategoryId: {label: "Preiskategorie", name: "priceCategoryId", type: "number", validation: {required: true}}
     };
   }
@@ -41,7 +49,9 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
   }
 
   update(id: number, dto: NewMovieDto): Observable<SuccessMessage> {
-    return this.api.updateMovie(id, dto);
+    return this.api.updateMovie(id, dto).pipe(
+      tap(() => this.movieService.refresh())
+    );
   }
 
   transformReadForForm(read: MovieDto): NewMovieDto {
