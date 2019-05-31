@@ -22,4 +22,5 @@ export interface MovieDto {
     duration?: number;
     ageRating?: number;
     presentations?: Array<PresentationDto>;
+    imageURL?: string;
 }

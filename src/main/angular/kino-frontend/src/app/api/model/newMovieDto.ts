@@ -18,4 +18,5 @@ export interface NewMovieDto {
     endDate?: string;
     duration?: number;
     ageRating?: number;
+    imageURL?: string;
 }
