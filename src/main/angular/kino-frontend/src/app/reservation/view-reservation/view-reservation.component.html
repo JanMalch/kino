@@ -3,4 +3,7 @@
   <h3>Reserviert um {{ reservation.reservationDate | parseDate | date: 'medium' }} Uhr</h3>
   <app-hall-overview [presentationId]="reservation.presentationId"
   [selectable]="false" [selectedSeats]="reservation.seats.map(idMapper)"></app-hall-overview>
+  <h2 class="mt-8">Reservierung löschen</h2>
+  <p>Sind Sie sich sicher, dass Sie die Reservierung löschen möchten? Dies kann nicht rückgängig gemacht werden.</p>
+  <button mat-flat-button color="warn" (click)="deleteReservation()">Endgültig löschen</button>
 </ng-container>
