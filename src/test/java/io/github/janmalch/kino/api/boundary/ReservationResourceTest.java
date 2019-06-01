@@ -169,19 +169,18 @@ public class ReservationResourceTest {
 
   @Test
   public void deleteMyReservation() {
+    var reservation = util.provideNewReservation(myAccount, presentation.getId());
 
     var accountInfoDto = new SafeAccountInfoDto();
     accountInfoDto.setEmail(myAccount);
-    accountInfoDto.setId(1);
+    accountInfoDto.setId(reservation.getId());
 
     var account = new Account();
     account.setEmail(myAccount);
 
-    var res = util.provideNewReservation(myAccount, presentation.getId());
-
     var newReservationInfoDto = new ReservationInfoDto();
     newReservationInfoDto.setAccount(accountInfoDto);
-    newReservationInfoDto.setId(res.getId());
+    newReservationInfoDto.setId(reservation.getId());
 
     var resource = new ReservationResource();
     var response = resource.deleteMyReservation(newReservationInfoDto);

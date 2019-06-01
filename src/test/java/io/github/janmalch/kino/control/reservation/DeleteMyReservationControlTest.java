@@ -34,7 +34,7 @@ public class DeleteMyReservationControlTest {
 
     var accountInfoDto = new SafeAccountInfoDto();
     accountInfoDto.setEmail(myAccount);
-    accountInfoDto.setId(1);
+    accountInfoDto.setId(reservation.getId());
 
     var account = new Account();
     account.setEmail(myAccount);
