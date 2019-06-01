@@ -8,6 +8,7 @@ import io.github.janmalch.kino.security.AuthorizationFilter;
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 @ApplicationPath("api")
 public class WebApplication extends ResourceConfig {
@@ -25,6 +26,7 @@ public class WebApplication extends ResourceConfig {
     register(PingResource.class);
     register(AccountResource.class);
     register(AuthorizationFilter.class);
+    register(RolesAllowedDynamicFeature.class);
     register(AuthResource.class);
     register(PriceCategoryResource.class);
     register(ValidationExceptionMapper.class);
