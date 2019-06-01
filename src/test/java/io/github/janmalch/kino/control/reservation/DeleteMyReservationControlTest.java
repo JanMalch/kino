@@ -48,4 +48,27 @@ public class DeleteMyReservationControlTest {
 
     assertTrue(result.isSuccess());
   }
+
+  @Test
+  public void deleteMyAccountNotSameAccount() {
+    String myAccount = "my@account.de";
+    var presentation = util.provideReservationSetup("first", 10, myAccount);
+    var reservation = util.provideNewReservation(myAccount, presentation.getId());
+
+    var accountInfoDto = new SafeAccountInfoDto();
+    accountInfoDto.setEmail("other@account.de");
+    accountInfoDto.setId(1);
+
+    var account = new Account();
+    account.setEmail("other@account.de");
+
+    var newReservationInfoDto = new ReservationInfoDto();
+    newReservationInfoDto.setAccount(accountInfoDto);
+    newReservationInfoDto.setId(reservation.getId());
+
+    var control = new DeleteMyReservation(newReservationInfoDto);
+    var result = control.execute(new EitherResultBuilder<>());
+
+    assertTrue(result.isFailure());
+  }
 }
