@@ -26,6 +26,7 @@ public class MovieDtoMapper implements Mapper<Movie, MovieDto> {
     dto.setEndDate(source.getEndDate().toGMTString());
     dto.setDuration(source.getDuration());
     dto.setAgeRating(source.getAgeRating());
+    dto.setImageURL(source.getImageURL());
     dto.setPresentations(
         source
             .getPresentations()

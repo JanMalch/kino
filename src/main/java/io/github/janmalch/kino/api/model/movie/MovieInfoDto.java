@@ -13,6 +13,15 @@ public class MovieInfoDto {
   private Date endDate;
   private float duration;
   private int ageRating;
+  private String imageURL;
+
+  public String getImageURL() {
+    return imageURL;
+  }
+
+  public void setImageURL(String imageURL) {
+    this.imageURL = imageURL;
+  }
 
   public long getId() {
     return id;

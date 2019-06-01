@@ -1,7 +1,7 @@
 <mat-card *ngIf="!!movie">
   <mat-card-header>
     <img mat-card-avatar
-         src="http://de.web.img3.acsta.net/r_1280_720/pictures/210/038/21003863_20130507111001999.jpg">
+         [src]="movie.imageURL || fallbackImage">
     <mat-card-title>{{ movie.name }}</mat-card-title>
     <mat-card-subtitle>Details</mat-card-subtitle>
   </mat-card-header>
