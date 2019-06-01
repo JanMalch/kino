@@ -19,6 +19,7 @@ class NewMovieControlTest {
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
     dto.setPriceCategoryId(createPriceCategory().getId());
+    dto.setImageURL("about:blank");
 
     var control = new NewMovieControl(dto);
     var response = control.execute(new EitherResultBuilder<>());
@@ -37,6 +38,7 @@ class NewMovieControlTest {
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
     dto.setPriceCategoryId(createPriceCategory().getId());
+    dto.setImageURL("about:blank");
 
     var control = new NewMovieControl(dto);
     try {

@@ -19,4 +19,5 @@ export interface MovieInfoDto {
     endDate?: Date;
     duration?: number;
     ageRating?: number;
+    imageURL?: string;
 }

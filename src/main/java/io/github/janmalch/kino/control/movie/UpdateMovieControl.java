@@ -61,6 +61,9 @@ public class UpdateMovieControl extends ManagingControl<SuccessMessage> {
           throw new RuntimeException(e);
         }
       }
+      if (update.getImageURL() != null) {
+        existing.setImageURL(update.getImageURL());
+      }
       if (update.getEndDate() != null) {
         try {
           existing.setEndDate(dayFormat.parse(update.getEndDate()));
@@ -69,7 +72,6 @@ public class UpdateMovieControl extends ManagingControl<SuccessMessage> {
           throw new RuntimeException(e);
         }
       }
-
       return existing;
     }
   }

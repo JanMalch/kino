@@ -85,6 +85,7 @@ class MovieResourceTest {
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
     dto.setPriceCategoryId(createPriceCategory().getId());
+    dto.setImageURL("about:blank");
     var response = resource.newMovie(dto);
     return (Long) response.getEntity();
   }
