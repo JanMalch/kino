@@ -3,7 +3,6 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
-import io.github.janmalch.kino.api.model.account.SafeAccountInfoDto;
 import io.github.janmalch.kino.control.reservation.ReservationTestUtil;
 import io.github.janmalch.kino.entity.*;
 import io.github.janmalch.kino.repository.RepositoryFactory;
@@ -164,26 +163,6 @@ public class ReservationResourceTest {
 
     var resource = new ReservationResource();
     var response = resource.deleteReservationById(existingReservation.getId(), secContext);
-    assertEquals(200, response.getStatus());
-  }
-
-  @Test
-  public void deleteMyReservation() {
-    var reservation = util.provideNewReservation(myAccount, presentation.getId());
-
-    var accountInfoDto = new SafeAccountInfoDto();
-    accountInfoDto.setEmail(myAccount);
-    accountInfoDto.setId(reservation.getId());
-
-    var account = new Account();
-    account.setEmail(myAccount);
-
-    var newReservationInfoDto = new ReservationInfoDto();
-    newReservationInfoDto.setAccount(accountInfoDto);
-    newReservationInfoDto.setId(reservation.getId());
-
-    var resource = new ReservationResource();
-    var response = resource.deleteMyReservation(newReservationInfoDto);
     assertEquals(200, response.getStatus());
   }
 }

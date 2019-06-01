@@ -48,18 +48,6 @@ public class ReservationResource {
     return control.execute(new ResponseResultBuilder<>());
   }
 
-  @Path("my-reservations")
-  @DELETE
-  @Secured
-  @RolesAllowed("CUSTOMER")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Delete users reservation", response = SuccessMessage.class)
-  public Response deleteMyReservation(ReservationInfoDto reservationInfoDto) {
-    var control = new DeleteMyReservation(reservationInfoDto);
-    return control.execute(new ResponseResultBuilder<>());
-  }
-
   @Path("{id}")
   @GET
   @Secured
