@@ -3,11 +3,9 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
+import io.github.janmalch.kino.api.model.account.SafeAccountInfoDto;
 import io.github.janmalch.kino.control.reservation.ReservationTestUtil;
-import io.github.janmalch.kino.entity.EntityWiper;
-import io.github.janmalch.kino.entity.Presentation;
-import io.github.janmalch.kino.entity.Reservation;
-import io.github.janmalch.kino.entity.Role;
+import io.github.janmalch.kino.entity.*;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;
@@ -166,6 +164,27 @@ public class ReservationResourceTest {
 
     var resource = new ReservationResource();
     var response = resource.deleteReservationById(existingReservation.getId(), secContext);
+    assertEquals(200, response.getStatus());
+  }
+
+  @Test
+  public void deleteMyReservation() {
+
+    var accountInfoDto = new SafeAccountInfoDto();
+    accountInfoDto.setEmail(myAccount);
+    accountInfoDto.setId(1);
+
+    var account = new Account();
+    account.setEmail(myAccount);
+
+    var res = util.provideNewReservation(myAccount, presentation.getId());
+
+    var newReservationInfoDto = new ReservationInfoDto();
+    newReservationInfoDto.setAccount(accountInfoDto);
+    newReservationInfoDto.setId(res.getId());
+
+    var resource = new ReservationResource();
+    var response = resource.deleteMyReservation(newReservationInfoDto);
     assertEquals(200, response.getStatus());
   }
 }
