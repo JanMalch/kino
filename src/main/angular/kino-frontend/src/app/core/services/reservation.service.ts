@@ -23,6 +23,10 @@ export class ReservationService implements OnDestroy {
     );
   }
 
+  getMyReservations(): Observable<ReservationInfoDto[]> {
+    return this.myReservations$;
+  }
+
   getMyReservation(id: number): Observable<ReservationInfoDto> {
     return this.myReservations$.pipe(
       map(reservations => reservations.find(r => r.id === id))
