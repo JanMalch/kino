@@ -48,14 +48,20 @@ VALUES ('13', 'A', '1', '4'),
        ('21', 'C', '3', '4');
 
 -- MOVIE
-INSERT INTO `Movie` (`id`, `ageRating`, `duration`, `endDate`, `name`, `startDate`, `PRICECATEGORY_ID`)
+INSERT INTO `Movie` (`id`, `ageRating`, `duration`, `endDate`, `name`, `startDate`, `imageURL`, `PRICECATEGORY_ID`)
 VALUES
 -- Captain Marvel, FSK 12, läuft den ganzen Mai
-('1', '12', '2.0', '2019-05-31 00:00:00', 'Captain Marvel', '2019-05-01 00:00:00', '3'),
+('1', '12', '2.0', '2019-05-31 00:00:00', 'Captain Marvel', '2019-05-01 00:00:00',
+ 'https://akns-images.eonline.com/eol_images/Entire_Site/2017126/rs_634x1024-170226172707-634.Alicia-Vikander-Oscars-2017-Beauty.jpg',
+ '3'),
 -- Brightburn, FSK 18, läuft ab 26.05. bis Mitte Juni
-('2', '18', '1.5', '2019-06-16 00:00:00', 'Brightburn', '2019-05-26 00:00:00', '2'),
+('2', '18', '1.5', '2019-06-16 00:00:00', 'Brightburn', '2019-05-26 00:00:00',
+ 'https://image.kurier.at/images/cfs_landscape_616w_347h/1454025/Alicia-Vikander-as-Lara-Croft-Tomb-Raider-02.jpg',
+ '2'),
 -- Frozen 2, FSK 0, lief nur bis 09.05.
-('3', '0', '1.75', '2019-05-09 00:00:00', 'Frozen 2', '2019-04-17 00:00:00', '1');
+('3', '0', '1.75', '2019-05-09 00:00:00', 'Frozen 2', '2019-04-17 00:00:00',
+ 'https://www.telegraph.co.uk/content/dam/films/2018/03/08/TR-ISS-08A-068-01_trans_NvBQzQNjv4BqEC90nADzAHqz_X14LCxiKfr7sARQy7EgBjwPUzvqL_M.jpg',
+ '1');
 
 -- PRESENTATION
 INSERT INTO `Presentation` (`id`, `date`, `CINEMAHALL_ID`, `MOVIE_ID`)

@@ -12,8 +12,8 @@ import {MovieInfoDto} from '@api/model/movieInfoDto';
 })
 export class MovieService implements OnDestroy {
 
-  private readonly movies$: Observable<MovieOverviewDto>;
-  private readonly movieCache = {};
+  private movies$: Observable<MovieOverviewDto>;
+  private readonly movieCache = new Map();
 
   constructor(private api: DefaultService) {
     this.movies$ = this.api.getCurrentMovies().pipe(
@@ -22,7 +22,16 @@ export class MovieService implements OnDestroy {
     );
   }
 
+  refresh() {
+    this.movieCache.clear();
+    this.movies$ = this.api.getCurrentMovies().pipe(
+      untilDestroyed(this),
+      shareReplay(1)
+    );
+  }
+
   getRunningMovies(): Observable<MovieOverviewDto> {
+    console.log('this.movies$, this.movieCache:', this.movies$, this.movieCache);
     return this.movies$;
   }
 
@@ -33,13 +42,13 @@ export class MovieService implements OnDestroy {
   }
 
   getMovie(id: number): Observable<MovieDto> {
-    if (id in this.movieCache) {
-      return of(this.movieCache[id]);
+    if (this.movieCache.has(id)) {
+      return of(this.movieCache.get(id));
     }
 
     return this.api.getMovie(id).pipe(
       tap(movie => {
-        this.movieCache[id] = movie;
+        this.movieCache.set(id, movie);
       })
     );
   }

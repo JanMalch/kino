@@ -49,6 +49,7 @@ public class NewMovieControl extends ManagingControl<Long> {
             "startDate",
             "endDate",
             "duration",
+            "imageURL",
             "ageRating") // exclude presentations from validation. can be empty
         .or(
             () -> {

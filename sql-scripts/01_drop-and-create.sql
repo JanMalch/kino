@@ -39,6 +39,7 @@ create table Movie
     endDate          datetime,
     name             varchar(255),
     startDate        datetime,
+    imageURL         varchar(500),
     PRICECATEGORY_ID bigint,
     primary key (id)
 );

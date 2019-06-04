@@ -14,6 +14,15 @@ public class MovieDto {
   private Float duration;
   private Integer ageRating;
   private List<PresentationDto> presentations;
+  private String imageURL;
+
+  public String getImageURL() {
+    return imageURL;
+  }
+
+  public void setImageURL(String imageURL) {
+    this.imageURL = imageURL;
+  }
 
   public long getId() {
     return id;

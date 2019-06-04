@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.ReservationTestUtil;
-import io.github.janmalch.kino.entity.EntityWiper;
-import io.github.janmalch.kino.entity.Presentation;
-import io.github.janmalch.kino.entity.Reservation;
-import io.github.janmalch.kino.entity.Role;
+import io.github.janmalch.kino.entity.*;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.Token;

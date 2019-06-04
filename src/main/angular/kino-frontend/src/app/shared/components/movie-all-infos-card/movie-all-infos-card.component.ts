@@ -10,6 +10,8 @@ export class MovieAllInfosCardComponent implements OnInit {
 
   @Input() movie: MovieDto;
 
+  readonly fallbackImage = 'https://source.unsplash.com/random/300x400';
+
   constructor() { }
 
   ngOnInit() {

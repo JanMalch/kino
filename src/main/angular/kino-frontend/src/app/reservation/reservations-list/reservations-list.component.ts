@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ReservationInfoDto} from '@api/model/reservationInfoDto';
 import {ParseDatePipe} from "@shared/pipes";
+import {ReservationInfoWithPresentation} from "@reservation/all-my-reservations/all-my-reservations.component";
 
 @Component({
   selector: 'app-reservations-list[reservations]',
@@ -11,12 +11,12 @@ export class ReservationsListComponent implements OnInit {
 
   private readonly parseDatePipe = new ParseDatePipe();
 
-  @Input() set reservations(value: ReservationInfoDto[]) {
+  @Input() set reservations(value: ReservationInfoWithPresentation[]) {
     this.upcoming = [];
     this.seen = [];
     const now = Date.now();
     (value || []).forEach(r => {
-      const parsedDate = this.parseDatePipe.transform(r.reservationDate);
+      const parsedDate = this.parseDatePipe.transform(r.presentation.date);
       if (parsedDate.getTime() < now) {
         this.seen.push(r);
       } else {
@@ -25,8 +25,8 @@ export class ReservationsListComponent implements OnInit {
     });
   }
 
-  upcoming: ReservationInfoDto[] = [];
-  seen: ReservationInfoDto[] = [];
+  upcoming: ReservationInfoWithPresentation[] = [];
+  seen: ReservationInfoWithPresentation[] = [];
 
   constructor() {
   }

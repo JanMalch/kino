@@ -35,7 +35,7 @@ export function isProblem(err: Error): boolean {
   return 'type' in err.error;
 }
 
-export function generateMessage({title, detail}: { title?: string; detail?: string}): string {
+export function generateMessage({title, detail, instance}: { title?: string; detail?: string; instance?: string}): string {
   if (!title) {
     return 'Unbekannter Serverfehler aufgetreten';
   }
@@ -46,7 +46,21 @@ export function generateMessage({title, detail}: { title?: string; detail?: stri
   if (!!detail) {
     output += detail;
     if (!output.endsWith(".")) {
-      output += ".";
+      output += ". ";
+    }
+  }
+  if (!!instance) {
+    const regex = /.+time=(\d+)/gm;
+    let m;
+
+    while ((m = regex.exec(instance)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+        regex.lastIndex++;
+      }
+
+      const [, time] = m;
+      output += `Code: ${time}`;
     }
   }
 
