@@ -5,11 +5,11 @@ CREATE DATABASE kino CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL ON `kino`.* TO `jpa`@localhost IDENTIFIED BY 'jpa';
 use kino;
 
-DROP TABLE if exists movie;
-DROP TABLE if exists pricecategory;
-DROP TABLE if exists presentation;
-DROP TABLE if exists cinemahall;
-DROP TABLE if exists seat;
+DROP TABLE if exists Movie;
+DROP TABLE if exists PriceCategory;
+DROP TABLE if exists Presentation;
+DROP TABLE if exists CinemaHall;
+DROP TABLE if exists Seat;
 
 create table Account
 (
