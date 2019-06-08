@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CrudService} from "@admin/services";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {SuccessMessage} from "@api/model/successMessage";
+import {CrudService} from '@admin/services';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {SuccessMessage} from '@api/model/successMessage';
 
 @Component({
   selector: 'app-generic-form',
@@ -26,8 +26,9 @@ export class GenericFormComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:variable-name
   private _data: any;
-  updateDisabled: boolean = false;
+  updateDisabled = false;
 
   @Output() create = new EventEmitter<number>();
   @Output() update = new EventEmitter<SuccessMessage>();
@@ -58,10 +59,10 @@ export class GenericFormComponent implements OnInit {
 
     // setup the form
     const formGroup = {};
-    for (let prop of Object.keys(schema)) {
+    for (const prop of Object.keys(schema)) {
       const ctrl = new FormControl(data[prop] || '',
         this.mapValidators(schema[prop].validation));
-      if (data[prop] && data[prop].type === "array") {
+      if (data[prop] && data[prop].type === 'array') {
         ctrl.disable();
       }
       formGroup[prop] = ctrl;
