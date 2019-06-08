@@ -5,6 +5,7 @@ import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Movie;
+import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.CurrentMoviesSpec;
@@ -26,9 +27,11 @@ public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
   public <T> T compute(ResultBuilder<T, MovieOverviewDto> result) {
     var overview = new MovieOverviewDto();
     manage(repository);
+
+    var queryResult = repository.query(new CurrentMoviesSpec(repository));
+
     var movieInfoDtoMap =
-        repository
-            .query(new CurrentMoviesSpec(repository))
+        queryResult
             .stream()
             .collect(
                 Collectors.toMap(
@@ -40,31 +43,46 @@ public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
                               ? -1
                               : entity.getPriceCategory().getId();
                       dto.setPriceCategoryId(id);
+
                       return dto;
                     }));
     overview.setMovies(movieInfoDtoMap);
 
+    var weeksMap = new HashMap<Long, MovieOverviewDto.DateGroup>();
+
     var now = new Date();
     var startOfWeekForNow = getStartOfWeek(now);
-    var weeksMap = new HashMap<Long, MovieOverviewDto.DateGroup>();
-    movieInfoDtoMap.forEach(
-        (id, dto) -> {
-          var until = weeksBetween(now, dto.getEndDate());
-          var startIn = Math.max(0L, weeksBetween(now, dto.getStartDate()));
 
-          for (long i = startIn; i <= until; i++) {
-            var group = weeksMap.getOrDefault(i, new MovieOverviewDto.DateGroup());
-            group.getMovieIds().add(id);
-            if (!weeksMap.containsKey(i)) {
-              group.init(startOfWeekForNow, i);
-              weeksMap.put(i, group);
-            }
-          }
+    var movieWeeksMap =
+        queryResult
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    Movie::getId,
+                    entity ->
+                        entity
+                            .getPresentations()
+                            .stream()
+                            .map(Presentation::getDate)
+                            .map(date -> weeksBetween(now, date))
+                            .collect(Collectors.toSet())));
+
+    movieWeeksMap.forEach(
+        (key, value) -> {
+          var i = 0L;
+          value.forEach(
+              weeks -> {
+                var group = weeksMap.getOrDefault(i, new MovieOverviewDto.DateGroup());
+                group.getMovieIds().add(key);
+                if (!weeksMap.containsKey(i)) {
+                  group.init(startOfWeekForNow, i);
+                  weeksMap.put(i, group);
+                }
+              });
         });
 
     var weeks = new ArrayList<>(weeksMap.values());
     overview.setWeeks(weeks);
-
     return result.success(overview);
   }
 

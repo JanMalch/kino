@@ -15,6 +15,10 @@ public class CurrentMoviesSpec implements Specification<Movie> {
 
   @Override
   public TypedQuery<Movie> toQuery() {
-    return em.createQuery("SELECT m FROM Movie m WHERE endDate > current_date()", Movie.class);
+    return em.createQuery(
+        "SELECT m FROM Movie m "
+            + "INNER JOIN Presentation p ON p.movie.id = m.id "
+            + "WHERE p.date > current_date()",
+        Movie.class);
   }
 }

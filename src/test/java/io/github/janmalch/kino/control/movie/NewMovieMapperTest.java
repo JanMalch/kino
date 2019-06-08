@@ -1,10 +1,9 @@
 package io.github.janmalch.kino.control.movie;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
-import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
 class NewMovieMapperTest {
@@ -16,19 +15,12 @@ class NewMovieMapperTest {
     dto.setPriceCategoryId(createPriceCategory().getId());
     dto.setAgeRating(12);
     dto.setDuration(2.5F);
-    dto.setStartDate("20g20-01-01");
-    dto.setEndDate("20g20-01-02");
 
     var mapper = new NewMovieControl.NewMovieMapper();
-    try {
-      mapper.map(dto);
-      fail("Should not be able to validate without Exception");
-    } catch (RuntimeException e) {
-      if (!(e.getCause() instanceof ParseException)) {
-        fail("Unknown RuntimeException thrown");
-      }
-      // ParseException is expected here
-    }
+    var result = mapper.map(dto);
+    assertEquals("Captain Marvel", result.getName());
+    assertEquals(12, result.getAgeRating());
+    assertEquals(2.5F, result.getDuration());
   }
 
   private PriceCategoryDto createPriceCategory() {
