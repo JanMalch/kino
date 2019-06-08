@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {DefaultService} from '@api/api/default.service';
 import {Observable, of} from 'rxjs';
 import {SignUpDto} from '@api/model/signUpDto';
-import {mapTo, mergeMap, pairwise, shareReplay, startWith, tap} from 'rxjs/operators';
+import {mapTo, mergeMap, pairwise, shareReplay, tap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 import {AccountInfoDto} from '@api/model/accountInfoDto';
@@ -20,7 +20,6 @@ export class AuthService {
     mergeMap(token => {
       return token === null ? of(null) : this.api.getMyAccount();
     }),
-    startWith(null),
     shareReplay(1)
   );
 
