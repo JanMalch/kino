@@ -34,8 +34,6 @@ public class PresentationResource {
   }
 
   @GET
-  @Secured
-  @RolesAllowed("MODERATOR")
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(
       value = "Returns all presentations",
