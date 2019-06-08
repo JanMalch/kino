@@ -1,4 +1,4 @@
-import {Component, Injectable} from '@angular/core';
+import {Component, Inject, Injectable, LOCALE_ID} from '@angular/core';
 import {CrudService, GenericForm} from "@admin/services";
 import {DefaultService} from "@api/api/default.service";
 import {Observable} from "rxjs";
@@ -7,14 +7,22 @@ import {MovieDto} from "@api/model/movieDto";
 import {NewMovieDto} from "@api/model/newMovieDto";
 import {MovieService} from "@core/services";
 import {tap} from "rxjs/operators";
+import {ParseDatePipe} from "@shared/pipes";
+import {DatePipe} from "@angular/common";
 
 
 @Injectable()
 export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
 
+  private readonly parseDatePipe = new ParseDatePipe();
+  private readonly datePipe;
+
   constructor(private api: DefaultService,
-              private movieService: MovieService) {
+              private movieService: MovieService,
+              @Inject(LOCALE_ID) locale: string) {
+    this.datePipe = new DatePipe(locale);
   }
+
 
   create(dto: NewMovieDto): Observable<number> {
     return this.api.newMovie(dto).pipe(
@@ -57,6 +65,8 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
   transformReadForForm(read: MovieDto): NewMovieDto {
     return {
       ...read,
+      startDate: this.formatAsYYYYMMDD(read.startDate),
+      endDate: this.formatAsYYYYMMDD(read.endDate),
       priceCategoryId: read.priceCategory.id
     };
   }
@@ -65,6 +75,10 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
     return false;
   }
 
+  private formatAsYYYYMMDD(date: any): string {
+    const parsed = this.parseDatePipe.transform(date);
+    return this.datePipe.transform(parsed, 'yyyy-MM-dd');
+  }
 
 }
 
