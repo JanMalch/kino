@@ -1,14 +1,14 @@
 import {Component, Inject, Injectable, LOCALE_ID} from '@angular/core';
-import {CrudService, GenericForm} from "@admin/services";
-import {DefaultService} from "@api/api/default.service";
-import {Observable} from "rxjs";
-import {SuccessMessage} from "@api/model/successMessage";
-import {MovieDto} from "@api/model/movieDto";
-import {NewMovieDto} from "@api/model/newMovieDto";
-import {MovieService} from "@core/services";
-import {tap} from "rxjs/operators";
-import {ParseDatePipe} from "@shared/pipes";
-import {DatePipe} from "@angular/common";
+import {CrudService, GenericForm} from '@admin/services';
+import {DefaultService} from '@api/api/default.service';
+import {Observable} from 'rxjs';
+import {SuccessMessage} from '@api/model/successMessage';
+import {MovieDto} from '@api/model/movieDto';
+import {NewMovieDto} from '@api/model/newMovieDto';
+import {MovieService} from '@core/services';
+import {tap} from 'rxjs/operators';
+import {ParseDatePipe} from '@shared/pipes';
+import {DatePipe} from '@angular/common';
 
 
 @Injectable()
@@ -38,13 +38,13 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
 
   getForm(): GenericForm {
     return {
-      name: {label: "Name", name: "name", type: "text", validation: {required: true, min: 1}},
-      startDate: {label: "Startdatum", name: "startDate", type: "text", validation: {required: true}},
-      endDate: {label: "Enddatum", name: "endDate", type: "text", validation: {required: true}},
-      duration: {label: "Länge", name: "duration", type: "number", validation: {required: true}},
-      ageRating: {label: "FSK", name: "ageRating", type: "number", validation: {required: true}},
-      imageURL: {label: "Poster-URL", name: "imageURL", type: "text"},
-      priceCategoryId: {label: "Preiskategorie", name: "priceCategoryId", type: "number", validation: {required: true}}
+      name: {label: 'Name', name: 'name', type: 'text', validation: {required: true, min: 1}},
+      startDate: {label: 'Startdatum', name: 'startDate', type: 'text', validation: {required: true}},
+      endDate: {label: 'Enddatum', name: 'endDate', type: 'text', validation: {required: true}},
+      duration: {label: 'Länge', name: 'duration', type: 'number', validation: {required: true}},
+      ageRating: {label: 'FSK', name: 'ageRating', type: 'number', validation: {required: true}},
+      imageURL: {label: 'Poster-URL', name: 'imageURL', type: 'text'},
+      priceCategoryId: {label: 'Preiskategorie', name: 'priceCategoryId', type: 'number', validation: {required: true}}
     };
   }
 
@@ -71,7 +71,7 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
     };
   }
 
-  isDisabled(checkFor: "CREATE" | "READ" | "UPDATE" | "DELETE" | "READ_ALL"): boolean {
+  isDisabled(checkFor: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'READ_ALL'): boolean {
     return false;
   }
 
@@ -94,7 +94,7 @@ export class MoviesComponent {
   }
 
   resolveIcon(role: string): string {
-    return role === "ADMIN" || role === "MODERATOR" ? "account-badge" : "account-circle";
+    return role === 'ADMIN' || role === 'MODERATOR' ? 'account-badge' : 'account-circle';
   }
 
 }
