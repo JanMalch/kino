@@ -47,6 +47,7 @@ public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
                       return dto;
                     }));
     overview.setMovies(movieInfoDtoMap);
+    System.out.println(movieInfoDtoMap);
 
     var weeksMap = new HashMap<Long, MovieOverviewDto.DateGroup>();
 
@@ -65,18 +66,18 @@ public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
                             .stream()
                             .map(Presentation::getDate)
                             .map(date -> weeksBetween(now, date))
+                            .filter(weeks -> weeks >= 0)
                             .collect(Collectors.toSet())));
 
     movieWeeksMap.forEach(
-        (key, value) -> {
-          var i = 0L;
-          value.forEach(
-              weeks -> {
-                var group = weeksMap.getOrDefault(i, new MovieOverviewDto.DateGroup());
-                group.getMovieIds().add(key);
-                if (!weeksMap.containsKey(i)) {
-                  group.init(startOfWeekForNow, i);
-                  weeksMap.put(i, group);
+        (movieId, weeks) -> {
+          weeks.forEach(
+              weekIndex -> {
+                var group = weeksMap.getOrDefault(weekIndex, new MovieOverviewDto.DateGroup());
+                group.getMovieIds().add(movieId);
+                if (!weeksMap.containsKey(weekIndex)) {
+                  group.init(startOfWeekForNow, weekIndex);
+                  weeksMap.put(weekIndex, group);
                 }
               });
         });
