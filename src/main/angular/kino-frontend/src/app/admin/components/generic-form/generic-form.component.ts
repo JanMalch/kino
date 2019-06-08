@@ -18,7 +18,7 @@ export class GenericFormComponent implements OnInit {
     this._data = value;
     if (!!this.form) {
       if (value === null) {
-        this.form.reset(null);
+        this.clearForm();
       } else {
         this.form.patchValue(this.crud.transformReadForForm(value));
         this.updateDisabled = this.crud.isDisabled('UPDATE');
@@ -40,7 +40,7 @@ export class GenericFormComponent implements OnInit {
   }
 
   clearForm() {
-    this.form.reset();
+    this.form.reset({});
     this.form.setErrors(null);
     this.form.markAsPristine();
     this.form.markAsUntouched();
@@ -61,7 +61,7 @@ export class GenericFormComponent implements OnInit {
     for (let prop of Object.keys(schema)) {
       const ctrl = new FormControl(data[prop] || '',
         this.mapValidators(schema[prop].validation));
-      if(data[prop] && data[prop].type === "array") {
+      if (data[prop] && data[prop].type === "array") {
         ctrl.disable();
       }
       formGroup[prop] = ctrl;
