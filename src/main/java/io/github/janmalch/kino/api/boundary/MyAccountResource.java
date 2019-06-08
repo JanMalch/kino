@@ -51,8 +51,7 @@ public class MyAccountResource {
     var myAccountToken = securityContext.getUserPrincipal();
 
     EditMyAccountControl control = new EditMyAccountControl((Token) myAccountToken, data);
-
-    return control.execute(new ResponseResultBuilder<>());
+    return control.execute(new AuthResource.JwtResultBuilder());
   }
 
   @Secured
