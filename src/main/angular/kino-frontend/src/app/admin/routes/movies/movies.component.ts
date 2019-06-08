@@ -39,8 +39,6 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
   getForm(): GenericForm {
     return {
       name: {label: 'Name', name: 'name', type: 'text', validation: {required: true, min: 1}},
-      startDate: {label: 'Startdatum', name: 'startDate', type: 'text', validation: {required: true}},
-      endDate: {label: 'Enddatum', name: 'endDate', type: 'text', validation: {required: true}},
       duration: {label: 'Länge', name: 'duration', type: 'number', validation: {required: true}},
       ageRating: {label: 'FSK', name: 'ageRating', type: 'number', validation: {required: true}},
       imageURL: {label: 'Poster-URL', name: 'imageURL', type: 'text'},
@@ -65,19 +63,12 @@ export class MovieCrudService implements CrudService<NewMovieDto, MovieDto> {
   transformReadForForm(read: MovieDto): NewMovieDto {
     return {
       ...read,
-      startDate: this.formatAsYYYYMMDD(read.startDate),
-      endDate: this.formatAsYYYYMMDD(read.endDate),
       priceCategoryId: read.priceCategory.id
     };
   }
 
   isDisabled(checkFor: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'READ_ALL'): boolean {
     return false;
-  }
-
-  private formatAsYYYYMMDD(date: any): string {
-    const parsed = this.parseDatePipe.transform(date);
-    return this.datePipe.transform(parsed, 'yyyy-MM-dd');
   }
 
 }

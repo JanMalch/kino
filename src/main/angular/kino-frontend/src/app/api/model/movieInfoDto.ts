@@ -15,8 +15,6 @@ export interface MovieInfoDto {
     id?: number;
     name?: string;
     priceCategoryId?: number;
-    startDate?: Date;
-    endDate?: Date;
     duration?: number;
     ageRating?: number;
     imageURL?: string;

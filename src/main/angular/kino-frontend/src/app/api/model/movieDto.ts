@@ -17,8 +17,6 @@ export interface MovieDto {
     id?: number;
     name?: string;
     priceCategory?: PriceCategoryDto;
-    startDate?: string;
-    endDate?: string;
     duration?: number;
     ageRating?: number;
     presentations?: Array<PresentationDto>;
