@@ -1,9 +1,6 @@
 package io.github.janmalch.kino.api;
 
-import io.github.janmalch.kino.api.boundary.AccountResource;
-import io.github.janmalch.kino.api.boundary.AuthResource;
-import io.github.janmalch.kino.api.boundary.PingResource;
-import io.github.janmalch.kino.api.boundary.PriceCategoryResource;
+import io.github.janmalch.kino.api.boundary.*;
 import io.github.janmalch.kino.security.AuthorizationFilter;
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
@@ -23,12 +20,16 @@ public class WebApplication extends ResourceConfig {
     beanConfig.setResourcePackage("io.github.janmalch.kino.api.boundary");
     beanConfig.setScan(true);
 
-    register(PingResource.class);
     register(AccountResource.class);
-    register(AuthorizationFilter.class);
-    register(RolesAllowedDynamicFeature.class);
     register(AuthResource.class);
+    register(AuthorizationFilter.class);
+    register(CinemaHallResource.class);
+    register(MovieResource.class);
+    register(MyAccountResource.class);
+    register(PresentationResource.class);
     register(PriceCategoryResource.class);
+    register(PingResource.class);
+    register(RolesAllowedDynamicFeature.class);
     register(ValidationExceptionMapper.class);
     register(new CORSFilter());
 
