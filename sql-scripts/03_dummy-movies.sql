@@ -72,7 +72,7 @@ VALUES ('35', 'A', '1', '4'),
 -- MOVIE
 INSERT INTO `Movie` (`id`, `ageRating`, `duration`, `name`, `imageURL`, `PRICECATEGORY_ID`)
 VALUES
--- Captain Marvel, FSK 12, läuft den ganzen Juli
+-- Captain Marvel, FSK 12
 ('1', '12', '2.0', 'Captain Marvel',
  'https://media.services.cinergy.ch/media/box1600/7ff00589a6ac72d438fff3fe550a0b81159159ad.jpg',
  '3'),
@@ -99,23 +99,23 @@ VALUES
 
 -- PRESENTATION
 INSERT INTO `Presentation` (`id`, `date`, `CINEMAHALL_ID`, `MOVIE_ID`)
-VALUES ('1', '2019-07-01 16:00:00', '4', '1'),  -- Captain Marvel, Saal 1
+VALUES ('1', '2019-07-01 16:00:00', '4', '1'),  -- Captain Marvel, Luxemburg-Saal
        ('2', '2019-05-12 16:00:00', '2', '2'),  -- Brightburn, Saal 2
-       ('3', '2019-06-08 18:00:00', '1', '2'),  -- Brightburn, Saal 1
-       ('4', '2019-06-18 20:00:00', '1', '2'),  -- Brightburn, Saal 1
-       ('5', '2019-07-02 20:00:00', '2', '2'),  -- Brightburn, Saal 1
-       ('6', '2019-06-11 20:00:00', '1', '4'),  -- Jonny English 3, Saal 1
+       ('3', '2019-06-08 18:00:00', '1', '2'),  -- Brightburn, Luxemburg-Saal
+       ('4', '2019-06-18 20:00:00', '1', '2'),  -- Brightburn, Luxemburg-Saal
+       ('5', '2019-07-02 20:00:00', '2', '2'),  -- Brightburn, Luxemburg-Saal
+       ('6', '2019-06-11 20:00:00', '1', '4'),  -- Jonny English 3, Luxemburg-Saal
        ('7', '2019-06-11 22:00:00', '3', '4'),  -- Jonny English 3, Saal 3
-       ('8', '2019-06-12 20:00:00', '1', '4'),  -- Jonny English 3, Saal 1
+       ('8', '2019-06-12 20:00:00', '1', '4'),  -- Jonny English 3, Luxemburg-Saal
        ('9', '2019-06-12 22:00:00', '3', '4'),  -- Jonny English 3, Saal 3
-       ('10', '2019-06-12 20:00:00', '1', '4'), -- Jonny English 3, Saal 1
+       ('10', '2019-06-12 20:00:00', '1', '4'), -- Jonny English 3, Luxemburg-Saal
        ('11', '2019-06-13 22:00:00', '3', '4'), -- Jonny English 3, Saal 3
        ('12', '2019-06-12 16:00:00', '2', '5'), -- Bohemian Rhapsody, Saal 2
        ('13', '2019-06-12 18:00:00', '3', '5'), -- Bohemian Rhapsody, Saal 3
-       ('14', '2019-06-12 20:00:00', '4', '5'), -- Bohemian Rhapsody, Saal 4
-       ('15', '2019-06-13 14:00:00', '1', '5'), -- Bohemian Rhapsody, Saal 1
+       ('14', '2019-06-12 20:00:00', '4', '5'), -- Bohemian Rhapsody, Europasaal
+       ('15', '2019-06-13 14:00:00', '1', '5'), -- Bohemian Rhapsody, Luxemburg-Saal
        ('16', '2019-06-13 16:00:00', '3', '5'), -- Bohemian Rhapsody, Saal 3
        ('17', '2019-06-13 18:00:00', '2', '5'), -- Bohemian Rhapsody, Saal 2
-       ('18', '2019-06-13 20:00:00', '4', '5'), -- Bohemian Rhapsody, Saal 4
+       ('18', '2019-06-13 20:00:00', '4', '5'), -- Bohemian Rhapsody, Europasaal
        ('19', '2019-06-17 20:15:00', '2', '6'), -- Sharknado 4 - The 4th Awakens, Saal 2
-       ('20', '2019-06-12 20:15:00', '2', '3'); -- Frozen 2 darf nicht auftauchen, da Spielzeit zu Ende
+       ('20', '2019-06-12 20:15:00', '2', '3'); -- Frozen 2, Saal 2
