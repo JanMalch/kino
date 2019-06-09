@@ -6,6 +6,7 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import java.security.Principal;
+import java.util.Optional;
 import javax.ws.rs.core.SecurityContext;
 
 public class TokenSecurityContext implements SecurityContext {
@@ -24,8 +25,12 @@ public class TokenSecurityContext implements SecurityContext {
     Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
     var query = new AccountByEmailSpec(_token.getName(), repository);
-    var referredUser = repository.queryFirst(query);
-    repository.close();
+    Optional<Account> referredUser;
+    try {
+      referredUser = repository.queryFirst(query);
+    } finally {
+      repository.close();
+    }
     if (referredUser.isEmpty()) {
       return null;
     }
