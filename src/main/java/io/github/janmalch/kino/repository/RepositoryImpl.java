@@ -15,6 +15,12 @@ final class RepositoryImpl<T> implements Repository<T> {
   }
 
   @Override
+  public void close() {
+    this.em.close();
+    this.factory.close();
+  }
+
+  @Override
   public Class<T> getEntityType() {
     return entityType;
   }
@@ -22,5 +28,21 @@ final class RepositoryImpl<T> implements Repository<T> {
   @Override
   public EntityManager getEntityManager() {
     return em;
+  }
+
+  @Override
+  public String toString() {
+    return "RepositoryImpl{"
+        + "entityType="
+        + entityType
+        + ", em="
+        + em
+        + ", em#isOpen="
+        + em.isOpen()
+        + ", factory="
+        + factory
+        + ", factory#isOpen="
+        + factory.isOpen()
+        + '}';
   }
 }
