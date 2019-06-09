@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 import {AccountInfoDto} from '@api/model/accountInfoDto';
 import {SessionStorageSubject} from './session-storage-subject.rxjs';
+import {ReservationService} from '@core/services';
 
 
 @Injectable({
@@ -29,7 +30,8 @@ export class AuthService {
 
   constructor(private api: DefaultService,
               private router: Router,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private reservationService: ReservationService) {
     this.account$.pipe(
       pairwise()
     ).subscribe(([prev, next]) => {
@@ -52,6 +54,7 @@ export class AuthService {
     this.api.logOut().subscribe(() => {
       this.setToken(null);
       this.router.navigateByUrl('/');
+      this.reservationService.refresh();
     });
   }
 
