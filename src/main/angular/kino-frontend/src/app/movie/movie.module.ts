@@ -7,9 +7,10 @@ import {MovieOverviewComponent} from './movie-overview/movie-overview.component'
 import {MovieResolver} from '@movie/movie.resolver';
 import {RunningMoviesComponent} from '@movie/running-movies/running-movies.component';
 import {FilterPastPipe} from './pipes';
+import {SortMoviesPipe} from './pipes/sort-movies.pipe';
 
 @NgModule({
-  declarations: [MovieOverviewComponent, RunningMoviesComponent, FilterPastPipe],
+  declarations: [MovieOverviewComponent, RunningMoviesComponent, FilterPastPipe, SortMoviesPipe],
   imports: [
     CommonModule,
     MovieRoutingModule,

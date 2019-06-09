@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template matTabContent>
         <mat-grid-list [cols]="(isHandset$ | async) ? 1 : 5" rowHeight="400px" gutterSize="32px">
-          <mat-grid-tile *ngFor="let movie of week.movies">
+          <mat-grid-tile *ngFor="let movie of week.movies | sortMovies">
             <a [routerLink]="['/movie', movie.id]" class="block-100">
               <app-movie-card [movie]="movie"></app-movie-card>
             </a>
