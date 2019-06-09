@@ -190,6 +190,10 @@ a.mat-menu-item > mat-icon {
 
   h1, h2 {
     color: #202124;
+
+    &.mat-hint {
+      color: rgba(0, 0, 0, 0.6);
+    }
   }
 }
 

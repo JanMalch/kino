@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {map, shareReplay} from 'rxjs/operators';
+import {catchError, map, shareReplay, startWith, tap} from 'rxjs/operators';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {MovieInfoDto} from '@api/model/movieInfoDto';
 import {MovieService} from '@core/services';
 
@@ -12,6 +12,7 @@ import {MovieService} from '@core/services';
   encapsulation: ViewEncapsulation.None
 })
 export class RunningMoviesComponent implements OnInit {
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -19,6 +20,7 @@ export class RunningMoviesComponent implements OnInit {
     );
 
   weeks$: Observable<MoviesByWeek[]>;
+  loading = true;
 
   constructor(private movieService: MovieService,
               private breakpointObserver: BreakpointObserver) {
@@ -40,10 +42,26 @@ export class RunningMoviesComponent implements OnInit {
           };
         });
       }),
+      always(() => this.loading = false),
+      /*catchError(err => {
+        this.loading = false;
+        return throwError(err);
+      }),
+      tap(() => this.loading = false),*/
+      startWith([]),
       shareReplay(1)
     );
   }
 }
+
+const always = <T>(fn: () => void) => (source$: Observable<T>) =>
+  source$.pipe(
+    catchError(err => {
+      fn();
+      return throwError(err);
+    }),
+    tap(() => fn())
+  );
 
 export interface MoviesByWeek {
   start: Date;

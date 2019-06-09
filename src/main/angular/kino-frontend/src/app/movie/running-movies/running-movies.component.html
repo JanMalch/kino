@@ -17,4 +17,6 @@
       </ng-template>
     </mat-tab>
   </mat-tab-group>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <h2 class="mat-hint mt-8" *ngIf="(weeks$ | async)?.length === 0 && !loading">Keine Filme gefunden ...</h2>
 </div>
