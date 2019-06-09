@@ -3,11 +3,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SeatDto} from '@api/model/seatDto';
 import {AuthService} from '@core/auth';
 import {Selectable} from '@shared/components';
-import {MovieService} from '@core/services';
+import {MovieService, ReservationService} from '@core/services';
 import {catchError, first, mergeMap, shareReplay} from 'rxjs/operators';
 import {DefaultService} from '@api/api/default.service';
-import {Observable, throwError} from "rxjs";
-import {MovieDto} from "@api/model/movieDto";
+import {Observable, throwError} from 'rxjs';
+import {MovieDto} from '@api/model/movieDto';
 
 @Component({
   selector: 'app-new-reservation',
@@ -31,6 +31,7 @@ export class NewReservationComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private api: DefaultService,
+              private reservationService: ReservationService,
               public movies: MovieService,
               public auth: AuthService) {
     this.presentationId = parseInt(this.route.snapshot.queryParamMap.get('presentation'), 10) || null;
@@ -38,7 +39,7 @@ export class NewReservationComponent implements OnInit {
 
   ngOnInit() {
     if (this.presentationId === null) {
-      this.router.navigateByUrl("/404");
+      this.router.navigateByUrl('/404');
       return;
     }
 
@@ -79,7 +80,7 @@ export class NewReservationComponent implements OnInit {
 
   makeReservation() {
     this.loading = true;
-    this.api.newReservation({
+    this.reservationService.newReservation({
       presentationId: this.presentationId,
       seatIds: this.selectedSeats.map(s => s.id)
     }).pipe(

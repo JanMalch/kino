@@ -4,7 +4,8 @@ import {Observable} from 'rxjs';
 import {ReservationInfoDto} from '@api/model/reservationInfoDto';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 import {map, shareReplay, tap} from 'rxjs/operators';
-import {SuccessMessage} from "@api/model/successMessage";
+import {SuccessMessage} from '@api/model/successMessage';
+import {ReservationDto} from '@api/model/reservationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class ReservationService implements OnDestroy {
 
   deleteMyReservation(id: number): Observable<SuccessMessage> {
     return this.api.deleteReservationById(id).pipe(
+      tap(() => this.refresh())
+    );
+  }
+
+  newReservation(dto: ReservationDto): Observable<number> {
+    return this.api.newReservation({...dto}).pipe(
       tap(() => this.refresh())
     );
   }
