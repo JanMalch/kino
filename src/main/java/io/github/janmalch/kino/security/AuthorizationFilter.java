@@ -64,10 +64,13 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   boolean userExists(Token token) {
     var repository = RepositoryFactory.createRepository(Account.class);
 
-    var query = new AccountByEmailSpec(token.getName(), repository);
-    var referredUser = repository.queryFirst(query);
-    repository.close();
-    return referredUser.isPresent();
+    try {
+      var query = new AccountByEmailSpec(token.getName(), repository);
+      var referredUser = repository.queryFirst(query);
+      return referredUser.isPresent();
+    } finally {
+      repository.close();
+    }
   }
 
   Token parseToken(String tokenString) {

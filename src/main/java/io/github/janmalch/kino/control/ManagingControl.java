@@ -17,9 +17,11 @@ public abstract class ManagingControl<P> implements Control<P>, Manageable {
 
   @Override
   public final <T> T execute(ResultBuilder<T, P> result) {
-    var output = compute(result);
-    this.close();
-    return output;
+    try {
+      return compute(result);
+    } finally {
+      this.close();
+    }
   }
 
   @Override
