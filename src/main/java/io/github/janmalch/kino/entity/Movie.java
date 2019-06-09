@@ -1,6 +1,5 @@
 package io.github.janmalch.kino.entity;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -18,10 +17,6 @@ public class Movie implements Identifiable {
   @ManyToOne
   @JoinColumn(name = "PRICECATEGORY_ID")
   private PriceCategory priceCategory;
-
-  private Date startDate;
-
-  private Date endDate;
 
   private float duration;
 
@@ -51,22 +46,6 @@ public class Movie implements Identifiable {
 
   public void setPriceCategory(PriceCategory priceCategory) {
     this.priceCategory = priceCategory;
-  }
-
-  public Date getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
-  }
-
-  public Date getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
   }
 
   public float getDuration() {

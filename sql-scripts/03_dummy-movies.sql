@@ -67,6 +67,7 @@ VALUES
 INSERT INTO `Presentation` (`id`, `date`, `CINEMAHALL_ID`, `MOVIE_ID`)
 VALUES ('1', '2019-05-12 16:00:00', '1', '1'), -- Captain Marvel, Saal 1
        ('2', '2019-05-12 16:00:00', '2', '2'), -- Brightburn, Saal 2
-       ('3', '2019-05-14 18:00:00', '1', '1'), -- Captain Marvel, Saal 1
-       ('4', '2019-05-18 20:00:00', '1', '2');
+       ('3', '2019-06-08 18:00:00', '1', '2'), -- Brightburn, Saal 1
+       ('4', '2019-06-18 20:00:00', '1', '2'), -- Brightburn, Saal 1
+       ('5', '2019-07-02 20:00:00', '1', '2'); -- Brightburn, Saal 1
 -- Brightburn, Saal 1

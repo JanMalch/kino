@@ -14,8 +14,6 @@
 export interface NewMovieDto { 
     name?: string;
     priceCategoryId?: number;
-    startDate?: string;
-    endDate?: string;
     duration?: number;
     ageRating?: number;
     imageURL?: string;

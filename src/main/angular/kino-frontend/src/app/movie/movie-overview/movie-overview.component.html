@@ -4,7 +4,7 @@
 <div id="presentations">
   <h1 class="mat-display-2"> Aufführungen </h1>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let p of movie.presentations">
+    <mat-expansion-panel *ngFor="let p of movie.presentations | filterPast">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ p.date | parseDate | date: 'EEEE, d. MMM, HH:mm' }} Uhr

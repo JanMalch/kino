@@ -19,13 +19,9 @@ class UpdateMovieMapperTest {
     var movieDto = new MovieDto();
     movieDto.setAgeRating(12);
     movieDto.setDuration(2.5F);
-    movieDto.setStartDate("2019-01-01");
-    movieDto.setEndDate("2019-01-02");
 
     var result = mapper.update(movieDto, movie);
     assertEquals(12, result.getAgeRating());
     assertEquals(2.5F, result.getDuration());
-    assertEquals("2019-01-01", dayFormat.format(result.getStartDate()));
-    assertEquals("2019-01-02", dayFormat.format(result.getEndDate()));
   }
 }

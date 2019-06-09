@@ -4,8 +4,6 @@ public class NewMovieDto {
 
   private String name;
   private long priceCategoryId;
-  private String startDate;
-  private String endDate;
   private float duration;
   private int ageRating;
   private String imageURL;
@@ -34,22 +32,6 @@ public class NewMovieDto {
     this.priceCategoryId = priceCategoryId;
   }
 
-  public String getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
-  }
-
-  public String getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(String endDate) {
-    this.endDate = endDate;
-  }
-
   public float getDuration() {
     return duration;
   }
@@ -74,10 +56,6 @@ public class NewMovieDto {
         + '\''
         + ", priceCategoryId="
         + priceCategoryId
-        + ", startDate="
-        + startDate
-        + ", endDate="
-        + endDate
         + ", duration="
         + duration
         + ", ageRating="

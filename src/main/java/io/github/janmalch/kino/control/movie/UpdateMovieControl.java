@@ -9,8 +9,6 @@ import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.ws.rs.core.Response;
 
 public class UpdateMovieControl extends ManagingControl<SuccessMessage> {
@@ -40,8 +38,6 @@ public class UpdateMovieControl extends ManagingControl<SuccessMessage> {
 
   static class UpdateMovieMapper implements Mapper<MovieDto, Movie> {
 
-    private final SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     @Override
     public Movie update(MovieDto update, Movie existing) {
       if (update.getName() != null) {
@@ -53,24 +49,8 @@ public class UpdateMovieControl extends ManagingControl<SuccessMessage> {
       if (update.getDuration() != null) {
         existing.setDuration(update.getDuration());
       }
-      if (update.getStartDate() != null) {
-        try {
-          existing.setStartDate(dayFormat.parse(update.getStartDate()));
-        } catch (ParseException e) {
-          // rethrow as unchecked as this should be handled by the validator
-          throw new RuntimeException(e);
-        }
-      }
       if (update.getImageURL() != null) {
         existing.setImageURL(update.getImageURL());
-      }
-      if (update.getEndDate() != null) {
-        try {
-          existing.setEndDate(dayFormat.parse(update.getEndDate()));
-        } catch (ParseException e) {
-          // rethrow as unchecked as this should be handled by the validator
-          throw new RuntimeException(e);
-        }
       }
       return existing;
     }

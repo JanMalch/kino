@@ -6,9 +6,10 @@ import {SharedModule} from '@shared/shared.module';
 import {MovieOverviewComponent} from './movie-overview/movie-overview.component';
 import {MovieResolver} from '@movie/movie.resolver';
 import {RunningMoviesComponent} from '@movie/running-movies/running-movies.component';
+import {FilterPastPipe} from './pipes';
 
 @NgModule({
-  declarations: [MovieOverviewComponent, RunningMoviesComponent],
+  declarations: [MovieOverviewComponent, RunningMoviesComponent, FilterPastPipe],
   imports: [
     CommonModule,
     MovieRoutingModule,

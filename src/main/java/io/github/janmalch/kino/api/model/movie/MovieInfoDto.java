@@ -1,6 +1,5 @@
 package io.github.janmalch.kino.api.model.movie;
 
-import java.util.Date;
 import java.util.Objects;
 
 // TODO: improve redundancy
@@ -9,8 +8,6 @@ public class MovieInfoDto {
   private long id;
   private String name;
   private long priceCategoryId;
-  private Date startDate;
-  private Date endDate;
   private float duration;
   private int ageRating;
   private String imageURL;
@@ -47,22 +44,6 @@ public class MovieInfoDto {
     this.priceCategoryId = priceCategoryId;
   }
 
-  public Date getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
-  }
-
-  public Date getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
-  }
-
   public float getDuration() {
     return duration;
   }
@@ -87,11 +68,6 @@ public class MovieInfoDto {
         + '\''
         + ", priceCategoryId="
         + priceCategoryId
-        + ", startDate='"
-        + startDate
-        + '\''
-        + ", endDate='"
-        + endDate
         + '\''
         + ", duration="
         + duration
@@ -108,13 +84,11 @@ public class MovieInfoDto {
     return priceCategoryId == that.priceCategoryId
         && Float.compare(that.duration, duration) == 0
         && ageRating == that.ageRating
-        && Objects.equals(name, that.name)
-        && Objects.equals(startDate, that.startDate)
-        && Objects.equals(endDate, that.endDate);
+        && Objects.equals(name, that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, priceCategoryId, startDate, endDate, duration, ageRating);
+    return Objects.hash(name, priceCategoryId, duration, ageRating);
   }
 }

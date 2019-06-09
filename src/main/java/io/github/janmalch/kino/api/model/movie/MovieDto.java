@@ -9,8 +9,6 @@ public class MovieDto {
   private long id;
   private String name;
   private PriceCategoryDto priceCategory;
-  private String startDate;
-  private String endDate;
   private Float duration;
   private Integer ageRating;
   private List<PresentationDto> presentations;
@@ -48,22 +46,6 @@ public class MovieDto {
     this.priceCategory = priceCategory;
   }
 
-  public String getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
-  }
-
-  public String getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(String endDate) {
-    this.endDate = endDate;
-  }
-
   public Float getDuration() {
     return duration;
   }
@@ -91,20 +73,22 @@ public class MovieDto {
   @Override
   public String toString() {
     return "MovieDto{"
-        + "name='"
+        + "id="
+        + id
+        + ", name='"
         + name
         + '\''
-        + ", priceCategory='"
+        + ", priceCategory="
         + priceCategory
-        + '\''
-        + ", startDate="
-        + startDate
-        + ", endDate="
-        + endDate
         + ", duration="
         + duration
         + ", ageRating="
         + ageRating
+        + ", presentations="
+        + presentations
+        + ", imageURL='"
+        + imageURL
+        + '\''
         + '}';
   }
 }
