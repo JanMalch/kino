@@ -8,7 +8,7 @@ VALUES ('1', '2D', '7.5', '8.5'),
 
 -- CINEMAHALL
 INSERT INTO `CinemaHall` (`id`, `name`)
-VALUES ('1', 'LuxemburgSaal'),
+VALUES ('1', 'Luxemburg-Saal'),
        ('2', 'Saal 2'),
        ('3', 'Saal 3'),
        ('4', 'Europasaal');
@@ -67,47 +67,47 @@ VALUES ('35', 'A', '1', '4'),
        ('40', 'B', '3', '4'),
        ('41', 'C', '1', '4'),
        ('42', 'C', '2', '4'),
-       ('43,', 'C', '3', '4');
+       ('43', 'C', '3', '4');
 
 -- MOVIE
-INSERT INTO `Movie` (`id`, `ageRating`, `duration`, `endDate`, `name`, `startDate`, `imageURL`, `PRICECATEGORY_ID`)
+INSERT INTO `Movie` (`id`, `ageRating`, `duration`, `name`, `imageURL`, `PRICECATEGORY_ID`)
 VALUES
 -- Captain Marvel, FSK 12, läuft den ganzen Juli
-('1', '12', '2.0', '2019-08-01 00:00:00', 'Captain Marvel', '2019-07-01 00:00:00',
+('1', '12', '2.0', 'Captain Marvel',
  'https://media.services.cinergy.ch/media/box1600/7ff00589a6ac72d438fff3fe550a0b81159159ad.jpg',
  '3'),
--- Brightburn, FSK 18, läuft ab 26.05. bis Mitte Juni
-('2', '18', '1.5', '2019-06-16 00:00:00', 'Brightburn', '2019-05-26 00:00:00',
+-- Brightburn, FSK 18
+('2', '18', '1.5', 'Brightburn',
  'https://pbs.twimg.com/media/D5_XG4kU0AA4Jrt.jpg',
  '2'),
--- Frozen 2, FSK 0, lief nur bis 09.05.
-('3', '0', '1.75', '2019-05-09 00:00:00', 'Frozen 2', '2019-04-17 00:00:00',
+-- Frozen 2, FSK 0
+('3', '0', '1.75', 'Frozen 2',
  'https://indac.org/wp-content/uploads/2019/02/33796-1288x724.jpg',
  '1'),
--- Jonny English 3, FSK 0, läuft den ganzen Juni
-('4', '0', '1.75', '2019-07-01 00:00:00', 'Jonny English 3', '2019-06-01 00:00:00',
-    'https://images-na.ssl-images-amazon.com/images/I/81ZsP3ZkrVL._RI_SX300_.jpg',
-    '2'),
--- Bohemian Rhapsody, FSK 18, läuft ab dem 12. Juni
-('5', '18', '2.25', '2019-08-01 00:00:00', 'Bohemian Rhapsody', '2019-06-12 00:00:00',
-    'https://image.film.at/images/cfs_poster_240w_339h/3014298/bohemian-rhapsody-plakat.jpg',
-    '4'),
--- Sharknado 4 - The 4th Awakens, FSK 13, läuft nur am 17. Juni
-('6', '16', '1.5', '2019-06-18 00:00:00', 'Bohemian Rhapsody', '2019-06-17 00:00:00',
+-- Jonny English 3, FSK 0
+('4', '0', '1.75', 'Jonny English 3',
+ 'https://images-na.ssl-images-amazon.com/images/I/81ZsP3ZkrVL._RI_SX300_.jpg',
+ '2'),
+-- Bohemian Rhapsody, FSK 18
+('5', '18', '2.25', 'Bohemian Rhapsody',
+ 'https://image.film.at/images/cfs_poster_240w_339h/3014298/bohemian-rhapsody-plakat.jpg',
+ '4'),
+-- Sharknado 4 - The 4th Awakens, FSK 13
+('6', '16', '1.5', 'Sharknado 4 - The 4th Awakens',
  'https://images-na.ssl-images-amazon.com/images/I/81dePEv10hL._SL1500_.jpg',
  '4');
 
 -- PRESENTATION
 INSERT INTO `Presentation` (`id`, `date`, `CINEMAHALL_ID`, `MOVIE_ID`)
-VALUES ('1', '2019-07-01 16:00:00', '4', '1'), -- Captain Marvel, Saal 1
-       ('2', '2019-05-12 16:00:00', '2', '2'), -- Brightburn, Saal 2
-       ('3', '2019-06-08 18:00:00', '1', '2'), -- Brightburn, Saal 1
-       ('4', '2019-06-18 20:00:00', '1', '2'), -- Brightburn, Saal 1
-       ('5', '2019-07-02 20:00:00', '2', '2'), -- Brightburn, Saal 1
-       ('6', '2019-06-11 20:00:00', '1', '4'), -- Jonny English 3, Saal 1
-       ('7', '2019-06-11 22:00:00', '3', '4'), -- Jonny English 3, Saal 3
-       ('8', '2019-06-12 20:00:00', '1', '4'), -- Jonny English 3, Saal 1
-       ('9', '2019-06-12 22:00:00', '3', '4'), -- Jonny English 3, Saal 3
+VALUES ('1', '2019-07-01 16:00:00', '4', '1'),  -- Captain Marvel, Saal 1
+       ('2', '2019-05-12 16:00:00', '2', '2'),  -- Brightburn, Saal 2
+       ('3', '2019-06-08 18:00:00', '1', '2'),  -- Brightburn, Saal 1
+       ('4', '2019-06-18 20:00:00', '1', '2'),  -- Brightburn, Saal 1
+       ('5', '2019-07-02 20:00:00', '2', '2'),  -- Brightburn, Saal 1
+       ('6', '2019-06-11 20:00:00', '1', '4'),  -- Jonny English 3, Saal 1
+       ('7', '2019-06-11 22:00:00', '3', '4'),  -- Jonny English 3, Saal 3
+       ('8', '2019-06-12 20:00:00', '1', '4'),  -- Jonny English 3, Saal 1
+       ('9', '2019-06-12 22:00:00', '3', '4'),  -- Jonny English 3, Saal 3
        ('10', '2019-06-12 20:00:00', '1', '4'), -- Jonny English 3, Saal 1
        ('11', '2019-06-13 22:00:00', '3', '4'), -- Jonny English 3, Saal 3
        ('12', '2019-06-12 16:00:00', '2', '5'), -- Bohemian Rhapsody, Saal 2
