@@ -1,5 +1,6 @@
 package io.github.janmalch.kino.problem;
 
+/** A runtime exception that always carries a problem with it. */
 public class ThrowableProblem extends RuntimeException {
 
   private final Problem problem;
