@@ -3,10 +3,17 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.janmalch.kino.api.model.presentation.NewPresentationDto;
+import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.problem.ThrowableProblem;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PresentationResourceTest {
+  @BeforeEach
+  public void tearDown() {
+    var ew = new EntityWiper();
+    ew.wipeDB();
+  }
 
   @Test
   void getAllPresentations() {
