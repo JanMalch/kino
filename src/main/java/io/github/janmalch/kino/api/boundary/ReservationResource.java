@@ -97,7 +97,7 @@ public class ReservationResource {
   @Path("{id}")
   @DELETE
   @Secured
-  @RolesAllowed("MODERATOR")
+  @RolesAllowed("CUSTOMER")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Deletes reservation for given ID", response = SuccessMessage.class)
