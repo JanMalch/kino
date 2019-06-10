@@ -2,6 +2,7 @@ package io.github.janmalch.kino.api;
 
 import io.github.janmalch.kino.api.boundary.*;
 import io.github.janmalch.kino.security.AuthorizationFilter;
+import io.github.janmalch.kino.security.RefreshTokenResponseFilter;
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -23,6 +24,7 @@ public class WebApplication extends ResourceConfig {
     register(AccountResource.class);
     register(AuthResource.class);
     register(AuthorizationFilter.class);
+    register(RefreshTokenResponseFilter.class);
     register(CinemaHallResource.class);
     register(MovieResource.class);
     register(MyAccountResource.class);
