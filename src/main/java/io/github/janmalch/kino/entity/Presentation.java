@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class Presentation implements Identifiable {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @OneToMany(mappedBy = "presentation")

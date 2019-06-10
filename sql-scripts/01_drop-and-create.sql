@@ -13,7 +13,7 @@ DROP TABLE if exists Seat;
 
 create table Account
 (
-    id             bigint not null,
+    id             bigint not null AUTO_INCREMENT,
     birthday       date,
     email          varchar(255),
     firstName      varchar(255),
@@ -26,14 +26,14 @@ create table Account
 
 create table CinemaHall
 (
-    id   bigint not null,
+    id   bigint not null AUTO_INCREMENT,
     name varchar(255),
     primary key (id)
 );
 
 create table Movie
 (
-    id               bigint  not null,
+    id               bigint  not null AUTO_INCREMENT,
     ageRating        integer not null,
     duration         float   not null,
     endDate          datetime,
@@ -46,7 +46,7 @@ create table Movie
 
 create table Presentation
 (
-    id            bigint not null,
+    id            bigint not null AUTO_INCREMENT,
     date          datetime,
     CINEMAHALL_ID bigint,
     MOVIE_ID      bigint,
@@ -55,7 +55,7 @@ create table Presentation
 
 create table PriceCategory
 (
-    id           bigint not null,
+    id           bigint not null AUTO_INCREMENT,
     name         varchar(255),
     reducedPrice float  not null,
     regularPrice float  not null,
@@ -64,7 +64,7 @@ create table PriceCategory
 
 create table Reservation
 (
-    id              bigint not null,
+    id              bigint not null AUTO_INCREMENT,
     reservationDate datetime,
     ACCOUNT_ID      bigint,
     PRESENTATION_ID bigint,
@@ -80,7 +80,7 @@ create table RESERVATION_SEAT
 
 create table Seat
 (
-    id            bigint  not null,
+    id            bigint  not null AUTO_INCREMENT,
     row           varchar(255),
     seatNumber    integer not null,
     CINEMAHALL_ID bigint,

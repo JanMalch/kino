@@ -9,7 +9,7 @@ import javax.validation.constraints.Email;
 @Entity
 public class Account implements Identifiable {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
