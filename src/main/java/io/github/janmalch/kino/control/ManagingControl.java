@@ -24,7 +24,7 @@ public abstract class ManagingControl<P> implements Control<P>, Manageable {
    * @return an instance of a result object, defined by the {@link ResultBuilder}
    * @see Control#execute(ResultBuilder)
    */
-  public abstract <T> T compute(ResultBuilder<T, P> result);
+  protected abstract <T> T compute(ResultBuilder<T, P> result);
 
   /**
    * Registers the given resource, to make it managed by the control
