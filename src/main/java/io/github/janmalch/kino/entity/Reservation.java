@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 public class Reservation implements Identifiable {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @ManyToMany

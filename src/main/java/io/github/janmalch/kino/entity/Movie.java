@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 public class Movie implements Identifiable {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @OneToMany(mappedBy = "movie")
