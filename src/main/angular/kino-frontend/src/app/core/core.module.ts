@@ -10,9 +10,9 @@ import localeDe from '@angular/common/locales/de';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '@core/auth';
 import {NotFoundComponent} from './not-found/not-found.component';
-import {ErrorInterceptor} from '@core/interceptors';
-import {RouterModule} from "@angular/router";
-import {environment} from "../../environments/environment";
+import {ErrorInterceptor, SessionTimeoutInterceptor, TokenInterceptor} from '@core/interceptors';
+import {RouterModule} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 registerLocaleData(localeDe);
 
@@ -45,6 +45,16 @@ export function apiConfigFactory(): Configuration {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SessionTimeoutInterceptor,
       multi: true
     }
   ]
