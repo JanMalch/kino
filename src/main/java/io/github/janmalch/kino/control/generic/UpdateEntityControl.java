@@ -9,6 +9,16 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
+/**
+ * Updates an existing entity specified by the ID and <code>entityClass</code> in the constructor
+ * call. Allows to add either a customer mapper, or map to the given <code>dtoClass</code> via
+ * reflection. The mappers are used to map the DTO to an instance of the target <code>entityClass
+ * </code>.
+ *
+ * @param <P> type of the input item
+ * @param <E> type of the new entity
+ * @see ReflectionMapper
+ */
 public class UpdateEntityControl<P, E extends Identifiable> extends ManagingControl<Void> {
 
   private final Mapper<P, E> mapper;

@@ -6,6 +6,11 @@ import io.github.janmalch.kino.problem.Problems;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 
+/**
+ * Generic Control to delete any entity specified by its ID and type / class.
+ *
+ * @param <E> the type of the entity to delete
+ */
 public class DeleteEntityControl<E> extends ManagingControl<Void> {
 
   private final long id;
