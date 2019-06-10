@@ -138,7 +138,5 @@ public interface Repository<D> extends TransactionProvider, Manageable {
 
   /** Closes all resources that this repository might use. */
   @Override
-  default void close() {
-    getEntityManager().close();
-  }
+  void close();
 }

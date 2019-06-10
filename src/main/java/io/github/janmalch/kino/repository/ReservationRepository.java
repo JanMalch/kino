@@ -16,6 +16,12 @@ public class ReservationRepository implements Repository<Reservation> {
   }
 
   @Override
+  public void close() {
+    this.em.close();
+    this.factory.close();
+  }
+
+  @Override
   public EntityManager getEntityManager() {
     return em;
   }
