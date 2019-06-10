@@ -1,6 +1,8 @@
 package io.github.janmalch.kino.problem;
 
-/** A runtime exception that always carries a problem with it. */
+import java.util.Objects;
+
+/** A runtime exception that always carries a problem with it. The problem may not be null. */
 public class ThrowableProblem extends RuntimeException {
 
   private final Problem problem;
@@ -19,7 +21,7 @@ public class ThrowableProblem extends RuntimeException {
 
   public ThrowableProblem(Problem problem, String message, Throwable cause) {
     super(message, cause);
-    this.problem = problem;
+    this.problem = Objects.requireNonNull(problem);
   }
 
   public Problem getProblem() {
