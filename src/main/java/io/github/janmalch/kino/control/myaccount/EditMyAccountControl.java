@@ -18,6 +18,11 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * When a user wants to edit its own account, it needs a Token and SignUpDto to change Account
+ * information. Token is needed for Principal information. SignUpDto is needed to update account
+ * information like email, first Name, last Name, Birthday or Password.
+ */
 public class EditMyAccountControl extends ManagingControl<Token> {
 
   private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);

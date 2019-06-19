@@ -15,6 +15,10 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * If a user wants to delete its own account, it will be removed from database, and current Token
+ * will be added to JwtTokenBlacklist. It also gets invalidated and returned as a value.
+ */
 public class DeleteMyAccountControl extends ManagingControl<Token> {
 
   private Logger log = LoggerFactory.getLogger(DeleteMyAccountControl.class);
