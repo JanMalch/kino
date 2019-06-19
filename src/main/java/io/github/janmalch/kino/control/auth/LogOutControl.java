@@ -8,6 +8,10 @@ import io.github.janmalch.kino.security.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * When user logout, the given token will be added into JwtTokenBlacklist and invalidated. This
+ * invalidated Token will be returned as a value.
+ */
 public class LogOutControl implements Control<Token> {
 
   private Logger log = LoggerFactory.getLogger(LogInControl.class);

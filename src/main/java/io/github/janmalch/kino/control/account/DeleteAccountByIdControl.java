@@ -10,6 +10,7 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/** Delete an account given ID */
 public class DeleteAccountByIdControl extends ManagingControl<SuccessMessage> {
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
   private Logger log = LoggerFactory.getLogger(DeleteAccountByIdControl.class);

@@ -10,6 +10,7 @@ import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Get all Accounts as List from database */
 public class GetAllAccountsControl extends ManagingControl<List<AccountInfoDto>> {
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
   private final List<AccountInfoDto> accountList = new ArrayList<>();
