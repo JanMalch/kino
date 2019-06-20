@@ -20,7 +20,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div>
+<div *ngIf="!skipForm">
   <mat-card>
     <mat-card-header>
       <mat-card-title><h2>{{ entityName }} verwalten</h2></mat-card-title>

@@ -1,4 +1,14 @@
-import {Component, ContentChild, Input, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {Observable} from "rxjs";
 import {CrudService} from "@admin/services";
 import {Router} from "@angular/router";
@@ -19,6 +29,9 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   @Input() onCreateRedirect: string;
   @Input() entityName: string;
   @Input() entityNamePlural: string;
+  @Input() skipForm = false;
+
+  @Output() selectItem = new EventEmitter<T>();
 
   @ContentChild(EntityDirective, { read: TemplateRef}) entityTemplate : TemplateRef<HTMLElement>;
   @ViewChild(GenericFormComponent) genericForm: GenericFormComponent;
@@ -84,6 +97,7 @@ export class GenericOverviewComponent<T, O> implements OnInit {
   setSelect(dto: T) {
     if (!this.crud.isDisabled('UPDATE') || !this.crud.isDisabled('DELETE')) {
       this.selected = dto;
+      this.selectItem.emit(this.selected);
     }
   }
 
