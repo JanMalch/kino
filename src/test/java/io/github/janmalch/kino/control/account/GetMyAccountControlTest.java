@@ -3,7 +3,7 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
-import io.github.janmalch.kino.api.model.AccountInfoDto;
+import io.github.janmalch.kino.api.model.account.AccountInfoDto;
 import io.github.janmalch.kino.control.myaccount.GetMyAccountControl;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;

@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.cinemahall;
 
-import io.github.janmalch.kino.api.model.CinemaHallDto;
-import io.github.janmalch.kino.api.model.SeatDto;
+import io.github.janmalch.kino.api.model.cinemahall.CinemaHallDto;
+import io.github.janmalch.kino.api.model.seat.SeatDto;
 import io.github.janmalch.kino.entity.CinemaHall;
 import io.github.janmalch.kino.entity.Seat;
 import io.github.janmalch.kino.util.Mapper;

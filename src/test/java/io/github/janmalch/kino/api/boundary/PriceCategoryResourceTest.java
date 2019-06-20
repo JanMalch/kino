@@ -3,8 +3,8 @@ package io.github.janmalch.kino.api.boundary;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import io.github.janmalch.kino.api.model.PriceCategoryBaseDto;
-import io.github.janmalch.kino.api.model.PriceCategoryDto;
+import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryBaseDto;
+import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryDto;
 import io.github.janmalch.kino.problem.ThrowableProblem;
 import org.junit.jupiter.api.Test;
 

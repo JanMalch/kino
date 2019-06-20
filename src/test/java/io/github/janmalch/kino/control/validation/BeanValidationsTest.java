@@ -1,8 +1,9 @@
 package io.github.janmalch.kino.control.validation;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.account.SignUpDto;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 

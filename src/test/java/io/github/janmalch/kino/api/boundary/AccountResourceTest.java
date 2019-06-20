@@ -2,8 +2,8 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.AccountInfoDto;
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.account.AccountInfoDto;
+import io.github.janmalch.kino.api.model.account.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Role;

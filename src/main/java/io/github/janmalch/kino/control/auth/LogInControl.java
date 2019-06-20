@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.auth;
 
-import io.github.janmalch.kino.api.model.LoginDto;
+import io.github.janmalch.kino.api.model.auth.LoginDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;

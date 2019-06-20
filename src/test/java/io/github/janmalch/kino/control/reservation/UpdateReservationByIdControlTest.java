@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.reservation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.ReservationDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationDto;
 import io.github.janmalch.kino.entity.*;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;

@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.reservation;
 
-import io.github.janmalch.kino.api.model.SeatForPresentationDto;
+import io.github.janmalch.kino.api.model.seat.SeatForPresentationDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Presentation;

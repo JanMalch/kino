@@ -1,33 +1,14 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.account;
 
 import java.time.LocalDate;
 import javax.json.bind.annotation.JsonbDateFormat;
 
-public class SignUpDto {
+public class SignUpDto extends AbstractAccountDto {
 
-  private String firstName;
-  private String lastName;
   private String password;
-  private String email;
 
   @JsonbDateFormat(value = "yyyy-MM-dd", locale = "de-DE")
   private LocalDate birthday;
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
 
   public String getPassword() {
     return password;
@@ -35,14 +16,6 @@ public class SignUpDto {
 
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 
   public LocalDate getBirthday() {

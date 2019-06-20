@@ -16,8 +16,8 @@ public class JwtTokenFactory implements TokenFactory {
   private Logger log = LoggerFactory.getLogger(JwtTokenFactory.class);
 
   private long tokenDuration = TimeUnit.HOURS.toMillis(1);
-  private static final String secretKey = "jAzbOw76gakypHAYOsn5";
-  private static final SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
+  private static final String SECRET_KEY = "jAzbOw76gakypHAYOsn5";
+  private static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256;
 
   @Override
   public Token generateToken(String subject) {
@@ -27,7 +27,7 @@ public class JwtTokenFactory implements TokenFactory {
     var tokenString =
         Jwts.builder()
             .setSubject(subject)
-            .signWith(algorithm, secretKey)
+            .signWith(ALGORITHM, SECRET_KEY)
             .setExpiration(expiration)
             .compact();
     return new JwtToken(tokenString, subject, expiration);
@@ -67,7 +67,7 @@ public class JwtTokenFactory implements TokenFactory {
    */
   void validateToken(String token) throws MalformedJwtException, SignatureException {
     try {
-      Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token); // signatur prüfen
+      Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token); // signatur prüfen
     } catch (ExpiredJwtException e) {
       // token is still valid, just expired
       // this can be expected

@@ -1,9 +1,9 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
-import io.github.janmalch.kino.api.model.AccountInfoDto;
-import io.github.janmalch.kino.api.model.SignUpDto;
-import io.github.janmalch.kino.api.model.TokenDto;
+import io.github.janmalch.kino.api.model.account.AccountInfoDto;
+import io.github.janmalch.kino.api.model.account.SignUpDto;
+import io.github.janmalch.kino.api.model.auth.TokenDto;
 import io.github.janmalch.kino.control.myaccount.DeleteMyAccountControl;
 import io.github.janmalch.kino.control.myaccount.EditMyAccountControl;
 import io.github.janmalch.kino.control.myaccount.GetMyAccountControl;

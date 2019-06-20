@@ -13,18 +13,18 @@ public class TokenSecurityContext implements SecurityContext {
   private final Token token;
   private Role userRole;
 
-  public TokenSecurityContext(Token token) {
-    this.token = ensureUserExists(token);
+  public TokenSecurityContext(Token receivedToken) {
+    this.token = ensureUserExists(receivedToken);
   }
 
-  Token ensureUserExists(Token _token) {
-    if (_token == null) {
+  Token ensureUserExists(Token receivedToken) {
+    if (receivedToken == null) {
       return null;
     }
 
     Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
 
-    var query = new AccountByEmailSpec(_token.getName(), repository);
+    var query = new AccountByEmailSpec(receivedToken.getName(), repository);
     Optional<Account> referredUser;
     try {
       referredUser = repository.queryFirst(query);
@@ -36,7 +36,7 @@ public class TokenSecurityContext implements SecurityContext {
     }
 
     this.userRole = referredUser.get().getRole();
-    return _token;
+    return receivedToken;
   }
 
   @Override

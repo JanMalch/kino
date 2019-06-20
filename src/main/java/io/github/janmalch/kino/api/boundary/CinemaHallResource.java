@@ -2,7 +2,7 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.CinemaHallDto;
+import io.github.janmalch.kino.api.model.cinemahall.CinemaHallDto;
 import io.github.janmalch.kino.api.model.cinemahall.NewCinemaHallDto;
 import io.github.janmalch.kino.control.cinemahall.CinemaHallDtoMapper;
 import io.github.janmalch.kino.control.cinemahall.NewCinemaHallControl;

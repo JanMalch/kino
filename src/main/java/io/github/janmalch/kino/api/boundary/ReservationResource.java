@@ -2,8 +2,8 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.ReservationDto;
-import io.github.janmalch.kino.api.model.ReservationInfoDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.*;
 import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.security.Secured;

@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.reservation;
 
-import io.github.janmalch.kino.api.model.ReservationDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.generic.UpdateEntityControl;
@@ -21,7 +21,7 @@ public class UpdateReservationByIdControl extends ManagingControl<Void> {
   private final Role role;
   private final String accountName;
   private final Repository<Reservation> reservationRepository =
-      RepositoryFactory.createRepository(Reservation.class);;
+      RepositoryFactory.createRepository(Reservation.class);
   private final Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
 
   public UpdateReservationByIdControl(

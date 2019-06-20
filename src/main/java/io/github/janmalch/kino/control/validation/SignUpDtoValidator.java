@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.validation;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.account.SignUpDto;
 import io.github.janmalch.kino.problem.Problem;
 import io.github.janmalch.kino.util.Contract;
 import java.util.Optional;

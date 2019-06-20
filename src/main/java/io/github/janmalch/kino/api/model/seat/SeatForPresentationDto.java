@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.seat;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.account;
 
 import io.github.janmalch.kino.entity.Role;
 

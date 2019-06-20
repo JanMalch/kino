@@ -2,8 +2,8 @@ package io.github.janmalch.kino.control.movie;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
+import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryDto;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import org.junit.jupiter.api.Test;
 

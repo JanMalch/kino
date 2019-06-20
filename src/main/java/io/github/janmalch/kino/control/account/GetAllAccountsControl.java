@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.account;
 
-import io.github.janmalch.kino.api.model.AccountInfoDto;
+import io.github.janmalch.kino.api.model.account.AccountInfoDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.entity.Account;
@@ -13,8 +13,6 @@ import java.util.List;
 public class GetAllAccountsControl extends ManagingControl<List<AccountInfoDto>> {
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
   private final List<AccountInfoDto> accountList = new ArrayList<>();
-
-  public GetAllAccountsControl() {}
 
   @Override
   public <T> T compute(ResultBuilder<T, List<AccountInfoDto>> result) {

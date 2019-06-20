@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
-import io.github.janmalch.kino.api.model.ReservationDto;
-import io.github.janmalch.kino.api.model.SeatForPresentationDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationDto;
+import io.github.janmalch.kino.api.model.seat.SeatForPresentationDto;
 import io.github.janmalch.kino.control.validation.Validator;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.entity.Role;
@@ -44,7 +44,7 @@ public class ReservationValidator implements Validator<ReservationDto> {
     var unavailableSeats = new HashSet<>(reservationDto.getSeatIds());
     unavailableSeats.removeAll(availableIds);
     // non available seats remain
-    if (unavailableSeats.size() > 0) {
+    if (!unavailableSeats.isEmpty()) {
       var problem =
           Problem.builder()
               .type("new-reservation/seats-unavailable")

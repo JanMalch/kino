@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.pricecategory;
 
 import java.util.Objects;
 import javax.validation.constraints.DecimalMin;

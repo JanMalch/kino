@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.account;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.account.SignUpDto;
 import io.github.janmalch.kino.security.PasswordManager;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
