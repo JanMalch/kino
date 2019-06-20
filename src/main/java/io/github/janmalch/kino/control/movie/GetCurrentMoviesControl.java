@@ -47,7 +47,6 @@ public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
                       return dto;
                     }));
     overview.setMovies(movieInfoDtoMap);
-    System.out.println(movieInfoDtoMap);
 
     var weeksMap = new HashMap<Long, MovieOverviewDto.DateGroup>();
 
