@@ -31,7 +31,7 @@ Benötigt:
     - User: `admin@account.de`
     - Passwort: `admin`
 -	**Moderator-Account:**
-    -	User: `admin@account.de`
+    -	User: `moderator@account.de`
     -	Passwort: `moderator`
 -	**Customer-Account:**
     -	User: `customer@account.de`
