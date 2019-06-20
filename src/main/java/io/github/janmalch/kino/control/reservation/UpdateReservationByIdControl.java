@@ -21,7 +21,7 @@ public class UpdateReservationByIdControl extends ManagingControl<Void> {
   private final Role role;
   private final String accountName;
   private final Repository<Reservation> reservationRepository =
-      RepositoryFactory.createRepository(Reservation.class);;
+      RepositoryFactory.createRepository(Reservation.class);
   private final Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
 
   public UpdateReservationByIdControl(
