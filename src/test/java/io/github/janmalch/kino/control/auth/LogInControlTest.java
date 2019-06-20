@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import io.github.janmalch.kino.api.boundary.AccountResource;
-import io.github.janmalch.kino.api.model.LoginDto;
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.auth.LoginDto;
+import io.github.janmalch.kino.api.model.auth.SignUpDto;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;

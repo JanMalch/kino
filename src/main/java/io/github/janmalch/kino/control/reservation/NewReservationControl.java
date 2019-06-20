@@ -1,6 +1,6 @@
 package io.github.janmalch.kino.control.reservation;
 
-import io.github.janmalch.kino.api.model.ReservationDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationDto;
 import io.github.janmalch.kino.control.ManagingControl;
 import io.github.janmalch.kino.control.ResultBuilder;
 import io.github.janmalch.kino.control.generic.NewEntityControl;

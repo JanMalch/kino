@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.validation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.SignUpDto;
+import io.github.janmalch.kino.api.model.auth.SignUpDto;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 

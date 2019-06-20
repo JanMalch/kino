@@ -2,7 +2,7 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.janmalch.kino.api.model.ReservationInfoDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationInfoDto;
 import io.github.janmalch.kino.control.reservation.ReservationTestUtil;
 import io.github.janmalch.kino.entity.*;
 import io.github.janmalch.kino.repository.RepositoryFactory;

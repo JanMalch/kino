@@ -2,9 +2,9 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.LoginDto;
-import io.github.janmalch.kino.api.model.SignUpDto;
-import io.github.janmalch.kino.api.model.TokenDto;
+import io.github.janmalch.kino.api.model.auth.LoginDto;
+import io.github.janmalch.kino.api.model.auth.SignUpDto;
+import io.github.janmalch.kino.api.model.auth.TokenDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;

@@ -4,7 +4,7 @@ import static io.github.janmalch.kino.DomainAssertions.assertEntityMissing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import io.github.janmalch.kino.api.model.AccountInfoDto;
+import io.github.janmalch.kino.api.model.account.AccountInfoDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.entity.Role;
 import io.github.janmalch.kino.repository.Repository;

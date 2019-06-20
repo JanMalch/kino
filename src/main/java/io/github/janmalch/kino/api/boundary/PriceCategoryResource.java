@@ -2,8 +2,8 @@ package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
 import io.github.janmalch.kino.api.SuccessMessage;
-import io.github.janmalch.kino.api.model.PriceCategoryBaseDto;
-import io.github.janmalch.kino.api.model.PriceCategoryDto;
+import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryBaseDto;
+import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryDto;
 import io.github.janmalch.kino.control.generic.*;
 import io.github.janmalch.kino.entity.PriceCategory;
 import io.github.janmalch.kino.security.Secured;

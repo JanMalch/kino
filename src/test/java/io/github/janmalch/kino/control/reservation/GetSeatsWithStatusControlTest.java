@@ -2,7 +2,7 @@ package io.github.janmalch.kino.control.reservation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.janmalch.kino.api.model.SeatForPresentationDto;
+import io.github.janmalch.kino.api.model.seat.SeatForPresentationDto;
 import io.github.janmalch.kino.entity.CinemaHall;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.entity.Reservation;

@@ -1,8 +1,8 @@
 package io.github.janmalch.kino.api.boundary;
 
 import io.github.janmalch.kino.api.ResponseResultBuilder;
-import io.github.janmalch.kino.api.model.LoginDto;
-import io.github.janmalch.kino.api.model.TokenDto;
+import io.github.janmalch.kino.api.model.auth.LoginDto;
+import io.github.janmalch.kino.api.model.auth.TokenDto;
 import io.github.janmalch.kino.control.Control;
 import io.github.janmalch.kino.control.auth.LogInControl;
 import io.github.janmalch.kino.control.auth.LogOutControl;

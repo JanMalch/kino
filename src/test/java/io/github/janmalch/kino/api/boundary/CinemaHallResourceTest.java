@@ -2,7 +2,7 @@ package io.github.janmalch.kino.api.boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.janmalch.kino.api.model.CinemaHallDto;
+import io.github.janmalch.kino.api.model.cinemahall.CinemaHallDto;
 import io.github.janmalch.kino.api.model.cinemahall.NewCinemaHallDto;
 import io.github.janmalch.kino.entity.CinemaHall;
 import io.github.janmalch.kino.entity.EntityWiper;

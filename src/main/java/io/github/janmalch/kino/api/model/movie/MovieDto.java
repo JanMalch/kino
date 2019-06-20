@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.api.model.movie;
 
-import io.github.janmalch.kino.api.model.PriceCategoryDto;
 import io.github.janmalch.kino.api.model.presentation.PresentationDto;
+import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryDto;
 import java.util.List;
 
 public class MovieDto extends AbstractMovieDto {

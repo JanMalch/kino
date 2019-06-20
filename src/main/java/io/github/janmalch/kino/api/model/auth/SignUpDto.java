@@ -1,4 +1,4 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.auth;
 
 import java.time.LocalDate;
 import javax.json.bind.annotation.JsonbDateFormat;

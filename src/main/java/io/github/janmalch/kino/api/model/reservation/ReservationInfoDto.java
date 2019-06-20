@@ -1,7 +1,8 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.reservation;
 
 import io.github.janmalch.kino.api.model.account.SafeAccountInfoDto;
 import io.github.janmalch.kino.api.model.movie.MovieInfoDto;
+import io.github.janmalch.kino.api.model.seat.SeatDto;
 import java.util.Date;
 import java.util.List;
 

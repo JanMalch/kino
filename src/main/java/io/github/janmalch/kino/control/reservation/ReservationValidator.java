@@ -1,7 +1,7 @@
 package io.github.janmalch.kino.control.reservation;
 
-import io.github.janmalch.kino.api.model.ReservationDto;
-import io.github.janmalch.kino.api.model.SeatForPresentationDto;
+import io.github.janmalch.kino.api.model.reservation.ReservationDto;
+import io.github.janmalch.kino.api.model.seat.SeatForPresentationDto;
 import io.github.janmalch.kino.control.validation.Validator;
 import io.github.janmalch.kino.entity.Reservation;
 import io.github.janmalch.kino.entity.Role;

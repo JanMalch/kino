@@ -1,5 +1,6 @@
-package io.github.janmalch.kino.api.model;
+package io.github.janmalch.kino.api.model.cinemahall;
 
+import io.github.janmalch.kino.api.model.seat.SeatDto;
 import java.util.List;
 
 public class CinemaHallDto {
