@@ -20,22 +20,22 @@ Benötigt:
 -	MySql Datenbank	(https://www.apachefriends.org/de/index.html)
 -	Executable Kino.war	(aus Build)
 ### Datenbank Setup
--	Nutzung der SQL Skripte in sql-scripts
+-	Nutzung der SQL Skripte im Ordner `sql-scripts`
 -	Datenbankname: kino
--	User-Credential
-o	User: jpa
-o	Passwort: jpa
-
+-	Datenbank-Credential:
+    - User: `jpa`
+    - Passwort: `jpa`
+  
 ## Dummy Login
--	**Admin-Account: **
-o	User: admin@account.de
-o	Passwort: admin
+-	**Admin-Account:**
+    - User: `admin@account.de`
+    - Passwort: `admin`
 -	**Moderator-Account:**
-o	User: admin@account.de
-o	Passwort: moderator
+    -	User: `admin@account.de`
+    -	Passwort: `moderator`
 -	**Customer-Account:**
-o	User: customer@account.de
-o	Passwort: customer
+    -	User: `customer@account.de`
+    -	Passwort: `customer`
 -	**Customer -Account:**
-o	User: customer1@account.de
-o	Passwort: customer1
+    -	User: `customer1@account.de`
+    -	Passwort: `customer1`
