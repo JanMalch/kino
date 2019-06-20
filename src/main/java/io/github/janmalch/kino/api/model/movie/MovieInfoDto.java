@@ -46,7 +46,7 @@ public class MovieInfoDto extends AbstractMovieDto {
     MovieInfoDto that = (MovieInfoDto) o;
     return priceCategoryId == that.priceCategoryId
         && Float.compare(that.duration, duration) == 0
-        && ageRating == that.ageRating
+        && Objects.equals(ageRating, that.ageRating)
         && Objects.equals(name, that.name);
   }
 
