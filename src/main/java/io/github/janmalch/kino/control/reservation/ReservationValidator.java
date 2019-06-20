@@ -44,7 +44,7 @@ public class ReservationValidator implements Validator<ReservationDto> {
     var unavailableSeats = new HashSet<>(reservationDto.getSeatIds());
     unavailableSeats.removeAll(availableIds);
     // non available seats remain
-    if (unavailableSeats.size() > 0) {
+    if (!unavailableSeats.isEmpty()) {
       var problem =
           Problem.builder()
               .type("new-reservation/seats-unavailable")
