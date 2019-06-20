@@ -2,23 +2,10 @@ package io.github.janmalch.kino.api.model.movie;
 
 import java.util.Objects;
 
-// TODO: improve redundancy
-public class MovieInfoDto {
+public class MovieInfoDto extends AbstractMovieDto {
 
   private long id;
-  private String name;
   private long priceCategoryId;
-  private float duration;
-  private int ageRating;
-  private String imageURL;
-
-  public String getImageURL() {
-    return imageURL;
-  }
-
-  public void setImageURL(String imageURL) {
-    this.imageURL = imageURL;
-  }
 
   public long getId() {
     return id;
@@ -28,36 +15,12 @@ public class MovieInfoDto {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public long getPriceCategoryId() {
     return priceCategoryId;
   }
 
   public void setPriceCategoryId(long priceCategoryId) {
     this.priceCategoryId = priceCategoryId;
-  }
-
-  public float getDuration() {
-    return duration;
-  }
-
-  public void setDuration(float duration) {
-    this.duration = duration;
-  }
-
-  public int getAgeRating() {
-    return ageRating;
-  }
-
-  public void setAgeRating(int ageRating) {
-    this.ageRating = ageRating;
   }
 
   @Override
