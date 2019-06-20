@@ -3,7 +3,7 @@ package io.github.janmalch.kino.control.account;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.janmalch.kino.api.model.auth.SignUpDto;
+import io.github.janmalch.kino.api.model.account.SignUpDto;
 import io.github.janmalch.kino.entity.Account;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.either.EitherResultBuilder;
