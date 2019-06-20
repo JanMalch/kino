@@ -70,17 +70,16 @@ public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
                             .collect(Collectors.toSet())));
 
     movieWeeksMap.forEach(
-        (movieId, weeks) -> {
-          weeks.forEach(
-              weekIndex -> {
-                var group = weeksMap.getOrDefault(weekIndex, new MovieOverviewDto.DateGroup());
-                group.getMovieIds().add(movieId);
-                if (!weeksMap.containsKey(weekIndex)) {
-                  group.init(startOfWeekForNow, weekIndex);
-                  weeksMap.put(weekIndex, group);
-                }
-              });
-        });
+        (movieId, weeks) ->
+            weeks.forEach(
+                weekIndex -> {
+                  var group = weeksMap.getOrDefault(weekIndex, new MovieOverviewDto.DateGroup());
+                  group.getMovieIds().add(movieId);
+                  if (!weeksMap.containsKey(weekIndex)) {
+                    group.init(startOfWeekForNow, weekIndex);
+                    weeksMap.put(weekIndex, group);
+                  }
+                }));
 
     var weeks = new ArrayList<>(weeksMap.values());
     overview.setWeeks(weeks);
