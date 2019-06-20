@@ -3,7 +3,7 @@ package io.github.janmalch.kino.api;
 public final class SuccessMessage {
 
   private String message;
-  private final String type = "http://localhost:8080/kino/success/message";
+  private static final String TYPE = "http://localhost:8080/kino/success/message";
 
   public SuccessMessage() {}
 
@@ -12,7 +12,7 @@ public final class SuccessMessage {
   }
 
   public String getType() {
-    return this.type;
+    return TYPE;
   }
 
   public String getMessage() {
