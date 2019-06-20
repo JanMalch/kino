@@ -1,7 +1,9 @@
 package io.github.janmalch.kino.api;
 
 public final class SuccessMessage {
+
   private String message;
+  private final String type = "http://localhost:8080/kino/success/message";
 
   public SuccessMessage() {}
 
@@ -10,7 +12,7 @@ public final class SuccessMessage {
   }
 
   public String getType() {
-    return "http://localhost:8080/kino/success/message";
+    return this.type;
   }
 
   public String getMessage() {
