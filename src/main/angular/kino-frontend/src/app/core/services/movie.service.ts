@@ -31,7 +31,6 @@ export class MovieService implements OnDestroy {
   }
 
   getRunningMovies(): Observable<MovieOverviewDto> {
-    console.log('this.movies$, this.movieCache:', this.movies$, this.movieCache);
     return this.movies$;
   }
 
