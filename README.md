@@ -7,5 +7,35 @@
 A RESTful Cinema API built with JEE
 
 ## Running the server
+### Build
+Benötigt:
+-	Maven 3.6.0 	(https://maven.apache.org/download.cgi)
+-	Node 12.0	(https://nodejs.org/en/)
+-	Java 11	(https://jdk.java.net/11/)
+./kino>_ %MAVEN_ROOT% clean install 
+### Deployment
+Benötigt:
+-	Java 			(https://jdk.java.net/11/)
+-	Wildfly 16.0.0 Final 	(https://wildfly.org/downloads/)
+-	MySql Datenbank	(https://www.apachefriends.org/de/index.html)
+-	Executable Kino.war	(aus Build)
+### Datenbank Setup
+-	Nutzung der SQL Skripte in sql-scripts
+-	Datenbankname: kino
+-	User-Credential
+o	User: jpa
+o	Passwort: jpa
 
-...
+## Dummy Login
+-	**Admin-Account: **
+o	User: admin@account.de
+o	Passwort: admin
+-	**Moderator-Account:**
+o	User: admin@account.de
+o	Passwort: moderator
+-	**Customer-Account:**
+o	User: customer@account.de
+o	Passwort: customer
+-	**Customer -Account:**
+o	User: customer1@account.de
+o	Passwort: customer1
