@@ -20,7 +20,10 @@ export class ErrorInterceptor implements HttpInterceptor {
             return throwError(err);
           }
           const message = generateMessage(err.error);
-          this.snackBar.open(message, 'OK', {duration: 5000});
+          // no snackbar showing currently
+          if (!this.snackBar._openedSnackBarRef) {
+            this.snackBar.open(message, 'OK', {duration: 2500});
+          }
         }
         return throwError(err);
       })
@@ -29,24 +32,22 @@ export class ErrorInterceptor implements HttpInterceptor {
 }
 
 export function isProblem(err: Error): boolean {
-  if (!(err instanceof HttpErrorResponse) || !('error' in err)) {
-    return false;
-  }
-  return 'type' in err.error;
+  return err instanceof HttpErrorResponse &&
+    err.headers.get('content-type').startsWith('application/problem');
 }
 
-export function generateMessage({title, detail, instance}: { title?: string; detail?: string; instance?: string}): string {
+export function generateMessage({title, detail, instance}: { title?: string; detail?: string; instance?: string }): string {
   if (!title) {
     return 'Unbekannter Serverfehler aufgetreten';
   }
   let output = title;
-  if (!output.endsWith(".")) {
-    output += ". ";
+  if (!output.endsWith('.')) {
+    output += '. ';
   }
   if (!!detail) {
     output += detail;
-    if (!output.endsWith(".")) {
-      output += ". ";
+    if (!output.endsWith('.')) {
+      output += '. ';
     }
   }
   if (!!instance) {

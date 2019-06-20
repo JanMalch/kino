@@ -30,6 +30,9 @@ export class LoginComponent implements OnInit {
               route: ActivatedRoute,
               private router: Router) {
     this.forward = route.snapshot.queryParamMap.get('forward') || '/movie';
+    if (this.forward === '/login') {
+      this.forward = '/movie';
+    }
   }
 
   ngOnInit() {
