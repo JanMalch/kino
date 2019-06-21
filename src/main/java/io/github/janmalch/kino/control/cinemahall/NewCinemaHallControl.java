@@ -16,6 +16,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/** 
+ * Adds a new Cinema Hall based on the input dto. The seat names are calculated based on the given dimensions.
+ * After adding the cinema hall the seats will be added. If any error occured the cinema hall will be deleted.
+ */
 public class NewCinemaHallControl extends ManagingControl<Long> {
 
   private final Logger logger = LoggerFactory.getLogger(NewCinemaHallControl.class);
