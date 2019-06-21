@@ -24,7 +24,7 @@
 
 <details open>
   <summary>Login as ...</summary>
-
-<button *ngFor="let acc of accounts" mat-raised-button color="warn"
+  <p class="mat-error mt-8">Diese Buttons werden später entfernt ...</p>
+  <button *ngFor="let acc of accounts" mat-raised-button color="warn"
         (click)="login(getCredentials(acc))">{{ acc }}</button>
 </details>
