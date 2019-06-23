@@ -62,6 +62,9 @@ class RepositoryTest {
     public EntityManager getEntityManager() {
       return null;
     }
+
+    @Override
+    public void close() {}
   }
 
   private static class TestSpecification implements Specification<Object> {

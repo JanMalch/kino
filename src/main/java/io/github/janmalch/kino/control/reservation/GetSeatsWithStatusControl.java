@@ -12,6 +12,11 @@ import io.github.janmalch.kino.util.ReflectionMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Returns a list of seats for the given presentation.
+ * The list includes all seats of the related Cinema Hall.
+ * Additionally it includes a status property, indicating if the seat is taken for the specified presentation
+ */
 public class GetSeatsWithStatusControl extends ManagingControl<List<SeatForPresentationDto>> {
 
   private final long presentationId;

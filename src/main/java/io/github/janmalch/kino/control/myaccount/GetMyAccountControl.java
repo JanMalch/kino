@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/** If a user wants its own Account info, it needs email as a param. */
 public class GetMyAccountControl extends ManagingControl<AccountInfoDto> {
 
   private Logger log = LoggerFactory.getLogger(GetMyAccountControl.class);

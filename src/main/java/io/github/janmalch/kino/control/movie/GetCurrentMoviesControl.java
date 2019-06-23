@@ -18,6 +18,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Returns an overview for all running movies.
+ * A movie is considered running, when there's at least one presentation in the future.
+ * The overview will contain all future weeks with presentations of any movie. It is not limited.
+ * The weekly overview only contain a list of movie IDs.
+ * The overview will contain all movies, referenced by their respective ID.
+ * This is useful to reduce the number of API calls and redundancy within the response.
+ */
 public class GetCurrentMoviesControl extends ManagingControl<MovieOverviewDto> {
 
   private final Mapper<Movie, MovieInfoDto> mapper = new ReflectionMapper<>(MovieInfoDto.class);

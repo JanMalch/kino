@@ -8,6 +8,14 @@ import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
+/**
+ * Get the entity specified by the given ID and <code>entityClass</code> in the constructor call.
+ * Allows to add either a customer mapper, or map to the given <code>dtoClass</code> via reflection.
+ *
+ * @param <P> type of resulting output items
+ * @param <E> type of the queried entities
+ * @see ReflectionMapper
+ */
 public class GetEntityControl<P, E> extends ManagingControl<P> {
 
   private final Mapper<E, P> mapper;

@@ -9,6 +9,7 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.ReflectionMapper;
 
+/** Get an account given by ID. */
 public class GetAccountByIdControl extends ManagingControl<AccountInfoDto> {
 
   private final long id;

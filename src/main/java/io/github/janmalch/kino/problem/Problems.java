@@ -1,8 +1,13 @@
 package io.github.janmalch.kino.problem;
 
 import java.util.Objects;
+import javax.annotation.Nullable;
 import javax.ws.rs.core.Response;
 
+/**
+ * Class that provides common utility methods for working with problems to reduce boilerplate code.
+ * It includes a {@link Problems.Factory} that contains common problems.
+ */
 public class Problems {
   private Problems() {}
 
@@ -81,11 +86,27 @@ public class Problems {
     return data;
   }
 
+  /** Static class to provide a place to put common problems. */
   public static class Factory {
 
     private Factory() {}
 
-    public static Problem noSuchEntity(long id, String detail) {
+    /**
+     * Constructs a problem for the common issue of a missing entity. The problem always consists of
+     * the following:
+     *
+     * <ul>
+     *   <li>type: {@link Problem#DEFAULT_TYPE}<code> + "no-such-entity"</code>
+     *   <li>title: <code>"Failed to find entity for given ID"</code>
+     *   <li>status: {@link Response.Status#NOT_FOUND}
+     *   <li>custom parameter: <code>"id" = id</code>
+     * </ul>
+     *
+     * @param id the id that was queried
+     * @param detail a detail string to specify the issue
+     * @return a {@link Problem}
+     */
+    public static Problem noSuchEntity(long id, @Nullable String detail) {
       return Problem.builder()
           .type("no-such-entity")
           .title("Failed to find entity for given ID")

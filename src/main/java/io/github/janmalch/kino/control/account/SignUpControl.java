@@ -20,6 +20,11 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Sign in an account provided by SignUpDto. Email gets validated if it already exists. All accounts
+ * signing in will be set to Role.CUSTOMER by default. It can be edited by Role.MODERATOR or
+ * Role.ADMIN
+ */
 public class SignUpControl extends ManagingControl<SuccessMessage> {
 
   private Logger log = LoggerFactory.getLogger(SignUpControl.class);

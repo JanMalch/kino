@@ -15,6 +15,10 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * When user login, this control checks if email exists in database and password matches with salt +
+ * hash. If both are correct, a token will be generated as a return value.
+ */
 public class LogInControl extends ManagingControl<Token> {
 
   private Logger log = LoggerFactory.getLogger(LogInControl.class);

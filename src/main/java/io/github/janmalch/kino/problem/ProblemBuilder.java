@@ -2,11 +2,14 @@ package io.github.janmalch.kino.problem;
 
 import io.github.janmalch.kino.util.Contract;
 import java.net.URI;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+/** Builder, based on the builder pattern, to create a {@link Problem}. */
 public class ProblemBuilder {
 
   /** Set of reserved properties: "type", "title", "status", "detail", "instance", "cause" */

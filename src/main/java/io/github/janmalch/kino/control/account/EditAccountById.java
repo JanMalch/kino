@@ -13,6 +13,7 @@ import io.github.janmalch.kino.util.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/** Edit an account given by AccountInfoDto. */
 public class EditAccountById extends ManagingControl<SuccessMessage> {
   private Logger log = LoggerFactory.getLogger(EditMyAccountControl.class);
   private final Repository<Account> repository = RepositoryFactory.createRepository(Account.class);
