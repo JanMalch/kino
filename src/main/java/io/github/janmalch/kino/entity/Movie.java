@@ -9,7 +9,7 @@ public class Movie implements Identifiable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @OneToMany(mappedBy = "movie")
+  @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Presentation> presentations;
 
   private String name;
