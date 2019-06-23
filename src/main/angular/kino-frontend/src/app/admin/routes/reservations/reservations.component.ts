@@ -61,6 +61,7 @@ export class ReservationCrudService implements CrudService<ReservationDto, Reser
 })
 export class ReservationsComponent  {
 
+  selectedItem: ReservationInfoDto;
 
   constructor(private crud: CrudService<ReservationDto, ReservationInfoDto>,
               private presentationService: PresentationService) {
@@ -71,5 +72,9 @@ export class ReservationsComponent  {
       map(p => p.date),
       startWith(undefined)
     );
+  }
+
+  onSelectItem(item: ReservationInfoDto) {
+    this.selectedItem = item;
   }
 }

@@ -1,4 +1,5 @@
-<app-generic-overview entityName="Reservierung" entityNamePlural="Reservierungen">
+<app-generic-overview entityName="Reservierung" entityNamePlural="Reservierungen"
+                      [skipForm]="true" (selectItem)="onSelectItem($event)">
   <ng-container *appEntity="let item">
     <mat-icon mat-list-icon svgIcon="theater"></mat-icon>
 
@@ -7,7 +8,8 @@
         {{ item.account.email }}
         &nbsp;&nbsp;&bull;&nbsp;&nbsp;
         {{ item.movie.name }}
-        &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+        <br/>
+        Vorstellung:&nbsp;
         <ng-container *ngIf="(getPresentationDate(item) | async) as pDate; else spinner">
           {{ pDate | parseDate | date: 'medium' }}
         </ng-container>
@@ -20,3 +22,17 @@
     </div>
   </ng-container>
 </app-generic-overview>
+<div *ngIf="selectedItem" id="reservation-admin-view">
+  <mat-card>
+    <mat-card-title><h2>Reservierung #{{ selectedItem.id }}</h2></mat-card-title>
+    <mat-card-content>
+      <h3>Reservierte Sitze</h3>
+      <mat-chip-list>
+        <mat-chip *ngFor="let seat of selectedItem.seats">{{ seat.row }}{{ seat.seatNumber }}</mat-chip>
+      </mat-chip-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <a [routerLink]="'/reservation/new'" [queryParams]="{ presentation:  selectedItem.presentationId}" mat-flat-button color="primary">Zur Vorstellung</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
