@@ -10,7 +10,7 @@ public class Presentation implements Identifiable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @OneToMany(mappedBy = "presentation")
+  @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Reservation> reservations;
 
   @ManyToOne
