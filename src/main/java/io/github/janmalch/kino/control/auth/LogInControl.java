@@ -11,6 +11,7 @@ import io.github.janmalch.kino.repository.specification.AccountByEmailSpec;
 import io.github.janmalch.kino.security.JwtTokenFactory;
 import io.github.janmalch.kino.security.PasswordManager;
 import io.github.janmalch.kino.security.Token;
+import javax.validation.Valid;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class LogInControl extends ManagingControl<Token> {
           .instance()
           .build();
 
-  public LogInControl(LoginDto data) {
+  public LogInControl(@Valid LoginDto data) {
     this.data = data;
   }
 
