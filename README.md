@@ -4,7 +4,7 @@
 
 # Kino
 
-A RESTful Cinema API built with JEE
+A RESTful Cinema API built with JEE. The frontend is built with Angular and contained in the final build.
 
 ## Running the server
 ### Build
@@ -12,7 +12,9 @@ Benötigt:
 -	Maven 3.6.0 	(https://maven.apache.org/download.cgi)
 -	Node 12.0	(https://nodejs.org/en/)
 -	Java 11	(https://jdk.java.net/11/)
-./kino>_ %MAVEN_ROOT% clean install 
+
+`./kino>_ %MAVEN_ROOT% clean install `
+
 ### Deployment
 Benötigt:
 -	Java 			(https://jdk.java.net/11/)
@@ -36,6 +38,6 @@ Benötigt:
 -	**Customer-Account:**
     -	User: `customer@account.de`
     -	Passwort: `customer`
--	**Customer -Account:**
+-	**Customer1-Account:**
     -	User: `customer1@account.de`
     -	Passwort: `customer1`
