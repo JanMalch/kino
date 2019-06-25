@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 @Api
 public class PingResource {
 
-  // TODO: refactor to @Inject
   private Logger log = LoggerFactory.getLogger(PingResource.class);
 
   @GET
