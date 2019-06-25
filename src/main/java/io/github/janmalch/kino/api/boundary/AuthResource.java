@@ -11,6 +11,7 @@ import io.github.janmalch.kino.security.Token;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,7 +34,7 @@ public class AuthResource {
   @ApiOperation(
       value = "Returns a new JWT token if credentials are valid",
       response = TokenDto.class)
-  public Response logIn(LoginDto loginDto) {
+  public Response logIn(@Valid LoginDto loginDto) {
     log.info("------------------ BEGIN LOGIN REQUEST ------------------");
     log.info(loginDto.toString());
 

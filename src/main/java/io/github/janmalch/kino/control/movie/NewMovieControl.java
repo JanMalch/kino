@@ -10,14 +10,13 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import io.github.janmalch.kino.util.Mapper;
 import java.util.Optional;
-import javax.validation.Valid;
 
 public class NewMovieControl extends ManagingControl<Long> {
 
   private final NewMovieDto movieDto;
   private final Repository<Movie> repository = RepositoryFactory.createRepository(Movie.class);
 
-  public NewMovieControl(@Valid NewMovieDto movieDto) {
+  public NewMovieControl(NewMovieDto movieDto) {
     this.movieDto = movieDto;
   }
 
@@ -50,7 +49,7 @@ public class NewMovieControl extends ManagingControl<Long> {
   static class NewMovieMapper implements Mapper<NewMovieDto, Movie> {
 
     @Override
-    public Movie map(@Valid NewMovieDto source) {
+    public Movie map(NewMovieDto source) {
       var movie = new Movie();
       movie.setName(source.getName());
       movie.setAgeRating(source.getAgeRating());
