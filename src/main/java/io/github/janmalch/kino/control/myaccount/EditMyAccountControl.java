@@ -78,6 +78,9 @@ public class EditMyAccountControl extends ManagingControl<Token> {
       if (update.getLastName() != null) {
         existing.setLastName(update.getLastName());
       }
+      // TODO: fix date issues, the received date is correct
+      //  but the stored date is one day earlier
+      //  LocalDate apparently is unrelated to a timezone
       if (update.getBirthday() != null) {
         existing.setBirthday(update.getBirthday());
       }
