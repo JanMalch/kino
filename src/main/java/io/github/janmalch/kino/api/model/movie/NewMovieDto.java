@@ -1,16 +1,16 @@
 package io.github.janmalch.kino.api.model.movie;
 
-import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 
 public class NewMovieDto extends AbstractMovieDto {
-  @DecimalMin("1.0")
+  @Min(1)
   private long priceCategoryId;
 
   public long getPriceCategoryId() {
     return priceCategoryId;
   }
 
-  @DecimalMin("1.0")
+  @Min(1)
   public void setPriceCategoryId(long priceCategoryId) {
     this.priceCategoryId = priceCategoryId;
   }

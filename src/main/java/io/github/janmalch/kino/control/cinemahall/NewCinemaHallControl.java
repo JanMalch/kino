@@ -10,15 +10,15 @@ import io.github.janmalch.kino.repository.Repository;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import javax.validation.Valid;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** 
- * Adds a new Cinema Hall based on the input dto. The seat names are calculated based on the given dimensions.
- * After adding the cinema hall the seats will be added. If any error occured the cinema hall will be deleted.
+/**
+ * Adds a new Cinema Hall based on the input dto. The seat names are calculated based on the given
+ * dimensions. After adding the cinema hall the seats will be added. If any error occured the cinema
+ * hall will be deleted.
  */
 public class NewCinemaHallControl extends ManagingControl<Long> {
 
@@ -28,7 +28,7 @@ public class NewCinemaHallControl extends ManagingControl<Long> {
       RepositoryFactory.createRepository(CinemaHall.class);
   private final Repository<Seat> seatRepository = RepositoryFactory.createRepository(Seat.class);
 
-  public NewCinemaHallControl(@Valid NewCinemaHallDto dto) {
+  public NewCinemaHallControl(NewCinemaHallDto dto) {
     this.dto = dto;
   }
 

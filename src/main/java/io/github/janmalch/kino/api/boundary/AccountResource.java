@@ -9,6 +9,7 @@ import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,7 +27,7 @@ public class AccountResource {
   @Path("sign-up")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response signUp(SignUpDto data) {
+  public Response signUp(@Valid SignUpDto data) {
     log.info("------------------ BEGIN SIGN UP REQUEST ------------------");
     log.info(data.toString());
     var control = new SignUpControl(data);

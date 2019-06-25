@@ -12,6 +12,7 @@ import io.github.janmalch.kino.security.Token;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -45,7 +46,7 @@ public class MyAccountResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Updates own profile", response = TokenDto.class)
-  public Response editMyAccount(SignUpDto data, @Context SecurityContext securityContext) {
+  public Response editMyAccount(@Valid SignUpDto data, @Context SecurityContext securityContext) {
     log.info("------------------ BEGIN EDIT MY-ACCOUNT REQUEST ------------------");
     log.info(data.toString());
     var myAccountToken = securityContext.getUserPrincipal();

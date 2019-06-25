@@ -14,6 +14,7 @@ import io.github.janmalch.kino.security.Secured;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -46,7 +47,7 @@ public class MovieResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Returns the ID for the newly created movie", response = Long.class)
-  public Response newMovie(NewMovieDto movieDto) {
+  public Response newMovie(@Valid NewMovieDto movieDto) {
     log.info(movieDto.toString());
     Control<Long> control = new NewMovieControl(movieDto);
     return control.execute(new ResponseResultBuilder<>());
