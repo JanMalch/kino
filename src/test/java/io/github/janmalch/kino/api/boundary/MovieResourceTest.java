@@ -7,14 +7,22 @@ import io.github.janmalch.kino.api.model.movie.MovieDto;
 import io.github.janmalch.kino.api.model.movie.MovieOverviewDto;
 import io.github.janmalch.kino.api.model.movie.NewMovieDto;
 import io.github.janmalch.kino.api.model.pricecategory.PriceCategoryDto;
+import io.github.janmalch.kino.entity.EntityWiper;
 import io.github.janmalch.kino.entity.Movie;
 import io.github.janmalch.kino.entity.Presentation;
 import io.github.janmalch.kino.repository.RepositoryFactory;
 import java.util.Date;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MovieResourceTest {
+
+  @BeforeEach
+  public void tearDown() {
+    var ew = new EntityWiper();
+    ew.wipeDB();
+  }
 
   @Test
   void getAllMovies() {
