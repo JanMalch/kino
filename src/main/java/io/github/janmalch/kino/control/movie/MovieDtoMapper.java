@@ -31,7 +31,7 @@ public class MovieDtoMapper implements Mapper<Movie, MovieDto> {
             .stream()
             .map(presentationDtoMapper::map)
             .collect(Collectors.toList()));
-    if (source.getPriceCategory() != null) { // TODO: why check for null for MovieResourceTest?
+    if (source.getPriceCategory() != null) {
       dto.setPriceCategory(priceCategoryDtoMapper.map(source.getPriceCategory()));
     }
     return dto;

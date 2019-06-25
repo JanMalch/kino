@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 @Api
 public class MovieResource {
 
-  // TODO: refactor to @Inject
   private Logger log = LoggerFactory.getLogger(MovieResource.class);
 
   @GET
