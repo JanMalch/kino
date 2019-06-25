@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 @Api
 public class AccountResource {
 
-  // TODO: refactor to @Inject
   private Logger log = LoggerFactory.getLogger(AccountResource.class);
 
   @POST

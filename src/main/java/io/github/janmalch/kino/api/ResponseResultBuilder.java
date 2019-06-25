@@ -15,7 +15,7 @@ public class ResponseResultBuilder<P> implements ResultBuilder<Response, P> {
 
   @Override
   public Response failure(Problem problem) {
-    // TODO: replace Map with Jackson Serializer
+    // TODO: replace Map with Jackson Serializer with CDI
     Map<String, Object> map = new HashMap<>(5);
     map.put("type", problem.getType());
     if (problem.getTitle() != null) {

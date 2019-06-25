@@ -75,8 +75,6 @@ class MovieResourceTest {
     // check if update has successfully been merged
     var fetched = (MovieDto) resource.getMovie(movieId).getEntity();
     assertEquals("Wonder Woman", fetched.getName());
-    // TODO: fix
-    // assertNotNull(fetched.getImageURL(), "Updating should not overwrite with null");
   }
 
   @Test
